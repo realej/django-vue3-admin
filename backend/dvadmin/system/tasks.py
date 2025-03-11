@@ -28,7 +28,7 @@ def is_number(num):
 
 def get_string_len(string):
     """
-    获取字符串最大长度
+    Get the maximum length of the string
     :param string:
     :return:
     """
@@ -50,7 +50,7 @@ def async_export_data(data: list, filename: str, dcid: int, export_field_label: 
     try:
         wb = Workbook()
         ws = wb.active
-        header_data = ["序号", *export_field_label.values()]
+        header_data = ["Serial number", *export_field_label.values()]
         hidden_header = ["#", *export_field_label.keys()]
         df_len_max = [get_string_len(ele) for ele in header_data]
         row = get_column_letter(len(export_field_label) + 1)
@@ -68,16 +68,16 @@ def async_export_data(data: list, filename: str, dcid: int, export_field_label: 
                             results_list.append(val)
                         else:
                             results_list.append(val)
-                        # 计算最大列宽度
+                        # Calculate the maximum column width
                         result_column_width = get_string_len(val)
                         if h_index != 0 and result_column_width > df_len_max[h_index]:
                             df_len_max[h_index] = result_column_width
             ws.append([index + 1, *results_list])
             column += 1
-        # 　更新列宽
+        # Update column width
         for index, width in enumerate(df_len_max):
             ws.column_dimensions[get_column_letter(index + 1)].width = width
-        tab = Table(displayName="Table", ref=f"A1:{row}{column}")  # 名称管理器
+        tab = Table(displayName="Table", ref=f"A1:{row}{column}")  # Name Manager
         style = TableStyleInfo(
             name="TableStyleLight11",
             showFirstColumn=True,

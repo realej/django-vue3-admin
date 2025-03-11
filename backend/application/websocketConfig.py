@@ -18,7 +18,7 @@ from dvadmin.utils.serializers import CustomModelSerializer
 send_dict = {}
 
 
-# 发送消息结构体
+# Send message structure
 def set_message(sender, msg_type, msg, unread=0):
     text = {
         'sender': sender,
@@ -29,7 +29,7 @@ def set_message(sender, msg_type, msg, unread=0):
     return text
 
 
-# 异步获取消息中心的目标用户
+# Asynchronously obtain the target user of the Message Center
 @database_sync_to_async
 def _get_message_center_instance(message_id):
     from dvadmin.system.models import MessageCenter
@@ -42,7 +42,7 @@ def _get_message_center_instance(message_id):
 
 @database_sync_to_async
 def _get_message_unread(user_id):
-    """获取用户的未读消息数量"""
+    """Get the number of unread messages for the user"""
     from dvadmin.system.models import MessageCenterTargetUser
     count = MessageCenterTargetUser.objects.filter(users=user_id, is_read=False).count()
     return count or 0
@@ -63,20 +63,20 @@ class DvadminWebSocket(AsyncJsonWebsocketConsumer):
             if decoded_result:
                 self.user_id = decoded_result.get('user_id')
                 self.chat_group_name = "user_" + str(self.user_id)
-                # 收到连接时候处理，
+                # Processed when the connection is received.
                 await self.channel_layer.group_add(
                     self.chat_group_name,
                     self.channel_name
                 )
                 await self.accept()
-                # 主动推送消息
+                # Proactively push messages
                 unread_count = await _get_message_unread(self.user_id)
                 if unread_count == 0:
-                    # 发送连接成功
-                    await self.send_json(set_message('system', 'SYSTEM', '您已上线'))
+                    # Send the connection successfully
+                    await self.send_json(set_message('system', 'SYSTEM', 'You're online'))
                 else:
                     await self.send_json(
-                        set_message('system', 'SYSTEM', "请查看您的未读消息~",
+                        set_message('system', 'SYSTEM', "Please check your unread messages ~",
                                     unread=unread_count))
         except InvalidSignatureError:
             await self.disconnect(None)
@@ -84,7 +84,7 @@ class DvadminWebSocket(AsyncJsonWebsocketConsumer):
     async def disconnect(self, close_code):
         # Leave room group
         await self.channel_layer.group_discard(self.chat_group_name, self.channel_name)
-        print("连接关闭")
+        print("Connection closes")
         try:
             await self.close(close_code)
         except Exception:
@@ -93,11 +93,11 @@ class DvadminWebSocket(AsyncJsonWebsocketConsumer):
 
 class MegCenter(DvadminWebSocket):
     """
-    消息中心
+    Message Center
     """
 
     async def receive(self, text_data):
-        # 接受客户端的信息，你处理的函数
+        # Accept client information, the functions you process
         text_data_json = json.loads(text_data)
         message_id = text_data_json.get('message_id', None)
         user_list = await _get_message_center_instance(message_id)
@@ -108,14 +108,14 @@ class MegCenter(DvadminWebSocket):
             )
 
     async def push_message(self, event):
-        """消息发送"""
+        """Message sending"""
         message = event['json']
         await self.send(text_data=json.dumps(message))
 
 
 class MessageCreateSerializer(CustomModelSerializer):
     """
-    消息中心-新增-序列化器
+    Message Center-New-Serializer
     """
     class Meta:
         model = MessageCenter
@@ -155,11 +155,11 @@ def create_message_push(title: str, content: str, target_type: int = 0, target_u
     message_center_instance.is_valid(raise_exception=True)
     message_center_instance.save()
     users = target_user or []
-    if target_type in [1]:  # 按角色
+    if target_type in [1]:  # By role
         users = Users.objects.filter(role__id__in=target_role).values_list('id', flat=True)
-    if target_type in [2]:  # 按部门
+    if target_type in [2]:  # By department
         users = Users.objects.filter(dept__id__in=target_dept).values_list('id', flat=True)
-    if target_type in [3]:  # 系统通知
+    if target_type in [3]:  # System Notification
         users = Users.objects.values_list('id', flat=True)
     targetuser_data = []
     for user in users:

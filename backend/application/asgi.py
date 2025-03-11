@@ -25,7 +25,7 @@ application = ProtocolTypeRouter({
     'websocket': AllowedHostsOriginValidator(
         AuthMiddlewareStack(
             URLRouter(
-                websocket_urlpatterns  # 指明路由文件是devops/routing.py
+                websocket_urlpatterns  # Specify that the routing file is devops/routing.py
             )
         )
     ),

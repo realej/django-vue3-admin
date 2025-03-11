@@ -10,14 +10,14 @@ dispatch_db_type = getattr(settings, 'DISPATCH_DB_TYPE', 'memory')  # redis
 
 def is_tenants_mode():
     """
-    判断是否为租户模式
+    Determine whether it is tenant mode
     :return:
     """
     return hasattr(connection, "tenant") and connection.tenant.schema_name
 
 
 # ================================================= #
-# ******************** 初始化 ******************** #
+# ******************** initialization ******************** #
 # ================================================= #
 def _get_all_dictionary():
     from dvadmin.system.models import Dictionary
@@ -68,7 +68,7 @@ def _get_all_system_config():
 
 def init_dictionary():
     """
-    初始化字典配置
+    Initialize dictionary configuration
     :return:
     """
     try:
@@ -84,13 +84,13 @@ def init_dictionary():
         else:
             settings.DICTIONARY_CONFIG = _get_all_dictionary()
     except Exception as e:
-        print("请先进行数据库迁移!")
+        print("Please do a database migration first!")
     return
 
 
 def init_system_config():
     """
-    初始化系统配置
+    Initialize system configuration
     :param name:
     :return:
     """
@@ -107,13 +107,13 @@ def init_system_config():
         else:
             settings.SYSTEM_CONFIG = _get_all_system_config()
     except Exception as e:
-        print("请先进行数据库迁移!")
+        print("Please do a database migration first!")
     return
 
 
 def refresh_dictionary():
     """
-    刷新字典配置
+    Refresh dictionary configuration
     :return:
     """
     if dispatch_db_type == 'redis':
@@ -131,7 +131,7 @@ def refresh_dictionary():
 
 def refresh_system_config():
     """
-    刷新系统配置
+    Refresh system configuration
     :return:
     """
     if dispatch_db_type == 'redis':
@@ -148,12 +148,12 @@ def refresh_system_config():
 
 
 # ================================================= #
-# ******************** 字典管理 ******************** #
+# ******************** Dictionary Management ******************** #
 # ================================================= #
 def get_dictionary_config(schema_name=None):
     """
-    获取字典所有配置
-    :param schema_name: 对应字典配置的租户schema_name值
+    Get all configurations of the dictionary
+    :param schema_name: The tenant schema_name value corresponding to the dictionary configuration
     :return:
     """
     if dispatch_db_type == 'redis':
@@ -172,9 +172,9 @@ def get_dictionary_config(schema_name=None):
 
 def get_dictionary_values(key, schema_name=None):
     """
-    获取字典数据数组
-    :param key: 对应字典配置的key值(字典编号)
-    :param schema_name: 对应字典配置的租户schema_name值
+    Get dictionary data array
+    :param key: The key value corresponding to the dictionary configuration (dictionary number)
+    :param schema_name: The tenant schema_name value corresponding to the dictionary configuration
     :return:
     """
     if dispatch_db_type == 'redis':
@@ -189,10 +189,10 @@ def get_dictionary_values(key, schema_name=None):
 
 def get_dictionary_label(key, name, schema_name=None):
     """
-    获取获取字典label值
-    :param key: 字典管理中的key值(字典编号)
-    :param name: 对应字典配置的value值
-    :param schema_name: 对应字典配置的租户schema_name值
+    Get the dictionary label value
+    :param key: Key value in dictionary management (dictionary number)
+    :param name: The value value corresponding to the dictionary configuration
+    :param schema_name: The tenant schema_name value corresponding to the dictionary configuration
     :return:
     """
     res = get_dictionary_values(key, schema_name) or []
@@ -203,14 +203,14 @@ def get_dictionary_label(key, name, schema_name=None):
 
 
 # ================================================= #
-# ******************** 系统配置 ******************** #
+# ******************** System configuration ******************** #
 # ================================================= #
 def get_system_config(schema_name=None):
     """
-    获取系统配置中所有配置
-    1.只传父级的key，返回全部子级，{ "父级key.子级key" : "值" }
-    2."父级key.子级key"，返回子级值
-    :param schema_name: 对应字典配置的租户schema_name值
+    Get all configurations in the system configuration
+    1.Only pass the parent key and return all children, { "parent key.Child key" : "value" }
+    2. "Parent key.Child key", return child value
+    :param schema_name: The tenant schema_name value corresponding to the dictionary configuration
     :return:
     """
     if dispatch_db_type == 'redis':
@@ -229,9 +229,9 @@ def get_system_config(schema_name=None):
 
 def get_system_config_values(key, schema_name=None):
     """
-    获取系统配置数据数组
-    :param key: 对应系统配置的key值(字典编号)
-    :param schema_name: 对应系统配置的租户schema_name值
+    Get the system configuration data array
+    :param key: The key value corresponding to the system configuration (dictionary number)
+    :param schema_name: The corresponding system configuration tenant schema_name value
     :return:
     """
     if dispatch_db_type == 'redis':
@@ -246,15 +246,15 @@ def get_system_config_values(key, schema_name=None):
 
 def get_system_config_values_to_dict(key, schema_name=None):
     """
-    获取系统配置数据并转换为字典 **仅限于数组类型系统配置
-    :param key: 对应系统配置的key值(字典编号)
-    :param schema_name: 对应系统配置的租户schema_name值
+    Get system configuration data and convert it into dictionary **Array type system configuration only
+    :param key: The key value corresponding to the system configuration (dictionary number)
+    :param schema_name: The corresponding system configuration tenant schema_name value
     :return:
     """
     values_dict = {}
     config_values = get_system_config_values(key, schema_name)
     if not isinstance(config_values, list):
-        raise CustomValidationError("该方式仅限于数组类型系统配置")
+        raise CustomValidationError("This method is limited to array type system configuration")
     for ele in get_system_config_values(key, schema_name):
         values_dict[ele.get('key')] = ele.get('value')
     return values_dict
@@ -262,10 +262,10 @@ def get_system_config_values_to_dict(key, schema_name=None):
 
 def get_system_config_label(key, name, schema_name=None):
     """
-    获取获取系统配置label值
-    :param key: 系统配置中的key值(字典编号)
-    :param name: 对应系统配置的value值
-    :param schema_name: 对应系统配置的租户schema_name值
+    Get the system configuration label value
+    :param key: key value in system configuration (dictionary number)
+    :param name: The value value corresponding to the system configuration
+    :param schema_name: The corresponding system configuration tenant schema_name value
     :return:
     """
     children = get_system_config_values(key, schema_name) or []

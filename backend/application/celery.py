@@ -22,7 +22,7 @@ platforms.C_FORCE_ROOT = True
 
 def retry_base_task_error():
     """
-    celery 失败重试装饰器
+    celery Failed to try the decorator
     :return:
     """
 

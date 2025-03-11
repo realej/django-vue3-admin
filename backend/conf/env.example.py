@@ -2,49 +2,49 @@ import os
 
 from application.settings import BASE_DIR
 
-# ================================================= #
-# *************** mysql数据库 配置  *************** #
-# ================================================= #
-# 数据库 ENGINE ，默认演示使用 sqlite3 数据库，正式环境建议使用 mysql 数据库
-# sqlite3 设置
+# ===================================================================== #
+# ***************mysql database configuration ******************#
+# ===================================================================== #
+# Database ENGINE, the default demonstration uses sqlite3 database, and it is recommended to use mysql database in the formal environment
+# sqlite3 settings
 # DATABASE_ENGINE = "django.db.backends.sqlite3"
 # DATABASE_NAME = os.path.join(BASE_DIR, "db.sqlite3")
 
-# 使用mysql时，改为此配置
+# When using mysql, change to this configuration
 DATABASE_ENGINE = "django.db.backends.mysql"
-DATABASE_NAME = 'django-vue3-admin' # mysql 时使用
+DATABASE_NAME = 'django-vue3-admin' # mysql When using
 
-# 数据库地址 改为自己数据库地址
+# Database address Change to your own database address
 DATABASE_HOST = '127.0.0.1'
-# # 数据库端口
+# # Database Port
 DATABASE_PORT = 3306
-# # 数据库用户名
+# # Database username
 DATABASE_USER = "root"
-# # 数据库密码
+# # Database Password
 DATABASE_PASSWORD = 'DVADMIN3'
 
-# 表前缀
+# Table prefix
 TABLE_PREFIX = "dvadmin_"
-# ================================================= #
-# ******** redis配置，无redis 可不进行配置  ******** #
-# ================================================= #
+# ===================================================================== #
+# **********redis configuration, no redis can be configured ************#
+# ===================================================================== #
 REDIS_DB = 1
 CELERY_BROKER_DB = 3
 REDIS_PASSWORD = 'DVADMIN3'
 REDIS_HOST = '127.0.0.1'
 REDIS_URL = f'redis://:{REDIS_PASSWORD or ""}@{REDIS_HOST}:6379'
-# ================================================= #
-# ****************** 功能 启停  ******************* #
-# ================================================= #
+# ===================================================================== #
+#******************Function Start and Stop *********************#
+# ===================================================================== #
 DEBUG = True
-# 启动登录详细概略获取(通过调用api获取ip详细地址。如果是内网，关闭即可)
+# Start login to obtain detailed overview (get the IP address by calling the API. If it is an intranet, just close it)
 ENABLE_LOGIN_ANALYSIS_LOG = True
-# 登录接口 /api/token/ 是否需要验证码认证，用于测试，正式环境建议取消
+# Login interface /api/token/Whether verification code authentication is required, for testing, formal environment recommendation is cancelled
 LOGIN_NO_CAPTCHA_AUTH = True
-# ================================================= #
-# ****************** 其他 配置  ******************* #
-# ================================================= #
+# ===================================================================== #
+# ******************Other Configuration *********************#
+# ===================================================================== #
 
 ALLOWED_HOSTS = ["*"]
-# 列权限中排除App应用
+# Exclude App Applications from Column Permissions
 COLUMN_EXCLUDE_APPS = []
