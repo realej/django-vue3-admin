@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: 猿小天
+@author: Yuan Xiaotian
 @contact: QQ:1638245306
 @Created on: 2021/6/6 006 12:39
-@Remark: 自定义过滤器
+@Remark: Custom filters
 """
 import operator
 import re
@@ -27,7 +27,7 @@ from dvadmin.utils.models import CoreModel
 
 class CoreModelFilterBankend(BaseFilterBackend):
     """
-    自定义时间范围过滤器
+    Custom time range filter
     """
     def filter_queryset(self, request, queryset, view):
         create_datetime_after = request.query_params.get('create_datetime_after', None)
@@ -43,7 +43,7 @@ class CoreModelFilterBankend(BaseFilterBackend):
             elif create_datetime_before:
                 create_filter &= Q(create_datetime__lte=f'{create_datetime_before} 23:59:59')
 
-            # 更新时间范围过滤条件
+            # Update time range filter conditions
             update_filter = Q()
             if update_datetime_after and update_datetime_before:
                 update_filter &= Q(update_datetime__gte=update_datetime_after) & Q(update_datetime__lte=update_datetime_before)
@@ -51,17 +51,17 @@ class CoreModelFilterBankend(BaseFilterBackend):
                 update_filter &= Q(update_datetime__gte=update_datetime_after)
             elif update_datetime_before:
                 update_filter &= Q(update_datetime__lte=update_datetime_before)
-            # 结合两个时间范围过滤条件
+            # Combined with two time range filter conditions
             queryset = queryset.filter(create_filter & update_filter)
             return queryset
         return queryset
 
 def get_dept(dept_id: int, dept_all_list=None, dept_list=None):
     """
-    递归获取部门的所有下级部门
-    :param dept_id: 需要获取的部门id
-    :param dept_all_list: 所有部门列表
-    :param dept_list: 递归部门list
+    Recursively obtain all subordinate departments of the department
+    :param dept_id: Departments that need to be obtainedid
+    :param dept_all_list: List of all departments
+    :param dept_list: Recursive departmentlist
     :return:
     """
     if not dept_all_list:
@@ -77,26 +77,26 @@ def get_dept(dept_id: int, dept_all_list=None, dept_list=None):
 
 class DataLevelPermissionsFilter(BaseFilterBackend):
     """
-    数据 级权限过滤器
-    0. 获取用户的部门id，没有部门则返回空
-    1. 判断过滤的数据是否有创建人所在部门 "creator" 字段,没有则返回全部
-    2. 如果用户没有关联角色则返回本部门数据
-    3. 根据角色的最大权限进行数据过滤(会有多个角色，进行去重取最大权限)
-    3.1 判断用户是否为超级管理员角色/如果有1(所有数据) 则返回所有数据
+    data Level permission filter
+    0. Obtaining the user's departmentid，If there is no department, return empty
+    1. Determine whether the filtered data has the department where the created data is located "creator" Fields,If not, return all
+    2. If the user has no associated role, return the data of this department
+    3. Data filtering based on the maximum permissions of the role(There will be multiple roles，Deretize the maximum permission)
+    3.1 Determine whether the user is a super administrator role/If there is1(All data) Return all data
 
-    4. 只为仅本人数据权限时只返回过滤本人数据，并且部门为自己本部门(考虑到用户会变部门，只能看当前用户所在的部门数据)
-    5. 自定数据权限 获取部门，根据部门过滤
+    4. Only return filtering of personal data when only permissions are allowed，And the department is its own department(Considering that users will change departments，Only view the data of the current user's department)
+    5. Custom data permissions Obtaining Department，Filter by department
     """
 
     def filter_queryset(self, request, queryset, view):
         """
-        接口白名单是否认证数据权限
+        Whether the interface whitelist authenticates data permissions
         """
-        api = request.path  # 当前请求接口
-        method = request.method  # 当前请求方法
+        api = request.path  # Current request interface
+        method = request.method  # Current request method
         methodList = ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
         method = methodList.index(method)
-        # ***接口白名单***
+        # ***Interface whitelist***
         api_white_list = ApiWhiteList.objects.filter(enable_datasource=False).values(
             permission__api=F("url"), permission__method=F("method")
         )
@@ -115,8 +115,8 @@ class DataLevelPermissionsFilter(BaseFilterBackend):
             else:
                 return queryset
         """
-        判断是否为超级管理员:
-        如果不是超级管理员,则进入下一步权限判断
+        Determine whether you are a super administrator:
+        If not a super administrator,Go to the next step of authority judgment
         """
         if request.user.is_superuser == 0:
             return self._extracted_from_filter_queryset_33(request, queryset, api, method)
@@ -125,28 +125,28 @@ class DataLevelPermissionsFilter(BaseFilterBackend):
 
     # TODO Rename this here and in `filter_queryset`
     def _extracted_from_filter_queryset_33(self, request, queryset, api, method):
-        # 0. 获取用户的部门id，没有部门则返回空
+        # 0. Obtaining the user's departmentid，If there is no department, return empty
         user_dept_id = getattr(request.user, "dept_id", None)
         if not user_dept_id:
             return queryset.none()
 
-        # 1. 判断过滤的数据是否有创建人所在部门 "dept_belong_id" 字段
+        # 1. Determine whether the filtered data has the department where the created data is located "dept_belong_id" Fields
         if not getattr(queryset.model, "dept_belong_id", None):
             return queryset
 
-        # 2. 如果用户没有关联角色则返回本部门数据
+        # 2. If the user has no associated role, return the data of this department
         if not hasattr(request.user, "role"):
             return queryset.filter(dept_belong_id=user_dept_id)
 
-        # 3. 根据所有角色 获取所有权限范围
-        # (0, "仅本人数据权限"),
-        # (1, "本部门及以下数据权限"),
-        # (2, "本部门数据权限"),
-        # (3, "全部数据权限"),
-        # (4, "自定数据权限")
+        # 3. By all roles Get all permission ranges
+        # (0, "Only the data permissions"),
+        # (1, "This department and the following data permissions"),
+        # (2, "Data permissions of this department"),
+        # (3, "All data permissions"),
+        # (4, "Custom data permissions")
         re_api = api
         _pk = request.parser_context["kwargs"].get('pk')
-        if _pk: # 判断是否是单例查询
+        if _pk: # Determine whether it is a singleton query
             re_api = re.sub(_pk,'{id}', api)
         role_id_list = request.user.role.values_list('id', flat=True)
         role_permission_list=RoleMenuButtonPermission.objects.filter(
@@ -156,21 +156,21 @@ class DataLevelPermissionsFilter(BaseFilterBackend):
             menu_button__method=method).values(
             'data_range'
         )
-        dataScope_list = []  # 权限范围列表
+        dataScope_list = []  # Permission range list
         for ele in role_permission_list:
-                # 判断用户是否为超级管理员角色/如果拥有[全部数据权限]则返回所有数据
+                # Determine whether the user is a super administrator role/If you have[All data permissions]Return all data
             if ele.get("data_range") == 3:
                 return queryset
             dataScope_list.append(ele.get("data_range"))
         dataScope_list = list(set(dataScope_list))
 
-        # 4. 只为仅本人数据权限时只返回过滤本人数据，并且部门为自己本部门(考虑到用户会变部门，只能看当前用户所在的部门数据)
+        # 4. Only return filtering of personal data when only permissions are allowed，And the department is its own department(Considering that users will change departments，Only view the data of the current user's department)
         if 0 in dataScope_list:
             return queryset.filter(
                 creator=request.user, dept_belong_id=user_dept_id
             )
 
-        # 5. 自定数据权限 获取部门，根据部门过滤
+        # 5. Custom data permissions Obtaining Department，Filter by department
         dept_list = []
         for ele in dataScope_list:
             if ele == 1:
@@ -223,7 +223,7 @@ class CustomDjangoFilterBackend(DjangoFilterBackend):
         for lookup in orm_lookups:
             # if lookup.find(search_term_key) >= 0:
             new_lookup = LOOKUP_SEP.join(lookup.split(LOOKUP_SEP)[:-1]) if len(lookup.split(LOOKUP_SEP)) > 1 else lookup
-            # 修复条件搜索错误 bug
+            # Fix conditional search error bug
             if new_lookup == search_term_key:
                 return lookup
         return None
@@ -339,13 +339,13 @@ class CustomDjangoFilterBackend(DjangoFilterBackend):
                         from django.db import models
                         from timezone_field import TimeZoneField
 
-                        # 不进行 过滤的model 类
+                        # Not to proceed Filteredmodel kind
                         if isinstance(field, (models.JSONField, TimeZoneField, models.FileField)):
                             continue
                         # warn if the field doesn't exist.
                         if field is None:
                             undefined.append(field_name)
-                        # 更新默认字符串搜索为模糊搜索
+                        # Updated default string search to fuzzy search
                         if (
                             isinstance(field, (models.CharField))
                             and filterset_fields == "__all__"

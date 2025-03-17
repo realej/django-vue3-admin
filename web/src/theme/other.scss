@@ -1,7 +1,7 @@
-/* wangeditor 富文本编辑器
+/* wangeditor Rich text editor
 ------------------------------- */
 .editor-container {
-	z-index: 10; // 用于 wangeditor 点击全屏时
+	z-index: 10; // For wangeditor When clicking on full screen
 	.w-e-toolbar {
 		border: 1px solid var(--el-border-color-light, #ebeef5) !important;
 		border-bottom: 1px solid var(--el-border-color-light, #ebeef5) !important;

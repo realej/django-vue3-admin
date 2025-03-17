@@ -1,4 +1,4 @@
-/* 第三方图标字体间距/大小设置
+/* Third-party icon font spacing/Size settings
 ------------------------------- */
 @mixin generalIcon {
 	font-size: 14px !important;
@@ -10,7 +10,7 @@
 	justify-content: center;
 }
 
-/* 文本不换行
+/* Text not to be changed
 ------------------------------- */
 @mixin text-no-wrap() {
 	text-overflow: ellipsis;
@@ -18,7 +18,7 @@
 	white-space: nowrap;
 }
 
-/* 多行文本溢出
+/* Multiple lines of text overflow
   ------------------------------- */
 @mixin text-ellipsis($line: 2) {
 	overflow: hidden;
@@ -29,22 +29,22 @@
 	-webkit-box-orient: vertical;
 }
 
-/* 滚动条(页面未使用) div 中使用：
+/* Scrollbar(Page not used) div Used in：
   ------------------------------- */
 // .test {
 //   @include scrollBar;
 // }
 @mixin scrollBar {
-	// 滚动条凹槽的颜色，还可以设置边框属性
+	// Color of scroll bar groove，You can also set border properties
 	&::-webkit-scrollbar-track-piece {
 		background-color: #f8f8f8;
 	}
-	// 滚动条的宽度
+	// The width of the scroll bar
 	&::-webkit-scrollbar {
 		width: 9px;
 		height: 9px;
 	}
-	// 滚动条的设置
+	// Scrollbar settings
 	&::-webkit-scrollbar-thumb {
 		background-color: #dddddd;
 		background-clip: padding-box;

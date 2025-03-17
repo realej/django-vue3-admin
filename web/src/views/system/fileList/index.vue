@@ -22,7 +22,7 @@
       <template #actionbar-left="scope">
         <el-upload :action="getBaseURL() + 'api/system/file/'" :multiple="false"
           :on-success="() => crudExpose.doRefresh()" :drag="false" :show-file-list="false">
-          <el-button type="primary" icon="plus">上传</el-button>
+          <el-button type="primary" icon="plus">Upload</el-button>
         </el-upload>
       </template>
       <template #cell_size="scope">
@@ -48,7 +48,7 @@
         <el-icon v-if="scope.row.file_type === 3" :size="60">
           <Document />
         </el-icon>
-        <div v-if="scope.row.file_type > 3">未知类型</div>
+        <div v-if="scope.row.file_type > 3">Unknown type</div>
       </template>
     </fs-crud>
     <div class="preview" :class="{ show: openPreview }">
@@ -80,15 +80,15 @@ const openAddHandle = async () => {
   fileSelectorRef.value.selectVisiable = true;
   await nextTick();
 };
-// crud组件的ref
+// crudComponentref
 const crudRef = ref();
-// crud 配置的ref
+// crud Configuredref
 const crudBinding = ref();
-// 暴露的方法
+// Methods of exposure
 const { crudExpose } = useExpose({ crudRef, crudBinding });
-// 你的crud配置
+// yourcrudConfiguration
 const { crudOptions } = createCrudOptions({ crudExpose, context: { openAddHandle } });
-// 初始化crud配置
+// initializationcrudConfiguration
 const { resetCrudOptions } = useCrud({ crudExpose, crudOptions });
 
 const selected = ref<any>([]);
@@ -119,7 +119,7 @@ const onPreviewKeydown = (e: KeyboardEvent) => {
   window.removeEventListener('keydown', onPreviewKeydown);
 };
 
-// 页面打开后获取列表数据
+// Get list data after the page is opened
 onMounted(() => {
   crudExpose.doRefresh();
 });

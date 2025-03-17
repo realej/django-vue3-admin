@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: 猿小天
+@author: Yuan Xiaotian
 @contact: QQ:1638245306
 @Created on: 2021/6/1 001 22:38
-@Remark: 菜单模块
+@Remark: Menu module
 """
 from rest_framework import serializers
 from rest_framework.decorators import action
@@ -18,7 +18,7 @@ from dvadmin.utils.viewset import CustomModelViewSet
 
 class MenuSerializer(CustomModelSerializer):
     """
-    菜单表的简单序列化器
+    Simple serializer for menu tables
     """
     menuPermission = serializers.SerializerMethodField(read_only=True)
     hasChild = serializers.SerializerMethodField()
@@ -45,7 +45,7 @@ class MenuSerializer(CustomModelSerializer):
 
 class MenuCreateSerializer(CustomModelSerializer):
     """
-    菜单表的创建序列化器
+    Menu table creation serializer
     """
     name = serializers.CharField(required=False)
 
@@ -63,7 +63,7 @@ class MenuCreateSerializer(CustomModelSerializer):
 
 class WebRouterSerializer(CustomModelSerializer):
     """
-    前端菜单路由的简单序列化器
+    Simple serializer for front-end menu routing
     """
     path = serializers.CharField(source="web_path")
     title = serializers.CharField(source="name")
@@ -78,12 +78,12 @@ class WebRouterSerializer(CustomModelSerializer):
 
 class MenuViewSet(CustomModelViewSet):
     """
-    菜单管理接口
-    list:查询
-    create:新增
-    update:修改
-    retrieve:单例
-    destroy:删除
+    Menu Management Interface
+    list:Query
+    create:New
+    update:Revise
+    retrieve:Single case
+    destroy:delete
     """
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
@@ -93,7 +93,7 @@ class MenuViewSet(CustomModelViewSet):
     filter_fields = ['parent', 'name', 'status', 'is_link', 'visible', 'cache', 'is_catalog']
 
     def list(self, request):
-        """懒加载"""
+        """Lazy loading"""
         request.query_params._mutable = True
         params = request.query_params
         parent = params.get('parent', None)
@@ -117,7 +117,7 @@ class MenuViewSet(CustomModelViewSet):
 
     @action(methods=['GET'], detail=False, permission_classes=[])
     def web_router(self, request):
-        """用于前端获取当前角色的路由"""
+        """Used to get the route of the current role in the front-end"""
         user = request.user
         if user.is_superuser:
             queryset = self.queryset.filter(status=1).order_by("sort")
@@ -127,11 +127,11 @@ class MenuViewSet(CustomModelViewSet):
             queryset = Menu.objects.filter(id__in=menu_list).order_by("sort")
         serializer = WebRouterSerializer(queryset, many=True, request=request)
         data = serializer.data
-        return SuccessResponse(data=data, total=len(data), msg="获取成功")
+        return SuccessResponse(data=data, total=len(data), msg="Get successful")
 
     @action(methods=['GET'], detail=False, permission_classes=[])
     def get_all_menu(self, request):
-        """用于菜单管理获取所有的菜单"""
+        """Used for menu management to get all menus"""
         user = request.user
         queryset = self.queryset.all()
         if not user.is_superuser:
@@ -140,34 +140,34 @@ class MenuViewSet(CustomModelViewSet):
             queryset = Menu.objects.filter(id__in=menu_list)
         serializer = WebRouterSerializer(queryset, many=True, request=request)
         data = serializer.data
-        return SuccessResponse(data=data, total=len(data), msg="获取成功")
+        return SuccessResponse(data=data, total=len(data), msg="Get successful")
 
     @action(methods=['POST'], detail=False, permission_classes=[])
     def move_up(self, request):
-        """菜单上移"""
+        """Move the menu up"""
         menu_id = request.data.get('menu_id')
         try:
             menu = Menu.objects.get(id=menu_id)
         except Menu.DoesNotExist:
-            return ErrorResponse(msg="菜单不存在")
+            return ErrorResponse(msg="The menu does not exist")
         previous_menu = Menu.objects.filter(sort__lt=menu.sort, parent=menu.parent).order_by('-sort').first()
         if previous_menu:
             previous_menu.sort, menu.sort = menu.sort, previous_menu.sort
             previous_menu.save()
             menu.save()
-        return SuccessResponse(data=[], msg="上移成功")
+        return SuccessResponse(data=[], msg="Move up successfully")
 
     @action(methods=['POST'], detail=False, permission_classes=[])
     def move_down(self, request):
-        """菜单下移"""
+        """Move the menu down"""
         menu_id = request.data['menu_id']
         try:
             menu = Menu.objects.get(id=menu_id)
         except Menu.DoesNotExist:
-            return ErrorResponse(msg="菜单不存在")
+            return ErrorResponse(msg="The menu does not exist")
         next_menu = Menu.objects.filter(sort__gt=menu.sort, parent=menu.parent).order_by('sort').first()
         if next_menu:
             next_menu.sort, menu.sort = menu.sort, next_menu.sort
             next_menu.save()
             menu.save()
-        return SuccessResponse(data=[], msg="下移成功")
+        return SuccessResponse(data=[], msg="Move down successfully")

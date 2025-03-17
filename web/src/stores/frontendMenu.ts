@@ -13,17 +13,17 @@ const viewsModules: any = import.meta.glob('../views/**/*.{vue,tsx}');
 
 
 /**
- * 获取目录下的 .vue、.tsx 全部文件
+ * Get the directory .vue、.tsx All files
  * @method import.meta.glob
- * @link 参考：https://cn.vitejs.dev/guide/features.html#json
+ * @link reference：https://cn.vitejs.dev/guide/features.html#json
  */
 const dynamicViewsModules: Record<string, Function> = Object.assign({}, { ...layouModules }, { ...viewsModules });
 
 /**
- * 后端路由 component 转换函数
- * @param dynamicViewsModules 获取目录下的 .vue、.tsx 全部文件
- * @param component 当前要处理项 component
- * @returns 返回处理成函数后的 component
+ * Backend routing component Conversion function
+ * @param dynamicViewsModules Get the directory .vue、.tsx All files
+ * @param component Items to be processed currently component
+ * @returns Returns the processed function component
  */
 export function dynamicImport(dynamicViewsModules: Record<string, Function>, component: string) {
     const keys = Object.keys(dynamicViewsModules);
@@ -41,18 +41,18 @@ export function dynamicImport(dynamicViewsModules: Record<string, Function>, com
 }
 
 /**
- * @description: 处理后端菜单数据格式
+ * @description: Process backend menu data format
  * @param {Array} menuData
  * @return {*}
  */
 export const handleMenu = (menuData: Array<any>) => {
-    // 框架内路由
+    // In-frame routing
     const frameInRoutes:Array<any> = []
-    // 框架外路由
+    // Out-of-frame routing
     const frameOutRoutes:Array<any> = []
-    // 需要缓存的路由
+    // Routers that need cache
     const cacheList:Array<any> = []
-    // 先处理menu meta数据转换
+    // Process it firstmenu metaData conversion
     const handleMeta = (item: any) => {
         item.path = item.web_path
         item.meta = {
@@ -67,11 +67,11 @@ export const handleMenu = (menuData: Array<any>) => {
         }
         item.component =  dynamicImport(dynamicViewsModules, item.component as string)
         if(item.is_catalog){
-            // 对目录的处理
+            // Processing of directories
             item.component = dynamicImport(dynamicViewsModules, 'layout/routerView/parent')
         }
         if(item.is_link){
-            // 对外链接的处理
+            // Processing of external links
             item.meta.isIframe = !item.is_iframe
             if(item.is_iframe){
                 item.component = dynamicImport(dynamicViewsModules, 'layout/routerView/link')

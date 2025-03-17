@@ -2,7 +2,7 @@ import { toRaw } from 'vue';
 import { DictionaryStore } from '/@/stores/dictionary';
 
 /**
-  * @method 获取指定name字典
+  * @method Get the specifiednamedictionary
   */
 export const dictionary = (name: string,key?:string|number|undefined) => {
   const dict = DictionaryStore()

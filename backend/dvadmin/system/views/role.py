@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: 猿小天
+@author: Yuan Xiaotian
 @contact: QQ:1638245306
 @Created on: 2021/6/3 003 0:30
-@Remark: 角色管理
+@Remark: Role Management
 """
 from rest_framework import serializers
 from rest_framework.decorators import action
@@ -24,7 +24,7 @@ from dvadmin.utils.viewset import CustomModelViewSet
 
 class RoleSerializer(CustomModelSerializer):
     """
-    角色-序列化器
+    Role-Serializer
     """
     users = serializers.SerializerMethodField()
 
@@ -41,13 +41,13 @@ class RoleSerializer(CustomModelSerializer):
 
 class RoleCreateUpdateSerializer(CustomModelSerializer):
     """
-    角色管理 创建/更新时的列化器
+    Role Management create/The serializer at update time
     """
     menu = MenuSerializer(many=True, read_only=True)
     dept = DeptSerializer(many=True, read_only=True)
     permission = MenuButtonSerializer(many=True, read_only=True)
     key = serializers.CharField(max_length=50,
-                                validators=[CustomUniqueValidator(queryset=Role.objects.all(), message="权限字符必须唯一")])
+                                validators=[CustomUniqueValidator(queryset=Role.objects.all(), message="Permission characters must be unique")])
     name = serializers.CharField(max_length=50, validators=[CustomUniqueValidator(queryset=Role.objects.all())])
 
     def validate(self, attrs: dict):
@@ -67,7 +67,7 @@ class RoleCreateUpdateSerializer(CustomModelSerializer):
 
 class MenuPermissionSerializer(CustomModelSerializer):
     """
-    菜单的按钮权限
+    Menu button permissions
     """
     menuPermission = serializers.SerializerMethodField()
 
@@ -88,7 +88,7 @@ class MenuPermissionSerializer(CustomModelSerializer):
 
 class MenuButtonPermissionSerializer(CustomModelSerializer):
     """
-    菜单和按钮权限
+    Menu and button permissions
     """
     isCheck = serializers.SerializerMethodField()
 
@@ -110,12 +110,12 @@ class MenuButtonPermissionSerializer(CustomModelSerializer):
 
 class RoleViewSet(CustomModelViewSet, FastCrudMixin,FieldPermissionMixin):
     """
-    角色管理接口
-    list:查询
-    create:新增
-    update:修改
-    retrieve:单例
-    destroy:删除
+    Role Management Interface
+    list:Query
+    create:New
+    update:Revise
+    retrieve:Single case
+    destroy:delete
     """
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
@@ -126,7 +126,7 @@ class RoleViewSet(CustomModelViewSet, FastCrudMixin,FieldPermissionMixin):
     @action(methods=['PUT'], detail=True, permission_classes=[IsAuthenticated])
     def set_role_users(self, request, pk):
         """
-        设置 角色-用户
+        set up Role-user
         :param request:
         :return:
         """
@@ -135,10 +135,10 @@ class RoleViewSet(CustomModelViewSet, FastCrudMixin,FieldPermissionMixin):
         movedKeys = data.get('movedKeys')
         role = Role.objects.get(pk=pk)
         if direction == "left":
-            # left : 移除用户权限
+            # left : Remove user permissions
             role.users_set.remove(*movedKeys)
         else:
-            # right : 添加用户权限
+            # right : Add user permissions
             role.users_set.add(*movedKeys)
         serializer = RoleSerializer(role)
-        return DetailResponse(data=serializer.data, msg="更新成功")
+        return DetailResponse(data=serializer.data, msg="Update successfully")

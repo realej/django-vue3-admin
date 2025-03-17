@@ -1,7 +1,7 @@
-// 定义内容
+// Define content
 export default {
 	formI18nLabel: {
-		name: '姓名',
+		name: 'Name',
 		email: '用戶歸屬部門',
 		autograph: '登入帳戶名',
 	},

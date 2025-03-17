@@ -1,7 +1,7 @@
 <template>
   <div style="display: inline-block">
     <el-button size="default" type="success" @click="handleImport()">
-      <slot>导入</slot>
+      <slot>Import</slot>
     </el-button>
     <el-dialog :title="props.upload.title" v-model="uploadShow" width="400px" append-to-body>
       <div v-loading="loading">
@@ -19,22 +19,22 @@
         >
           <i class="el-icon-upload"/>
           <div class="el-upload__text">
-            将文件拖到此处，或
-            <em>点击上传</em>
+            Drag the file here，or
+            <em>Click to upload</em>
           </div>
           <template #tip>
-          <div  class="el-upload__tip" style="color:red">提示：仅允许导入“xls”或“xlsx”格式文件！</div>
+          <div  class="el-upload__tip" style="color:red">hint：Only imports are allowed“xls”or“xlsx”Format file！</div>
           </template>
         </el-upload>
         <div>
-          <el-button type="warning" style="font-size:14px;margin-top: 20px" @click="importTemplate">下载导入模板</el-button>
-          <el-button type="warning" style="font-size:14px;margin-top: 20px" @click="updateTemplate">批量更新模板</el-button>
+          <el-button type="warning" style="font-size:14px;margin-top: 20px" @click="importTemplate">Download the import template</el-button>
+          <el-button type="warning" style="font-size:14px;margin-top: 20px" @click="updateTemplate">Batch update templates</el-button>
         </div>
       </div>
       <template #footer>
       <div  class="dialog-footer">
-        <el-button type="primary" :disabled="loading" @click="submitFileForm">确 定</el-button>
-        <el-button :disabled="loading" @click="uploadShow = false">取 消</el-button>
+        <el-button type="primary" :disabled="loading" @click="submitFileForm">Confirm Certainly</el-button>
+        <el-button :disabled="loading" @click="uploadShow = false">Pick remove</el-button>
       </div>
       </template>
     </el-dialog>
@@ -55,22 +55,22 @@ let props = defineProps({
     type: Object,
     default () {
       return {
-        // 是否显示弹出层
+        // Whether to display the pop-up layer
         open: true,
-        // 弹出层标题
+        // Pop-up layer title
         title: '',
-        // 是否禁用上传
+        // Whether to disable upload
         isUploading: false,
-        // 是否更新已经存在的用户数据
+        // Whether to update existing user data
         updateSupport: 0,
-        // 设置上传的请求头部
+        // Set up the uploaded request header
         headers: { Authorization: 'JWT ' + Session.get('token') },
-        // 上传的地址
+        // Uploaded address
         url: getBaseURL() + 'api/system/file/'
       }
     }
   },
-  api: { // 导入接口地址
+  api: { // Import interface address
     type: String,
     default () {
       return undefined
@@ -82,12 +82,12 @@ let loading = ref(false)
 const uploadRef = ref()
 const uploadShow = ref(false)
 const isUploading = ref(false)
-/** 导入按钮操作 */
+/** Import button operation */
 const handleImport = function () {
   uploadShow.value = true
 }
 
-/** 下载模板操作 */
+/** Download template operation */
 const importTemplate=function () {
   downloadFile({
     url: props.api + 'import_data/',
@@ -96,7 +96,7 @@ const importTemplate=function () {
   })
 }
 /***
- * 批量更新模板
+ * Batch update templates
  */
 const updateTemplate=function () {
   downloadFile({
@@ -105,16 +105,16 @@ const updateTemplate=function () {
     method: 'get'
   })
 }
-// 文件上传中处理
+// Processing during file upload
 const handleFileUploadProgress=function (event:any, file:any, fileList:any) {
   isUploading.value = true
 }
-// 文件上传成功处理
+// File upload successfully processed
 const handleFileSuccess=function (response:any, file:any, fileList:any) {
   isUploading.value = false
   loading.value = true
   uploadRef.value.clearFiles()
-  // 是否更新已经存在的用户数据
+  // Whether to update existing user data
   return request({
     url: props.api + 'import_data/',
     method: 'post',
@@ -123,7 +123,7 @@ const handleFileSuccess=function (response:any, file:any, fileList:any) {
     }
   }).then((response:any) => {
     loading.value = false
-    ElMessageBox.alert('导入成功', '导入完成', {
+    ElMessageBox.alert('Import successfully', 'Importing is complete', {
       confirmButtonText: 'OK',
       callback: (action: Action) => {
         refreshView()
@@ -134,7 +134,7 @@ const handleFileSuccess=function (response:any, file:any, fileList:any) {
   })
 
 }
-// 提交上传文件
+// Submit upload file
 const submitFileForm=function () {
   uploadRef.value.submit()
 }

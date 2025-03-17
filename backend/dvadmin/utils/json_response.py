@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: 猿小天
+@author: Yuan Xiaotian
 @contact: QQ:1638245306
 @Created on: 2021/6/2 002 14:43
-@Remark: 自定义的JsonResonpse文件
+@Remark: CustomJsonResonpsedocument
 """
 
 from rest_framework.response import Response
@@ -12,8 +12,8 @@ from rest_framework.response import Response
 
 class SuccessResponse(Response):
     """
-    标准响应成功的返回, SuccessResponse(data)或者SuccessResponse(data=data)
-    (1)默认code返回2000, 不支持指定其他返回码
+    Returns with successful standard response, SuccessResponse(data)orSuccessResponse(data=data)
+    (1)defaultcodereturn2000, Specifying other return codes is not supported
     """
 
     def __init__(self, data=None, msg='success', status=None, template_name=None, headers=None, exception=False,
@@ -31,8 +31,8 @@ class SuccessResponse(Response):
 
 class DetailResponse(Response):
     """
-    不包含分页信息的接口返回,主要用于单条数据查询
-    (1)默认code返回2000, 不支持指定其他返回码
+    Returns to interfaces that do not contain paging information,Mainly used for single data query
+    (1)defaultcodereturn2000, Specifying other return codes is not supported
     """
 
     def __init__(self, data=None, msg='success', status=None, template_name=None, headers=None, exception=False,
@@ -47,8 +47,8 @@ class DetailResponse(Response):
 
 class ErrorResponse(Response):
     """
-    标准响应错误的返回,ErrorResponse(msg='xxx')
-    (1)默认错误码返回400, 也可以指定其他返回码:ErrorResponse(code=xxx)
+    Return of standard response error,ErrorResponse(msg='xxx')
+    (1)The default error code returns400, You can also specify other return codes:ErrorResponse(code=xxx)
     """
 
     def __init__(self, data=None, msg='error', code=400, status=None, template_name=None, headers=None,

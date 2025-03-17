@@ -32,7 +32,7 @@
 <script setup lang="ts" name="layoutTagsViewContextmenu">
 import { computed, reactive, onMounted, onUnmounted, watch } from 'vue';
 
-// 定义父组件传过来的值
+// Define the value passed by the parent component
 const props = defineProps({
 	dropdown: {
 		type: Object,
@@ -45,10 +45,10 @@ const props = defineProps({
 	},
 });
 
-// 定义子组件向父组件传值/事件
+// Define child components to pass values ​​to parent components/event
 const emit = defineEmits(['currentContextmenuClick']);
 
-// 定义变量内容
+// Define variable content
 const state = reactive({
 	isShow: false,
 	dropdownList: [
@@ -67,9 +67,9 @@ const state = reactive({
 	arrowLeft: 10,
 });
 
-// 父级传过来的坐标 x,y 值
+// The coordinates passed by the parent x,y value
 const dropdowns = computed(() => {
-	// 117 为 `Dropdown 下拉菜单` 的宽度
+	// 117 for `Dropdown Pull-down menu` Width of
 	if (props.dropdown.x + 117 > document.documentElement.clientWidth) {
 		return {
 			x: document.documentElement.clientWidth - 117 - 5,
@@ -79,11 +79,11 @@ const dropdowns = computed(() => {
 		return props.dropdown;
 	}
 });
-// 当前项菜单点击
+// Click the current item menu
 const onCurrentContextmenuClick = (contextMenuClickId: number) => {
 	emit('currentContextmenuClick', Object.assign({}, { contextMenuClickId }, state.item));
 };
-// 打开右键菜单：判断是否固定，固定则不显示关闭按钮
+// Open the right-click menu：Determine whether it is fixed，If the close button is fixed, it will not be displayed.
 const openContextmenu = (item: RouteItem) => {
 	state.item = item;
 	item.meta?.isAffix ? (state.dropdownList[1].affix = true) : (state.dropdownList[1].affix = false);
@@ -92,19 +92,19 @@ const openContextmenu = (item: RouteItem) => {
 		state.isShow = true;
 	}, 10);
 };
-// 关闭右键菜单
+// Close the right-click menu
 const closeContextmenu = () => {
 	state.isShow = false;
 };
-// 监听页面监听进行右键菜单的关闭
+// Listen to the monitor page and close the right-click menu
 onMounted(() => {
 	document.body.addEventListener('click', closeContextmenu);
 });
-// 页面卸载时，移除右键菜单监听事件
+// When the page is uninstalled，Remove the right-click menu listening event
 onUnmounted(() => {
 	document.body.removeEventListener('click', closeContextmenu);
 });
-// 监听下拉菜单位置
+// Listen to drop-down menu location
 watch(
 	() => props.dropdown,
 	({ x }) => {
@@ -116,7 +116,7 @@ watch(
 	}
 );
 
-// 暴露变量
+// Expose variables
 defineExpose({
 	openContextmenu,
 });

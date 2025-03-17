@@ -31,7 +31,7 @@ const isShow = ref<boolean>(false);
 const itemRef = ref<HTMLDivElement>();
 const data = ref<any>(null);
 const delFileHandle = () => props.api.DelObj(props.fileData.id).then(() => {
-  successNotification('删除成功');
+  successNotification('Delete successfully');
   emit('onDelFile');
 });
 watch(props.fileData, (nVal) => data.value = nVal, { immediate: true, deep: true });

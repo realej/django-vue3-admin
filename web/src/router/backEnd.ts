@@ -23,39 +23,39 @@ const layouModules: any = import.meta.glob('../layout/routerView/*.{vue,tsx}');
 const viewsModules: any = import.meta.glob('../views/**/*.{vue,tsx}');
 
 /**
- * 获取目录下的 .vue、.tsx 全部文件
+ * Get the directory .vue、.tsx All files
  * @method import.meta.glob
- * @link 参考：https://cn.vitejs.dev/guide/features.html#json
+ * @link reference：https://cn.vitejs.dev/guide/features.html#json
  */
 const dynamicViewsModules: Record<string, Function> = Object.assign({}, { ...layouModules }, { ...viewsModules });
 
 /**
- * 后端控制路由：初始化方法，防止刷新时路由丢失
- * @method NextLoading 界面 loading 动画开始执行
- * @method useUserInfo().setUserInfos() 触发初始化用户信息 pinia
- * @method useRequestOldRoutes().setRequestOldRoutes() 存储接口原始路由（未处理component），根据需求选择使用
- * @method setAddRoute 添加动态路由
- * @method setFilterMenuAndCacheTagsViewRoutes 设置路由到 vuex routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
+ * Backend control routing：Initialization method，Prevent route loss during refresh
+ * @method NextLoading interface loading The animation starts executing
+ * @method useUserInfo().setUserInfos() Trigger initialization of user information pinia
+ * @method useRequestOldRoutes().setRequestOldRoutes() Storage interface original routing（Not processedcomponent），Choose to use according to your needs
+ * @method setAddRoute Add dynamic routing
+ * @method setFilterMenuAndCacheTagsViewRoutes Set up routing to vuex routesList middle（Processed into multi-level nested routing）and cache one-dimensional arrays processed by multi-level nested arrays
  */
 export async function initBackEndControlRoutes() {
-	// 界面 loading 动画开始执行
+	// interface loading The animation starts executing
 	if (window.nextLoading === undefined) NextLoading.start();
-	// 无 token 停止执行下一步
+	// none token Stop executing the next step
 	if (!Session.get('token')) return false;
-	// 触发初始化用户信息 pinia
+	// Trigger initialization of user information pinia
 	// https://gitee.com/lyt-top/vue-next-admin/issues/I5F1HP
 	await useUserInfo().getApiUserInfo();
-	// 获取路由菜单数据
+	// Get routing menu data
 	const res = await getBackEndControlRoutes();
-	// 无登录权限时，添加判断
+	// When there is no login permission，Add judgment
 	// https://gitee.com/lyt-top/vue-next-admin/issues/I64HVO
 	// if (res.data.length <= 0) return Promise.resolve(true);
-	// 处理路由（component），替换 dynamicRoutes（/@/router/route）第一个顶级 children 的路由
+	// Processing routing（component），replace dynamicRoutes（/@/router/route）The first top level children Routing
 	const {frameIn,frameOut} = handleMenu(res.data)
 	dynamicRoutes[0].children = await backEndComponent(frameIn);
-	// 添加动态路由
+	// Add dynamic routing
 	await setAddRoute();
-	// 设置路由到 vuex routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
+	// Set up routing to vuex routesList middle（Processed into multi-level nested routing）and cache one-dimensional arrays processed by multi-level nested arrays
 	await setFilterMenuAndCacheTagsViewRoutes();
 }
 
@@ -78,9 +78,9 @@ export async function setRouters(){
 }
 
 /**
- * 设置路由到 vuex routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
- * @description 用于左侧菜单、横向菜单的显示
- * @description 用于 tagsView、菜单搜索中：未过滤隐藏的(isHide)
+ * Set up routing to vuex routesList middle（Processed into multi-level nested routing）and cache one-dimensional arrays processed by multi-level nested arrays
+ * @description For left-hand menu、Display of horizontal menu
+ * @description For tagsView、Menu search：Unfiltered hidden(isHide)
  */
 export function setFilterMenuAndCacheTagsViewRoutes() {
 	const storesRoutesList = useRoutesList(pinia);
@@ -89,8 +89,8 @@ export function setFilterMenuAndCacheTagsViewRoutes() {
 }
 
 /**
- * 缓存多级嵌套数组处理后的一维数组
- * @description 用于 tagsView、菜单搜索中：未过滤隐藏的(isHide)
+ * Caches one-dimensional arrays processed by multi-level nested arrays
+ * @description For tagsView、Menu search：Unfiltered hidden(isHide)
  */
 export function setCacheTagsViewRoutes() {
 	const storesTagsView = useTagsViewRoutes(pinia);
@@ -98,23 +98,23 @@ export function setCacheTagsViewRoutes() {
 }
 
 /**
- * 处理路由格式及添加捕获所有路由或 404 Not found 路由
- * @description 替换 dynamicRoutes（/@/router/route）第一个顶级 children 的路由
- * @returns 返回替换后的路由数组
+ * Process routing formats and add capture of all routes or 404 Not found routing
+ * @description replace dynamicRoutes（/@/router/route）The first top level children Routing
+ * @returns Returns the replaced route array
  */
 export function setFilterRouteEnd() {
 	let filterRouteEnd: any = formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes));
-	// notFoundAndNoPower 防止 404、401 不在 layout 布局中，不设置的话，404、401 界面将全屏显示
-	// 关联问题 No match found for location with path 'xxx'
+	// notFoundAndNoPower prevent 404、401 Not here layout In layout，If not set，404、401 The interface will be displayed in full screen
+	// Related issues No match found for location with path 'xxx'
 	filterRouteEnd[0].children = [...filterRouteEnd[0].children, ...notFoundAndNoPower];
 	return filterRouteEnd;
 }
 
 /**
- * 添加动态路由
+ * Add dynamic routing
  * @method router.addRoute
- * @description 此处循环为 dynamicRoutes（/@/router/route）第一个顶级 children 的路由一维数组，非多级嵌套
- * @link 参考：https://next.router.vuejs.org/zh/api/#addroute
+ * @description Here the cycle is dynamicRoutes（/@/router/route）The first top level children One-dimensional array of routes，Non-multi-level nesting
+ * @link reference：https://next.router.vuejs.org/zh/api/#addroute
  */
 export async function setAddRoute() {
 	await setFilterRouteEnd().forEach((route: RouteRecordRaw) => {
@@ -123,46 +123,46 @@ export async function setAddRoute() {
 }
 
 /**
- * 请求后端路由菜单接口
- * @description isRequestRoutes 为 true，则开启后端控制路由
- * @returns 返回后端路由菜单数据
+ * Request the backend routing menu interface
+ * @description isRequestRoutes for true，Turn on the backend control routing
+ * @returns Return backend routing menu data
  */
 export function getBackEndControlRoutes() {
-	//获取所有的按钮权限
+	//Get all button permissions
 	BtnPermissionStore().getBtnPermissionStore();
-	// 获取系统配置
+	// Get system configuration
 	SystemConfigStore().getSystemConfigs()
-	// 获取所有部门信息
+	// Get all department information
 	useDeptInfoStore().requestDeptInfo()
-	// 获取字典信息
+	// Get dictionary information
 	DictionaryStore().getSystemDictionarys()
 	return menuApi.getSystemMenu();
 }
 
 /**
- * 重新请求后端路由菜单接口
- * @description 用于菜单管理界面刷新菜单（未进行测试）
- * @description 路径：/src/views/system/menu/component/addMenu.vue
+ * Request the backend routing menu interface
+ * @description Used to refresh menus using menu management interface（No tests were performed）
+ * @description path：/src/views/system/menu/component/addMenu.vue
  */
 export function setBackEndControlRefreshRoutes() {
 	getBackEndControlRoutes();
 }
 
 /**
- * 后端路由 component 转换
- * @param routes 后端返回的路由表数组
- * @returns 返回处理成函数后的 component
+ * Backend routing component Convert
+ * @param routes Array of routing tables returned by the backend
+ * @returns Returns the processed function component
  */
 export function backEndComponent(routes: any) {
 	if (!routes) return;
 	return routes.map((item: any) => {
 		if (item.component) item.component = dynamicImport(dynamicViewsModules, item.component as string);
 		if(item.is_catalog){
-			// 对目录的处理
+			// Processing of directories
 			item.component = dynamicImport(dynamicViewsModules, 'layout/routerView/parent')
 		}
 		if(item.is_link){
-			// 对外链接的处理
+			// Processing of external links
 			if(item.is_iframe){
 				item.component = dynamicImport(dynamicViewsModules, 'layout/routerView/iframes')
 			}else {
@@ -189,10 +189,10 @@ export function backEndComponent(routes: any) {
 }
 
 /**
- * 后端路由 component 转换函数
- * @param dynamicViewsModules 获取目录下的 .vue、.tsx 全部文件
- * @param component 当前要处理项 component
- * @returns 返回处理成函数后的 component
+ * Backend routing component Conversion function
+ * @param dynamicViewsModules Get the directory .vue、.tsx All files
+ * @param component Items to be processed currently component
+ * @returns Returns the processed function component
  */
 export function dynamicImport(dynamicViewsModules: Record<string, Function>, component: string) {
 	const keys = Object.keys(dynamicViewsModules);

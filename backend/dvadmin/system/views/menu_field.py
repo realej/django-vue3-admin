@@ -13,7 +13,7 @@ from dvadmin.utils.json_response import DetailResponse, ErrorResponse, SuccessRe
 
 class MenuFieldSerializer(CustomModelSerializer):
     """
-    列权限序列化器
+    Column permissions serializer
     """
 
     class Meta:
@@ -24,7 +24,7 @@ class MenuFieldSerializer(CustomModelSerializer):
 
 class MenuFieldViewSet(CustomModelViewSet):
     """
-    列权限视图集
+    Column permissions view set
     """
     queryset = MenuField.objects.order_by('-model')
     serializer_class = MenuFieldSerializer
@@ -35,7 +35,7 @@ class MenuFieldViewSet(CustomModelViewSet):
             return SuccessResponse([])
         queryset = self.filter_queryset(self.get_queryset().filter(menu=menu))
         serializer = self.get_serializer(queryset, many=True, request=request)
-        return SuccessResponse(data=serializer.data, msg="获取成功")
+        return SuccessResponse(data=serializer.data, msg="Get successful")
 
     def create(self, request, *args, **kwargs):
         payload = request.data
@@ -43,16 +43,16 @@ class MenuFieldViewSet(CustomModelViewSet):
             if payload.get('model') == model.__name__:
                 break
         else:
-            return ErrorResponse(msg='模型表不存在')
+            return ErrorResponse(msg='The model table does not exist')
 
         if MenuField.objects.filter(menu=payload.get('menu'),model=model.__name__, field_name=payload.get('field_name')).exists():
-            return ErrorResponse(msg='‘%s’ 字段权限已有，不可重复创建' % payload.get('title'))
+            return ErrorResponse(msg='‘%s’ Field permissions are already available，Cannot be created repeatedly' % payload.get('title'))
 
         return super().create(request, *args, **kwargs)
 
     @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
     def get_models(self, request):
-        """获取所有项目app下的model"""
+        """Get all itemsappNextmodel"""
         res = []
         for model in get_custom_app_models():
             res.append({
@@ -64,11 +64,11 @@ class MenuFieldViewSet(CustomModelViewSet):
 
     @action(methods=['POST'], detail=False, permission_classes=[IsAuthenticated])
     def auto_match_fields(self, request):
-        """自动匹配已有的字段"""
+        """Automatically match existing fields"""
         menu_id = request.data.get('menu')
         model_name = request.data.get('model')
         if not menu_id or not model_name:
-            return ErrorResponse( msg='参数错误')
+            return ErrorResponse( msg='Error parameters')
         for model in get_custom_app_models():
             if model['model'] != model_name:
                 continue
@@ -86,4 +86,4 @@ class MenuFieldViewSet(CustomModelViewSet):
                 serializer = self.get_serializer(data=data, request=request)
                 serializer.is_valid(raise_exception=True)
                 serializer.save()
-        return SuccessResponse(msg='匹配成功')
+        return SuccessResponse(msg='Match successfully')

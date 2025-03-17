@@ -1,6 +1,6 @@
 @import './index.scss';
 
-/* 页面宽度小于1200px
+/* Page width is less than1200px
 ------------------------------- */
 @media screen and (max-width: $lg) and (min-width: $xs) {
 	.login-container {
@@ -21,7 +21,7 @@
 	}
 }
 
-/* 页面宽度小于576px
+/* Page width is less than576px
 ------------------------------- */
 @media screen and (max-width: $xs) {
 	.login-container {
@@ -57,7 +57,7 @@
 	}
 }
 
-/* 页面宽度小于375px
+/* Page width is less than375px
 ------------------------------- */
 @media screen and (max-width: $us) {
 	.login-container {

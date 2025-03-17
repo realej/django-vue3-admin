@@ -10,7 +10,7 @@ export function GetUserInfo(query: PageQuery) {
 }
 
 /**
- * 更新用户信息
+ * Update user information
  * @param data
  */
 export function updateUserInfo(data: AddReq) {
@@ -22,7 +22,7 @@ export function updateUserInfo(data: AddReq) {
 }
 
 /**
- * 获取自己接收的消息
+ * Get the message you received
  * @param query
  * @returns {*}
  * @constructor
@@ -36,7 +36,7 @@ export function GetSelfReceive(query: PageQuery) {
 }
 
 /***
- * 修改密码
+ * Modify password
  * @param data
  */
 export function UpdatePassword(data: EditReq) {
@@ -48,7 +48,7 @@ export function UpdatePassword(data: EditReq) {
 }
 
 /***
- * 上传头像
+ * Upload avatar
  * @param data
  */
 export function uploadAvatar(data: AddReq) {

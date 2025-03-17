@@ -1,150 +1,150 @@
 import { defineStore } from 'pinia';
 
 /**
- * 布局配置
- * 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I567R1，感谢@lanbao123
- * 2020.05.28 by lyt 优化。开发时配置不生效问题
- * 修改配置时：
- * 1、需要每次都清理 `window.localStorage` 浏览器永久缓存
- * 2、或者点击布局配置最底部 `一键恢复默认` 按钮即可看到效果
+ * Layout configuration
+ * repair：https://gitee.com/lyt-top/vue-next-admin/issues/I567R1，grateful@lanbao123
+ * 2020.05.28 by lyt optimization。Problem of not taking effect during development
+ * When modifying configuration：
+ * 1、Need to be cleaned every time `window.localStorage` Browser permanent cache
+ * 2、Or click on the bottom of the layout configuration `One-click to restore the default` The button will see the effect
  */
 export const useThemeConfig = defineStore('themeConfig', {
 	state: (): ThemeConfigState => ({
 		themeConfig: {
-			// 是否开启布局配置抽屉
+			// Whether to open the layout configuration drawer
 			isDrawer: false,
 
 			/**
-			 * 全局主题
+			 * Global Topic
 			 */
-			// 默认 primary 主题颜色
+			// default primary Theme color
 			primary: '#409eff',
-			// 是否开启深色模式
+			// Whether to enable dark mode
 			isIsDark: false,
 
 			/**
-			 * 顶栏设置
+			 * Top bar settings
 			 */
-			// 默认顶栏导航背景颜色
+			// Default top bar navigation background color
 			topBar: '#ffffff',
-			// 默认顶栏导航字体颜色
+			// Default top bar navigation font color
 			topBarColor: '#606266',
-			// 是否开启顶栏背景颜色渐变
+			// Whether to enable the color gradient of the top bar background
 			isTopBarColorGradual: false,
 
 			/**
-			 * 菜单设置
+			 * Menu Settings
 			 */
-			// 默认菜单导航背景颜色
+			// Default menu navigation background color
 			menuBar: '#334054',
-			// 默认菜单导航字体颜色
+			// Default menu navigation font color
 			menuBarColor: '#eaeaea',
-			// 默认菜单高亮背景色
+			// Default menu highlight background color
 			menuBarActiveColor: 'rgba(0, 0, 0, 0.2)',
-			// 是否开启菜单背景颜色渐变
+			// Whether to enable the menu background color gradient
 			isMenuBarColorGradual: false,
 
 			/**
-			 * 分栏设置
+			 * Column settings
 			 */
-			// 默认分栏菜单背景颜色
+			// Default column menu background color
 			columnsMenuBar: '#334054',
-			// 默认分栏菜单字体颜色
+			// Default column menu font color
 			columnsMenuBarColor: '#e6e6e6',
-			// 是否开启分栏菜单背景颜色渐变
+			// Whether to enable the background color gradient of the column menu
 			isColumnsMenuBarColorGradual: false,
-			// 是否开启分栏菜单鼠标悬停预加载(预览菜单)
+			// Whether to enable the column menu mouse hover preload(Preview menu)
 			isColumnsMenuHoverPreload: false,
 
 			/**
-			 * 界面设置
+			 * Interface settings
 			 */
-			// 是否开启菜单水平折叠效果
+			// Whether to enable the horizontal folding effect of the menu
 			isCollapse: false,
-			// 是否开启菜单手风琴效果
+			// Whether to turn on the menu accordion effect
 			isUniqueOpened: true,
-			// 是否开启固定 Header
+			// Whether to enable fixed Header
 			isFixedHeader: false,
-			// 初始化变量，用于更新菜单 el-scrollbar 的高度，请勿删除
+			// Initialize variables，Used to update menus el-scrollbar The height of，Please do not delete
 			isFixedHeaderChange: false,
-			// 是否开启经典布局分割菜单（仅经典布局生效）
+			// Whether to enable the classic layout split menu（Only classic layouts take effect）
 			isClassicSplitMenu: false,
-			// 是否开启自动锁屏
+			// Whether to enable the automatic lock screen
 			isLockScreen: false,
-			// 开启自动锁屏倒计时(s/秒)
+			// Turn on the automatic lock screen countdown(s/Second)
 			lockScreenTime: 30,
 
 			/**
-			 * 界面显示
+			 * Interface display
 			 */
-			// 是否开启侧边栏 Logo
+			// Whether to open the sidebar Logo
 			isShowLogo: true,
-			// 初始化变量，用于 el-scrollbar 的高度更新，请勿删除
+			// Initialize variables，For el-scrollbar Highly updated，Please do not delete
 			isShowLogoChange: false,
-			// 是否开启 Breadcrumb，强制经典、横向布局不显示
+			// Whether to enable Breadcrumb，Forced Classic、Horizontal layout not displayed
 			isBreadcrumb: true,
-			// 是否开启 Tagsview
+			// Whether to enable Tagsview
 			isTagsview: true,
-			// 是否开启 Breadcrumb 图标
+			// Whether to enable Breadcrumb icon
 			isBreadcrumbIcon: true,
-			// 是否开启 Tagsview 图标
+			// Whether to enable Tagsview icon
 			isTagsviewIcon: true,
-			// 是否开启 TagsView 缓存
+			// Whether to enable TagsView cache
 			isCacheTagsView: true,
-			// 是否开启 TagsView 拖拽
+			// Whether to enable TagsView Drag and drag
 			isSortableTagsView: true,
-			// 是否开启 TagsView 共用
+			// Whether to enable TagsView Shared
 			isShareTagsView: false,
-			// 是否开启 Footer 底部版权信息
+			// Whether to enable Footer Bottom copyright information
 			isFooter: true,
-			// 是否开启灰色模式
+			// Whether to enable gray mode
 			isGrayscale: false,
-			// 是否开启色弱模式
+			// Whether to enable the color weak mode
 			isInvert: false,
-			// 是否开启水印
+			// Whether to turn on the watermark
 			isWartermark: false,
-			// 水印文案
+			// Watermark copy
 			wartermarkText: '',
 
 			/**
-			 * 其它设置
+			 * Other settings
 			 */
-			// Tagsview 风格：可选值"<tags-style-one|tags-style-four|tags-style-five>"，默认 tags-style-five
-			// 定义的值与 `/src/layout/navBars/tagsView/tagsView.vue` 中的 class 同名
+			// Tagsview style：Optional value"<tags-style-one|tags-style-four|tags-style-five>"，default tags-style-five
+			// The value defined and `/src/layout/navBars/tagsView/tagsView.vue` In-house class The same name
 			tagsStyle: 'tags-style-five',
-			// 主页面切换动画：可选值"<slide-right|slide-left|opacitys>"，默认 slide-right
+			// Home page switching animation：Optional value"<slide-right|slide-left|opacitys>"，default slide-right
 			animation: 'slide-right',
-			// 分栏高亮风格：可选值"<columns-round|columns-card>"，默认 columns-round
+			// Column highlight style：Optional value"<columns-round|columns-card>"，default columns-round
 			columnsAsideStyle: 'columns-round',
-			// 分栏布局风格：可选值"<columns-horizontal|columns-vertical>"，默认 columns-horizontal
+			// Column layout style：Optional value"<columns-horizontal|columns-vertical>"，default columns-horizontal
 			columnsAsideLayout: 'columns-vertical',
 
 			/**
-			 * 布局切换
-			 * 注意：为了演示，切换布局时，颜色会被还原成默认，代码位置：/@/layout/navBars/breadcrumb/setings.vue
-			 * 中的 `initSetLayoutChange(设置布局切换，重置主题样式)` 方法
+			 * Layout Switch
+			 * Notice：For demonstration，When switching layout，The color will be restored to default，Code location：/@/layout/navBars/breadcrumb/setings.vue
+			 * In-house `initSetLayoutChange(Set layout switching，Reset theme style)` method
 			 */
-			// 布局切换：可选值"<defaults|classic|transverse|columns>"，默认 defaults
+			// Layout Switch：Optional value"<defaults|classic|transverse|columns>"，default defaults
 			layout: 'defaults',
 
 			/**
-			 * 后端控制路由
+			 * Backend control routing
 			 */
-			// 是否开启后端控制路由
+			// Whether to enable backend control routing
 			isRequestRoutes: true,
 
 			/**
-			 * 全局网站标题 / 副标题
+			 * Global website title / subtitle
 			 */
-			// 网站主标题（菜单导航、浏览器当前网页标题）
+			// Website main title（Menu Navigation、Browser's current web page title）
 			globalTitle: 'DVAdmin',
-			// 网站副标题（登录页顶部文字）
+			// Website subtitle（Text at the top of the login page）
 			globalViceTitle: 'DVAdmin',
-			// 网站副标题（登录页顶部文字）
-			globalViceTitleMsg: '企业级快速开发平台',
-			// 默认初始语言，可选值"<zh-cn|en|zh-tw>"，默认 zh-cn
+			// Website subtitle（Text at the top of the login page）
+			globalViceTitleMsg: 'Enterprise-level rapid development platform',
+			// Default initial language，Optional value"<zh-cn|en|zh-tw>"，default zh-cn
 			globalI18n: 'zh-cn',
-			// 默认全局组件大小，可选值"<large|'default'|small>"，默认 'large'
+			// Default global component size，Optional value"<large|'default'|small>"，default 'large'
 			globalComponentSize: 'default',
 		},
 	}),

@@ -9,7 +9,7 @@ interface CreateCrudOptionsTypes {
     crudOptions: CrudOptions;
 }
 
-//此处为crudOptions配置
+//Here iscrudOptionsConfiguration
 export const createCrudOptions = function ({ crudExpose }: { crudExpose: CrudExpose; }): CreateCrudOptionsTypes {
     const pageRequest = async (query: any) => {
         return await api.GetList(query);
@@ -25,7 +25,7 @@ export const createCrudOptions = function ({ crudExpose }: { crudExpose: CrudExp
         return await api.AddObj(form);
     };
 
-    //权限判定
+    //Permission determination
 
     // @ts-ignore
     // @ts-ignore
@@ -55,7 +55,7 @@ export const createCrudOptions = function ({ crudExpose }: { crudExpose: CrudExp
                 }
             },
             rowHandle: {
-                //固定右侧
+                //Fix the right side
                 fixed: 'right',
                 width: 120,
                 buttons: {
@@ -70,7 +70,7 @@ export const createCrudOptions = function ({ crudExpose }: { crudExpose: CrudExp
                     },
                     download: {
                         show: compute(ctx => ctx.row.task_status === 2),
-                        text: '下载文件',
+                        text: 'Download the file',
                         type: 'warning',
                         click: (ctx) => window.open(ctx.row.url, '_blank')
                     }
@@ -86,17 +86,17 @@ export const createCrudOptions = function ({ crudExpose }: { crudExpose: CrudExp
             },
             columns: {
                 _index: {
-                    title: '序号',
+                    title: 'Serial number',
                     form: { show: false },
                     column: {
                         type: 'index',
                         align: 'center',
                         width: '70px',
-                        columnSetDisabled: true, //禁止在列设置中选择
+                        columnSetDisabled: true, //Disable selection in column settings
                     },
                 },
                 task_name: {
-                    title: '任务名',
+                    title: 'Task name',
                     type: 'text',
                     column: {
                         minWidth: 160,
@@ -107,7 +107,7 @@ export const createCrudOptions = function ({ crudExpose }: { crudExpose: CrudExp
                     }
                 },
                 file_name: {
-                    title: '文件名',
+                    title: 'file name',
                     type: 'text',
                     column: {
                         minWidth: 160,
@@ -118,21 +118,21 @@ export const createCrudOptions = function ({ crudExpose }: { crudExpose: CrudExp
                     }
                 },
                 size: {
-                    title: '文件大小(b)',
+                    title: 'File size(b)',
                     type: 'number',
                     column: {
                         width: 100
                     }
                 },
                 task_status: {
-                    title: '任务状态',
+                    title: 'Task status',
                     type: 'dict-select',
                     dict: dict({
                         data: [
-                            { label: '任务已创建', value: 0 },
-                            { label: '任务进行中', value: 1 },
-                            { label: '任务完成', value: 2 },
-                            { label: '任务失败', value: 3 },
+                            { label: 'Task created', value: 0 },
+                            { label: 'The task is in progress', value: 1 },
+                            { label: 'Task completion', value: 2 },
+                            { label: 'Mission failed', value: 3 },
                         ]
                     }),
                     column: {
@@ -143,13 +143,13 @@ export const createCrudOptions = function ({ crudExpose }: { crudExpose: CrudExp
                     }
                 },
                 create_datetime: {
-                    title: '创建时间',
+                    title: 'Creation time',
                     column: {
                         width: 160
                     }
                 },
                 update_datetime: {
-                    title: '创建时间',
+                    title: 'Creation time',
                     column: {
                         width: 160
                     }

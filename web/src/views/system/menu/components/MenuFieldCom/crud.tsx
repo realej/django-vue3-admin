@@ -28,26 +28,26 @@ export const createCrudOptions = function ({ crudExpose, props,modelDialog,selec
 		form.menu = selectOptions.value.id;
 		return await api.AddObj(form);
 	};
-// 记录选中的行
+// Record the selected row
 const selectedRows = ref<any>([]);
 
 const onSelectionChange = (changed: any) => {
 	const tableData = crudExpose.getTableData();
 	const unChanged = tableData.filter((row: any) => !changed.includes(row));
-	// 添加已选择的行
+	// Add selected rows
 	XEUtils.arrayEach(changed, (item: any) => {
 		const ids = XEUtils.pluck(selectedRows.value, 'id');
 		if (!ids.includes(item.id)) {
 			selectedRows.value = XEUtils.union(selectedRows.value, [item]);
 		}
 	});
-	// 剔除未选择的行
+	// Exclude unselected rows
 	XEUtils.arrayEach(unChanged, (unItem: any) => {
 		selectedRows.value = XEUtils.remove(selectedRows.value, (item: any) => item.id !== unItem.id);
 	});
 };
 const toggleRowSelection = () => {
-	// 多选后，回显默认勾选
+	// After multiple choices，Echo the default check
 	const tableRef = crudExpose.getBaseTableRef();
 	const tableData = crudExpose.getTableData();
 	const selected = XEUtils.filter(tableData, (item: any) => {
@@ -79,7 +79,7 @@ const toggleRowSelection = () => {
 						show:auth('column:Create')
 					},
 					auto: {
-						text: '自动匹配',
+						text: 'Automatic matching',
 						type: 'success',
 						show:auth('column:Match'),
 						click: () => {
@@ -89,7 +89,7 @@ const toggleRowSelection = () => {
 				},
 			},
 			rowHandle: {
-				//固定右侧
+				//Fix the right side
 				fixed: 'right',
 				buttons: {
 					view: {
@@ -112,32 +112,32 @@ const toggleRowSelection = () => {
 				},
 			},
 			table: {
-				rowKey: 'id', //设置你的主键id， 默认rowKey=id
+				rowKey: 'id', //Set your primary keyid， defaultrowKey=id
 				onSelectionChange,
 				onRefreshed: () => toggleRowSelection(),
 			},
 			columns: {
 				$checked: {
-					title: '选择',
+					title: 'choose',
 					form: { show: false },
 					column: {
 						type: 'selection',
 						align: 'center',
 						width: '70px',
-						columnSetDisabled: true, //禁止在列设置中选择
+						columnSetDisabled: true, //Disable selection in column settings
 					},
 				},
 				_index: {
-					title: '序号',
+					title: 'Serial number',
 					form: { show: false },
 					column: {
 						//type: 'index',
 						align: 'center',
 						width: '70px',
-						columnSetDisabled: true, //禁止在列设置中选择
+						columnSetDisabled: true, //Disable selection in column settings
 						//@ts-ignore
 						formatter: (context) => {
-							//计算序号,你可以自定义计算规则，此处为翻页累加
+							//Calculate the serial number,You can customize calculation rules，Here is the page recapture
 							let index = context.index ?? 1;
 							let pagination: any = crudExpose!.crudBinding.value.pagination;
 							return ((pagination.currentPage ?? 1) - 1) * pagination.pageSize + index + 1;
@@ -157,18 +157,18 @@ const toggleRowSelection = () => {
 					},
 					form: {
 						rules: [
-							// 表单校验规则
+							// Form verification rules
 							{
 								required: true,
-								message: '必填项',
+								message: 'Required',
 							},
 						],
 						component: {
 							span: 12,
 							showSearch: true,
 							filterable: true,
-							//默认的filterOption仅支持value的过滤，label并不会加入查询
-							//所以需要自定义filterOption
+							//DefaultfilterOptionSupported onlyvalueFilter of，labelWill not join the query
+							//So customization is requiredfilterOption
 							filterOption(inputValue, option) {
 								return option.label.indexOf(inputValue) >= 0 || option.value.indexOf(inputValue) >= 0;
 							}
@@ -176,7 +176,7 @@ const toggleRowSelection = () => {
 					},
 				},
 				title: {
-					title: '中文名',
+					title: 'Chinese name',
 					sortable: 'custom',
 					search: {
 						show: true,
@@ -184,20 +184,20 @@ const toggleRowSelection = () => {
 					type: 'text',
 					form: {
 						rules: [
-							// 表单校验规则
+							// Form verification rules
 							{
 								required: true,
-								message: '必填项',
+								message: 'Required',
 							},
 						],
 						component: {
 							span: 12,
-							placeholder: '请输入中文名',
+							placeholder: 'Please enter your Chinese name',
 						},
 					},
 				},
 				field_name: {
-					title: '字段名',
+					title: 'Field name',
 					type: 'text',
 					search: {
 						show: true,
@@ -207,15 +207,15 @@ const toggleRowSelection = () => {
 					},
 					form: {
 						rules: [
-							// 表单校验规则
+							// Form verification rules
 							{
 								required: true,
-								message: '必填项',
+								message: 'Required',
 							},
 						],
 						component: {
 							span: 12,
-							placeholder: '请输入字段名',
+							placeholder: 'Please enter a field name',
 						},
 					},
 				},

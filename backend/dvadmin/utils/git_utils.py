@@ -5,7 +5,7 @@ from git.repo.fun import is_git_dir
 
 class GitRepository(object):
     """
-    git仓库管理
+    gitWarehouse management
     """
 
     def __init__(self, local_path, repo_url, branch='master'):
@@ -16,7 +16,7 @@ class GitRepository(object):
 
     def initial(self, repo_url, branch):
         """
-        初始化git仓库
+        initializationgitstorehouse
         :param repo_url:
         :param branch:
         :return:
@@ -31,14 +31,14 @@ class GitRepository(object):
 
     def pull(self):
         """
-        从线上拉最新代码
+        Pull the latest code from online
         :return:
         """
         self.repo.git.pull()
 
     def branches(self):
         """
-        获取所有分支
+        Get all branches
         :return:
         """
         branches = self.repo.remote().refs
@@ -46,7 +46,7 @@ class GitRepository(object):
 
     def commits(self):
         """
-        获取所有提交记录
+        Get all submission records
         :return:
         """
         commit_log = self.repo.git.log('--pretty={"commit":"%h","author":"%an","summary":"%s","date":"%cd"}',
@@ -57,21 +57,21 @@ class GitRepository(object):
 
     def tags(self):
         """
-        获取所有tag
+        Get alltag
         :return:
         """
         return [tag.name for tag in self.repo.tags]
 
     def tags_exists(self, tag):
         """
-        tag是否存在
+        tagDoes it exist
         :return:
         """
         return tag in self.tags()
 
     def change_to_branch(self, branch):
         """
-        切换分支
+        Switch branches
         :param branch:
         :return:
         """
@@ -79,7 +79,7 @@ class GitRepository(object):
 
     def change_to_commit(self, branch, commit):
         """
-        切换commit
+        Switchcommit
         :param branch:
         :param commit:
         :return:
@@ -89,7 +89,7 @@ class GitRepository(object):
 
     def change_to_tag(self, tag):
         """
-        切换tag
+        Switchtag
         :param tag:
         :return:
         """

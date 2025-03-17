@@ -23,10 +23,10 @@ import { useThemeConfig } from '/@/stores/themeConfig';
 import { Session } from '/@/utils/storage';
 import mittBus from '/@/utils/mitt';
 
-// 引入组件
+// Introducing components
 const Iframes = defineAsyncComponent(() => import('/@/layout/routerView/iframes.vue'));
 
-// 定义变量内容
+// Define variable content
 const route = useRoute();
 const router = useRouter();
 const storesKeepAliveNames = useKeepALiveNames();
@@ -34,39 +34,39 @@ const storesThemeConfig = useThemeConfig();
 const { keepAliveNames, cachedViews } = storeToRefs(storesKeepAliveNames);
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive<ParentViewState>({
-	refreshRouterViewKey: '', // 非 iframe tagsview 右键菜单刷新时
-	iframeRefreshKey: '', // iframe tagsview 右键菜单刷新时
+	refreshRouterViewKey: '', // No iframe tagsview When the menu is refreshed by right click
+	iframeRefreshKey: '', // iframe tagsview When the menu is refreshed by right click
 	keepAliveNameList: [],
 	iframeList: [],
 });
 
-//全局依赖刷新页面
+//Global dependency refresh page
 const showView = ref(true)
 /**
- * 刷新页面
+ * Refresh the page
  */
 const refreshView = function () {
-	showView.value = false // 通过v-if移除router-view节点
+	showView.value = false // passv-ifRemoverouter-viewnode
 	nextTick(() => {
-		showView.value = true // DOM更新后再通过v-if添加router-view节点
+		showView.value = true // DOMUpdated and then passedv-ifAdd torouter-viewnode
 	})
 }
 provide('refreshView', refreshView)
 
-// 设置主界面切换动画
+// Set the main interface switching animation
 const setTransitionName = computed(() => {
 	return themeConfig.value.animation;
 });
-// 获取组件缓存列表(name值)
+// Get the component cache list(namevalue)
 const getKeepAliveNames = computed(() => {
   console.log(cachedViews.value)
 	return themeConfig.value.isTagsview ? cachedViews.value : state.keepAliveNameList;
 });
-// 设置 iframe 显示/隐藏
+// set up iframe show/hide
 const isIframePage = computed(() => {
 	return route.meta.isIframe;
 });
-// 获取 iframe 组件列表(未进行渲染)
+// Get iframe Component list(Not rendered)
 const getIframeListRoutes = async () => {
 	router.getRoutes().forEach((v) => {
 		if (v.meta.isIframe) {
@@ -76,7 +76,7 @@ const getIframeListRoutes = async () => {
 		}
 	});
 };
-// 页面加载前，处理缓存，页面刷新时路由缓存处理
+// Before the page loads，Processing cache，Routing cache processing when page refreshes
 onBeforeMount(() => {
 	state.keepAliveNameList = keepAliveNames.value;
 	mittBus.on('onTagsViewRefreshRouterView', (fullPath: string) => {
@@ -90,7 +90,7 @@ onBeforeMount(() => {
 		});
 	});
 });
-// 页面加载时
+// When the page loads
 onMounted(() => {
 	getIframeListRoutes();
 	// https://gitee.com/lyt-top/vue-next-admin/issues/I58U75
@@ -105,11 +105,11 @@ onMounted(() => {
 		}, 0);
 	});
 });
-// 页面卸载时
+// When the page is uninstalled
 onUnmounted(() => {
 	mittBus.off('onTagsViewRefreshRouterView', () => { });
 });
-// 监听路由变化，防止 tagsView 多标签时，切换动画消失
+// Listen to routing changes，prevent tagsView When multi-label，Switch animation disappears
 // https://toscode.gitee.com/lyt-top/vue-next-admin/pulls/38/files
 watch(
 	() => route.fullPath,

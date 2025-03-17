@@ -19,39 +19,39 @@ import { reactive, shallowRef, watch, onBeforeUnmount } from 'vue';
 import { IDomEditor } from '@wangeditor/editor';
 import { Toolbar, Editor } from '@wangeditor/editor-for-vue';
 
-// 定义父组件传过来的值
+// Define the value passed by the parent component
 const props = defineProps({
-	// 是否禁用
+	// Whether to disable
 	disable: {
 		type: Boolean,
 		default: () => false,
 	},
-	// 内容框默认 placeholder
+	// Content box default placeholder
 	placeholder: {
 		type: String,
-		default: () => '请输入内容...',
+		default: () => 'Please enter content...',
 	},
 	// https://www.wangeditor.com/v5/getting-started.html#mode-%E6%A8%A1%E5%BC%8F
-	// 模式，可选 <default|simple>，默认 default
+	// model，Optional <default|simple>，default default
 	mode: {
 		type: String,
 		default: () => 'default',
 	},
-	// 高度
+	// high
 	height: {
 		type: String,
 		default: () => '310px',
 	},
-	// 双向绑定，用于获取 editor.getHtml()
+	// Two-way binding，Used to obtain editor.getHtml()
 	getHtml: String,
-	// 双向绑定，用于获取 editor.getText()
+	// Two-way binding，Used to obtain editor.getText()
 	getText: String,
 });
 
-// 定义子组件向父组件传值/事件
+// Define child components to pass values ​​to parent components/event
 const emit = defineEmits(['update:getHtml', 'update:getText']);
 
-// 定义变量内容
+// Define variable content
 const editorRef = shallowRef();
 const state = reactive({
 	editorConfig: {
@@ -60,22 +60,22 @@ const state = reactive({
 	editorVal: props.getHtml,
 });
 
-// 编辑器回调函数
+// Editor callback function
 const handleCreated = (editor: IDomEditor) => {
 	editorRef.value = editor;
 };
-// 编辑器内容改变时
+// When the editor content changes
 const handleChange = (editor: IDomEditor) => {
 	emit('update:getHtml', editor.getHtml());
 	emit('update:getText', editor.getText());
 };
-// 页面销毁时
+// When the page is destroyed
 onBeforeUnmount(() => {
 	const editor = editorRef.value;
 	if (editor == null) return;
 	editor.destroy();
 });
-// 监听是否禁用改变
+// Listen to whether to disable changes
 // https://gitee.com/lyt-top/vue-next-admin/issues/I4LM7I
 watch(
 	() => props.disable,
@@ -88,7 +88,7 @@ watch(
 		deep: true,
 	}
 );
-// 监听双向绑定值改变，用于回显
+// Listen to the change of two-way binding value，For echo
 watch(
 	() => props.getHtml,
 	(val) => {

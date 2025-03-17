@@ -11,7 +11,7 @@
 			@selection-change="onSelectionChange"
 		>
 			<el-table-column type="selection" :reserve-selection="true" width="30" v-if="config.isSelection" />
-			<el-table-column type="index" label="序号" width="60" v-if="config.isSerialNo" />
+			<el-table-column type="index" label="Serial number" width="60" v-if="config.isSerialNo" />
 			<el-table-column
 				v-for="(item, index) in setHeader"
 				:key="index"
@@ -29,17 +29,17 @@
 					</template>
 				</template>
 			</el-table-column>
-			<el-table-column label="操作" width="100" v-if="config.isOperate">
+			<el-table-column label="operate" width="100" v-if="config.isOperate">
 				<template v-slot="scope">
-					<el-popconfirm title="确定删除吗？" @confirm="onDelRow(scope.row)">
+					<el-popconfirm title="Are you sure to delete it?？" @confirm="onDelRow(scope.row)">
 						<template #reference>
-							<el-button text type="primary">删除</el-button>
+							<el-button text type="primary">delete</el-button>
 						</template>
 					</el-popconfirm>
 				</template>
 			</el-table-column>
 			<template #empty>
-				<el-empty description="暂无数据" />
+				<el-empty description="No data yet" />
 			</template>
 		</el-table>
 		<div class="table-footer mt15">
@@ -56,8 +56,8 @@
 			>
 			</el-pagination>
 			<div class="table-footer-tool">
-				<SvgIcon name="iconfont icon-yunxiazai_o" :size="22" title="导出" @click="onImportTable" />
-				<SvgIcon name="iconfont icon-shuaxin" :size="22" title="刷新" @click="onRefreshTable" />
+				<SvgIcon name="iconfont icon-yunxiazai_o" :size="22" title="Export" @click="onImportTable" />
+				<SvgIcon name="iconfont icon-shuaxin" :size="22" title="refresh" @click="onRefreshTable" />
 				<el-popover
 					placement="top-end"
 					trigger="click"
@@ -68,22 +68,22 @@
 					@show="onSetTable"
 				>
 					<template #reference>
-						<SvgIcon name="iconfont icon-quanjushezhi_o" :size="22" title="设置" />
+						<SvgIcon name="iconfont icon-quanjushezhi_o" :size="22" title="set up" />
 					</template>
 					<template #default>
 						<div class="tool-box">
-							<el-tooltip content="拖动进行排序" placement="top-start">
+							<el-tooltip content="Drag to sort" placement="top-start">
 								<SvgIcon name="fa fa-question-circle-o" :size="17" class="ml11" color="#909399" />
 							</el-tooltip>
 							<el-checkbox
 								v-model="state.checkListAll"
 								:indeterminate="state.checkListIndeterminate"
 								class="ml10 mr1"
-								label="列显示"
+								label="Column display"
 								@change="onCheckAllChange"
 							/>
-							<el-checkbox v-model="getConfig.isSerialNo" class="ml12 mr1" label="序号" />
-							<el-checkbox v-model="getConfig.isSelection" class="ml12 mr1" label="多选" />
+							<el-checkbox v-model="getConfig.isSerialNo" class="ml12 mr1" label="Serial number" />
+							<el-checkbox v-model="getConfig.isSelection" class="ml12 mr1" label="Multiple choices" />
 						</div>
 						<el-scrollbar>
 							<div ref="toolSetRef" class="tool-sortable">
@@ -109,29 +109,29 @@ import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import '/@/theme/tableTool.scss';
 
-// 定义父组件传过来的值
+// Define the value passed by the parent component
 const props = defineProps({
-	// 列表内容
+	// List content
 	data: {
 		type: Array<EmptyObjectType>,
 		default: () => [],
 	},
-	// 表头内容
+	// Header content
 	header: {
 		type: Array<EmptyObjectType>,
 		default: () => [],
 	},
-	// 配置项
+	// Configuration Items
 	config: {
 		type: Object,
 		default: () => {},
 	},
 });
 
-// 定义子组件向父组件传值/事件
+// Define child components to pass values ​​to parent components/event
 const emit = defineEmits(['delRow', 'pageChange', 'sortHeader']);
 
-// 定义变量内容
+// Define variable content
 const toolSetRef = ref();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
@@ -145,64 +145,64 @@ const state = reactive({
 	checkListIndeterminate: false,
 });
 
-// 设置边框显示/隐藏
+// Set border display/hide
 const setBorder = computed(() => {
 	return props.config.isBorder ? true : false;
 });
-// 获取父组件 配置项（必传）
+// Get the parent component Configuration Items（Must pass）
 const getConfig = computed(() => {
 	return props.config;
 });
-// 设置 tool header 数据
+// set up tool header data
 const setHeader = computed(() => {
 	return props.header.filter((v) => v.isCheck);
 });
-// tool 列显示全选改变时
+// tool When the column display select all changes
 const onCheckAllChange = <T>(val: T) => {
 	if (val) props.header.forEach((v) => (v.isCheck = true));
 	else props.header.forEach((v) => (v.isCheck = false));
 	state.checkListIndeterminate = false;
 };
-// tool 列显示当前项改变时
+// tool When the column displays the current item changes
 const onCheckChange = () => {
 	const headers = props.header.filter((v) => v.isCheck).length;
 	state.checkListAll = headers === props.header.length;
 	state.checkListIndeterminate = headers > 0 && headers < props.header.length;
 };
-// 表格多选改变时，用于导出
+// When multiple selections of tables are changed，For export
 const onSelectionChange = (val: EmptyObjectType[]) => {
 	state.selectlist = val;
 };
-// 删除当前项
+// Delete the current item
 const onDelRow = (row: EmptyObjectType) => {
 	emit('delRow', row);
 };
-// 分页改变
+// Page changes
 const onHandleSizeChange = (val: number) => {
 	state.page.pageSize = val;
 	emit('pageChange', state.page);
 };
-// 分页改变
+// Page changes
 const onHandleCurrentChange = (val: number) => {
 	state.page.pageNum = val;
 	emit('pageChange', state.page);
 };
-// 搜索时，分页还原成默认
+// When searching，Restore the page to default
 const pageReset = () => {
 	state.page.pageNum = 1;
 	state.page.pageSize = 10;
 	emit('pageChange', state.page);
 };
-// 导出
+// Export
 const onImportTable = () => {
-	if (state.selectlist.length <= 0) return ElMessage.warning('请先选择要导出的数据');
+	if (state.selectlist.length <= 0) return ElMessage.warning('Please select the data to export first');
 	table2excel(props.header, state.selectlist, `${themeConfig.value.globalTitle} ${new Date().toLocaleString()}`);
 };
-// 刷新
+// refresh
 const onRefreshTable = () => {
 	emit('pageChange', state.page);
 };
-// 设置
+// set up
 const onSetTable = () => {
 	nextTick(() => {
 		const sortable = Sortable.create(toolSetRef.value, {
@@ -222,7 +222,7 @@ const onSetTable = () => {
 	});
 };
 
-// 暴露变量
+// Expose variables
 defineExpose({
 	pageReset,
 });

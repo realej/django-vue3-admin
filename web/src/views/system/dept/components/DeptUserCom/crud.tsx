@@ -11,7 +11,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 		const show_all = context?.isShowChildFlag.value ? '1' : '0';
 		const res = await api.GetList({ ...query, show_all });
 		/**
-		 * 处理crud警告：Invalid prop: type check failed for prop "name". Expected String with value "2", got Number with value 2.
+		 * deal withcrudwarn：Invalid prop: type check failed for prop "name". Expected String with value "2", got Number with value 2.
 		 */
 		// res.data.forEach((item: any) => {
 		// 	item.dept = String(item.dept);
@@ -44,7 +44,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 		crudOptions: {
 			table: {
 				remove: {
-					confirmMessage: '是否删除该用户？',
+					confirmMessage: 'Whether to delete the user？',
 				},
 			},
 			request: {
@@ -59,8 +59,8 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 						show: auth('user:Create')
 					},
 					export: {
-						text: '导出', //按钮文字
-						title: '导出', //鼠标停留显示的信息
+						text: 'Export', //Button text
+						title: 'Export', //The information displayed by the mouse stay
 						show: auth('user:Export'),
 						click() {
 							return exportRequest(crudExpose!.getSearchFormData());
@@ -79,7 +79,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 				},
 			},
 			rowHandle: {
-				//固定右侧
+				//Fix the right side
 				fixed: 'right',
 				width: 250,
 				buttons: {
@@ -93,12 +93,12 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 						show: auth('user:Delete'),
 					},
 					custom: {
-						text: '重设密码',
+						text: 'Reset password',
 						type: 'primary',
 						show: auth('user:ResetPassword'),
 						tooltip: {
 							placement: 'top',
-							content: '重设密码',
+							content: 'Reset password',
 						},
 						click: (ctx: any) => context?.handleResetPwdOpen(ctx.row),
 					},
@@ -106,17 +106,17 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 			},
 			columns: {
 				_index: {
-					title: '序号',
+					title: 'Serial number',
 					form: { show: false },
 					column: {
 						type: 'index',
 						align: 'center',
 						width: '70px',
-						columnSetDisabled: true, //禁止在列设置中选择
+						columnSetDisabled: true, //Disable selection in column settings
 					},
 				},
 				search: {
-					title: '关键词',
+					title: 'Keywords',
 					column: {
 						show: false,
 					},
@@ -126,7 +126,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 							props: {
 								clearable: true,
 							},
-							placeholder: '请输入关键词',
+							placeholder: 'Please enter keywords',
 						},
 					},
 					form: {
@@ -139,26 +139,26 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 				},
 				username: {
-					title: '账号',
+					title: 'account',
 					type: 'input',
 					column: {
-						minWidth: 100, //最小列宽
+						minWidth: 100, //Minimum column width
 					},
 					form: {
 						rules: [
-							// 表单校验规则
+							// Form verification rules
 							{
 								required: true,
-								message: '账号必填项',
+								message: 'Required account number',
 							},
 						],
 						component: {
-							placeholder: '请输入账号',
+							placeholder: 'Please enter your account number',
 						},
 					},
 				},
 				password: {
-					title: '密码',
+					title: 'password',
 					type: 'input',
 					column: {
 						show: false,
@@ -168,16 +168,16 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 					form: {
 						rules: [
-							// 表单校验规则
+							// Form verification rules
 							{
 								required: true,
-								message: '密码必填项',
+								message: 'Password Required',
 							},
 						],
 						component: {
 							span: 12,
 							showPassword: true,
-							placeholder: '请输入密码',
+							placeholder: 'Please enter your password',
 						},
 						// value: vm.systemConfig('base.default_password'),
 					},
@@ -188,27 +188,27 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					} */
 				},
 				name: {
-					title: '姓名',
+					title: 'Name',
 					type: 'input',
 					column: {
-						minWidth: 100, //最小列宽
+						minWidth: 100, //Minimum column width
 					},
 					form: {
 						rules: [
-							// 表单校验规则
+							// Form verification rules
 							{
 								required: true,
-								message: '姓名必填项',
+								message: 'Required name',
 							},
 						],
 						component: {
 							span: 12,
-							placeholder: '请输入姓名',
+							placeholder: 'Please enter a name',
 						},
 					},
 				},
 				dept: {
-					title: '部门',
+					title: 'department',
 					type: 'dict-tree',
 					dict: dict({
 						isTree: true,
@@ -217,22 +217,22 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 						label: 'name',
 					}),
 					column: {
-						minWidth: 200, //最小列宽
+						minWidth: 200, //Minimum column width
 						formatter({ value, row, index }) {
 							return row.dept_name_all
 						}
 					},
 					form: {
 						rules: [
-							// 表单校验规则
+							// Form verification rules
 							{
 								required: true,
-								message: '必填项',
+								message: 'Required',
 							},
 						],
 						component: {
 							filterable: true,
-							placeholder: '请选择',
+							placeholder: 'Please select',
 							props: {
 								props: {
 									value: 'id',
@@ -243,7 +243,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 				},
 				role: {
-					title: '角色',
+					title: 'Role',
 					search: {
 						show: true,
 						component: {
@@ -259,7 +259,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 						label: 'name',
 					}),
 					column: {
-						minWidth: 200, //最小列宽
+						minWidth: 200, //Minimum column width
 						// formatter({ value, row, index }) {
 						// 	const values = row.role_info.map((item: any) => item.name);
 						// 	return values.join(',')
@@ -267,44 +267,44 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 					form: {
 						rules: [
-							// 表单校验规则
+							// Form verification rules
 							{
 								required: true,
-								message: '必填项',
+								message: 'Required',
 							},
 						],
 						component: {
 							multiple: true,
 							filterable: true,
-							placeholder: '请选择角色',
+							placeholder: 'Please select a role',
 						},
 					},
 				},
 				mobile: {
-					title: '手机号码',
+					title: 'phone number',
 					type: 'input',
 					column: {
-						minWidth: 120, //最小列宽
+						minWidth: 120, //Minimum column width
 					},
 					form: {
 						rules: [
 							{
 								max: 20,
-								message: '请输入正确的手机号码',
+								message: 'Please enter the correct mobile phone number',
 								trigger: 'blur',
 							},
 							{
 								pattern: /^1[3-9]\d{9}$/,
-								message: '请输入正确的手机号码',
+								message: 'Please enter the correct mobile phone number',
 							},
 						],
 						component: {
-							placeholder: '请输入手机号码',
+							placeholder: 'Please enter your mobile phone number',
 						},
 					},
 				},
 				email: {
-					title: '邮箱',
+					title: 'Mail',
 					column: {
 						width: 260,
 					},
@@ -312,17 +312,17 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 						rules: [
 							{
 								type: 'email',
-								message: '请输入正确的邮箱地址',
+								message: 'Please enter the correct email address',
 								trigger: ['blur', 'change'],
 							},
 						],
 						component: {
-							placeholder: '请输入邮箱',
+							placeholder: 'Please enter your email address',
 						},
 					},
 				},
 				gender: {
-					title: '性别',
+					title: 'gender',
 					type: 'dict-select',
 					dict: dict({
 						data: dictionary('gender'),
@@ -333,10 +333,10 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 							span: 12,
 						},
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				user_type: {
-					title: '用户类型',
+					title: 'User Type',
 					search: {
 						show: true,
 					},
@@ -345,7 +345,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 						data: dictionary('user_type'),
 					}),
 					column: {
-						minWidth: 100, //最小列宽
+						minWidth: 100, //Minimum column width
 					},
 					form: {
 						show: false,
@@ -356,7 +356,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 				},
 				is_active: {
-					title: '锁定',
+					title: 'locking',
 					search: {
 						show: true,
 					},
@@ -381,7 +381,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					}),
 				},
 				avatar: {
-					title: '头像',
+					title: 'avatar',
 					type: 'avatar-uploader',
 					form: {
 						show: false,

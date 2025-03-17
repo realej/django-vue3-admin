@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: 猿小天
+@author: Yuan Xiaotian
 
 @contact: QQ:1638245306
 
@@ -68,7 +68,7 @@ class CustomPagination(PageNumberPagination):
 
         if not data:
             code = 2000
-            msg = "暂无数据"
+            msg = "No data yet"
             data = []
 
         return Response(OrderedDict([

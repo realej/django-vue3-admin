@@ -11,21 +11,21 @@ from dvadmin.utils.validator import CustomValidationError
 
 def import_to_data(file_url, field_data, m2m_fields=None):
     """
-    读取导入的excel文件
+    Read importedexceldocument
     :param file_url:
-    :param field_data: 首行数据源
-    :param m2m_fields: 多对多字段
+    :param field_data: First row data source
+    :param m2m_fields: Many-to-many fields
     :return:
     """
-    # 读取excel 文件
+    # Readexcel document
     file_path_dir = os.path.join(settings.BASE_DIR, file_url)
     workbook = openpyxl.load_workbook(file_path_dir)
     table = workbook[workbook.sheetnames[0]]
-    theader = tuple(table.values)[0] #Excel的表头
-    is_update = '更新主键(勿改)' in theader #是否导入更新
-    if is_update is False: #不是更新时,删除id列
+    theader = tuple(table.values)[0] #ExcelThe head of the
+    is_update = 'Update the primary key(Do not change)' in theader #Whether to import updates
+    if is_update is False: #Not when updated,deleteidList
         field_data.pop('id')
-    # 获取参数映射
+    # Get parameter map
     validation_data_dict = {}
     for key, value in field_data.items():
         if isinstance(value, dict):
@@ -41,7 +41,7 @@ def import_to_data(file_url, field_data, m2m_fields=None):
             else:
                 continue
             validation_data_dict[key] = data_dict
-    # 创建一个空列表，存储Excel的数据
+    # Create an empty list，storageExcelData of
     tables = []
     for i, row in enumerate(range(table.max_row)):
         if i == 0:
@@ -62,11 +62,11 @@ def import_to_data(file_url, field_data, m2m_fields=None):
                 try:
                     cell_value = datetime.strptime(str(cell_value), '%Y-%m-%d %H:%M:%S').date()
                 except:
-                    raise CustomValidationError('日期格式不正确')
+                    raise CustomValidationError('Incorrect date format')
             elif value_type == 'datetime':
                 cell_value = datetime.strptime(str(cell_value), '%Y-%m-%d %H:%M:%S')
             else:
-            # 由于excel导入数字类型后，会出现数字加 .0 的，进行处理
+            # becauseexcelAfter importing the number type，The number will appear .0 of，Perform processing
                 if type(cell_value) is float and str(cell_value).split(".")[1] == "0":
                     cell_value = int(str(cell_value).split(".")[0])
                 elif type(cell_value) is str:

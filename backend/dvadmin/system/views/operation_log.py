@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: 李强
+@author: Li Qiang
 @contact: QQ:1206709430
 @Created on: 2021/6/8 003 0:30
-@Remark: 操作日志管理
+@Remark: Operation log management
 """
 
 from dvadmin.system.models import OperationLog
@@ -14,7 +14,7 @@ from dvadmin.utils.viewset import CustomModelViewSet
 
 class OperationLogSerializer(CustomModelSerializer):
     """
-    日志-序列化器
+    log-Serializer
     """
 
     class Meta:
@@ -25,7 +25,7 @@ class OperationLogSerializer(CustomModelSerializer):
 
 class OperationLogCreateUpdateSerializer(CustomModelSerializer):
     """
-    操作日志  创建/更新时的列化器
+    Operation log  create/The serializer at update time
     """
 
     class Meta:
@@ -35,12 +35,12 @@ class OperationLogCreateUpdateSerializer(CustomModelSerializer):
 
 class OperationLogViewSet(CustomModelViewSet):
     """
-    操作日志接口
-    list:查询
-    create:新增
-    update:修改
-    retrieve:单例
-    destroy:删除
+    Operation log interface
+    list:Query
+    create:New
+    update:Revise
+    retrieve:Single case
+    destroy:delete
     """
     queryset = OperationLog.objects.order_by('-create_datetime')
     serializer_class = OperationLogSerializer

@@ -14,69 +14,69 @@
 <script setup lang="ts" name="noticeBar">
 import { reactive, ref, onMounted, nextTick } from 'vue';
 
-// 定义父组件传过来的值
+// Define the value passed by the parent component
 const props = defineProps({
-	// 通知栏模式，可选值为 closeable link
+	// Notification bar mode，The optional value is closeable link
 	mode: {
 		type: String,
 		default: () => '',
 	},
-	// 通知文本内容
+	// Notification text content
 	text: {
 		type: String,
 		default: () => '',
 	},
-	// 通知文本颜色
+	// Notification text color
 	color: {
 		type: String,
 		default: () => 'var(--el-color-warning)',
 	},
-	// 通知背景色
+	// Notification background color
 	background: {
 		type: String,
 		default: () => 'var(--el-color-warning-light-9)',
 	},
-	// 字体大小，单位px
+	// Font size，unitpx
 	size: {
 		type: [Number, String],
 		default: () => 14,
 	},
-	// 通知栏高度，单位px
+	// Notification bar height，unitpx
 	height: {
 		type: Number,
 		default: () => 40,
 	},
-	// 动画延迟时间 (s)
+	// Animation delay time (s)
 	delay: {
 		type: Number,
 		default: () => 1,
 	},
-	// 滚动速率 (px/s)
+	// Rolling rate (px/s)
 	speed: {
 		type: Number,
 		default: () => 100,
 	},
-	// 是否开启垂直滚动
+	// Whether to enable vertical scrolling
 	scrollable: {
 		type: Boolean,
 		default: () => false,
 	},
-	// 自定义左侧图标
+	// Customize the left icon
 	leftIcon: {
 		type: String,
 		default: () => '',
 	},
-	// 自定义右侧图标
+	// Customize the right icon
 	rightIcon: {
 		type: String,
 		default: () => '',
 	},
 });
 
-// 定义子组件向父组件传值/事件
+// Define child components to pass values ​​to parent components/event
 const emit = defineEmits(['close', 'link']);
 
-// 定义变量内容
+// Define variable content
 const noticeBarWarpRef = ref();
 const noticeBarTextRef = ref();
 const state = reactive({
@@ -88,7 +88,7 @@ const state = reactive({
 	isMode: false,
 });
 
-// 初始化 animation 各项参数
+// initialization animation Various parameters
 const initAnimation = () => {
 	nextTick(() => {
 		state.warpOWidth = noticeBarWarpRef.value.offsetWidth;
@@ -101,12 +101,12 @@ const initAnimation = () => {
 		}, props.delay * 1000);
 	});
 };
-// 计算 animation 滚动时长
+// calculate animation Scrolling time
 const computeAnimationTime = () => {
 	state.oneTime = state.textOWidth / props.speed;
 	state.twoTime = (state.textOWidth + state.warpOWidth) / props.speed;
 };
-// 改变 animation 动画调用
+// Change animation Animation call
 const changeAnimation = () => {
 	if (state.order === 1) {
 		noticeBarTextRef.value.style.cssText = `animation: oneAnimation ${state.oneTime}s linear; opactity: 1;}`;
@@ -115,7 +115,7 @@ const changeAnimation = () => {
 		noticeBarTextRef.value.style.cssText = `animation: twoAnimation ${state.twoTime}s linear infinite; opacity: 1;`;
 	}
 };
-// 监听 animation 动画的结束
+// monitor animation The end of the animation
 const listenerAnimationend = () => {
 	noticeBarTextRef.value.addEventListener(
 		'animationend',
@@ -125,7 +125,7 @@ const listenerAnimationend = () => {
 		false
 	);
 };
-// 右侧 icon 图标点击
+// Right side icon Icon Click
 const onRightIconClick = () => {
 	if (!props.mode) return false;
 	if (props.mode === 'closeable') {
@@ -135,7 +135,7 @@ const onRightIconClick = () => {
 		emit('link');
 	}
 };
-// 页面加载时
+// When the page loads
 onMounted(() => {
 	if (props.scrollable) return false;
 	initAnimation();

@@ -38,7 +38,7 @@ const props = defineProps({
 	},
 	title: {
 		type: String,
-		default: '标题',
+		default: 'title',
 	},
 	label: {
 		type: String,

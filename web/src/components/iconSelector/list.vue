@@ -14,29 +14,29 @@
 </template>
 
 <script setup lang="ts" name="iconSelectorList">
-// 定义父组件传过来的值
+// Define the value passed by the parent component
 const props = defineProps({
-	// 图标列表数据
+	// Icon List Data
 	list: {
 		type: Array,
 		default: () => [],
 	},
-	// 自定义空状态描述文字
+	// Customize empty status description text
 	empty: {
 		type: String,
-		default: () => '无相关图标',
+		default: () => 'No related icons',
 	},
-	// 高亮当前选中图标
+	// Highlight the currently selected icon
 	prefix: {
 		type: String,
 		default: () => '',
 	},
 });
 
-// 定义子组件向父组件传值/事件
+// Define child components to pass values ​​to parent components/event
 const emit = defineEmits(['get-icon']);
 
-// 当前 icon 图标点击时
+// current icon When the icon is clicked
 const onColClick = (v: unknown | string) => {
 	emit('get-icon', v);
 };

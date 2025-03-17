@@ -25,30 +25,30 @@ import { computed, watch, ref, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import {cookie} from "xe-utils";
 
-// 定义父组件传过来的值
+// Define the value passed by the parent component
 const props = defineProps({
-	// 刷新 iframe
+	// refresh iframe
 	refreshKey: {
 		type: String,
 		default: () => '',
 	},
-	// 过渡动画 name
+	// Transition animation name
 	name: {
 		type: String,
 		default: () => 'slide-right',
 	},
-	// iframe 列表
+	// iframe List
 	list: {
 		type: Array,
 		default: () => [],
 	},
 });
 
-// 定义变量内容
+// Define variable content
 const iframeRef = ref();
 const route = useRoute();
 
-// 处理 list 列表，当打开时，才进行加载
+// deal with list List，When open，Loading
 const setIframeList = computed(() => {
 	return (<RouteItems>props.list).filter((v: RouteItem) => {
     if (v.meta?.isIframeOpen) {
@@ -60,11 +60,11 @@ const setIframeList = computed(() => {
     return v.meta?.isIframeOpen
   });
 });
-// 获取 iframe 当前路由 path
+// Get iframe Current routing path
 const getRoutePath = computed(() => {
 	return route.path;
 });
-// 关闭 iframe loading
+// closure iframe loading
 const closeIframeLoading = (val: string, item: RouteItem) => {
 	nextTick(() => {
 		if (!iframeRef.value) return false;
@@ -77,7 +77,7 @@ const closeIframeLoading = (val: string, item: RouteItem) => {
 		});
 	});
 };
-// 监听路由变化，初始化 iframe 数据，防止多个 iframe 时，切换不生效
+// Listen to routing changes，initialization iframe data，Prevent multiple iframe hour，The switch does not take effect
 watch(
 	() => route.fullPath,
 	(val) => {
@@ -90,7 +90,7 @@ watch(
 		immediate: true,
 	}
 );
-// 监听 iframe refreshKey 变化，用于 tagsview 右键菜单刷新
+// monitor iframe refreshKey change，For tagsview Right-click menu refresh
 watch(
 	() => props.refreshKey,
 	() => {

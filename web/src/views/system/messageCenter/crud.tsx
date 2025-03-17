@@ -7,7 +7,7 @@ import { auth } from '/@/utils/authFunction';
 const { compute } = useCompute();
 
 export default function ({ crudExpose, context }: CreateCrudOptionsProps): CreateCrudOptionsRet {
-	const { tabActivted } = context; //从context中获取tabActivted
+	const { tabActivted } = context; //fromcontextGet it intabActivted
 
 	const pageRequest = async (query: PageQuery) => {
 		if (tabActivted.value === 'receive') {
@@ -59,7 +59,7 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 						show: false,
 					},
 					view: {
-						text: '查看',
+						text: 'Check',
 						type: 'text',
 						iconRight: 'View',
 						show: auth('messageCenter:Search'),
@@ -86,7 +86,7 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 					},
 				},
 				title: {
-					title: '标题',
+					title: 'title',
 					search: {
 						show: true,
 					},
@@ -96,25 +96,25 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 					},
 					form: {
 						rules: [
-							// 表单校验规则
+							// Form verification rules
 							{
 								required: true,
-								message: '必填项',
+								message: 'Required',
 							},
 						],
-						component: { span: 24, placeholder: '请输入标题' },
+						component: { span: 24, placeholder: 'Please enter a title' },
 					},
 				},
 				is_read: {
-					title: '是否已读',
+					title: 'Have you read it',
 					type: 'dict-select',
 					column: {
 						show: IsReadFunc.value,
 					},
 					dict: dict({
 						data: [
-							{ label: '已读', value: true, color: 'success' },
-							{ label: '未读', value: false, color: 'danger' },
+							{ label: 'Read', value: true, color: 'success' },
+							{ label: 'Not read', value: false, color: 'danger' },
 						],
 					}),
 					form: {
@@ -122,20 +122,20 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 					},
 				},
 				target_type: {
-					title: '目标类型',
+					title: 'Target Type',
 					type: ['dict-radio', 'colspan'],
 					column: {
 						minWidth: 120,
 					},
 					dict: dict({
 						data: [
-							{ value: 0, label: '按用户' },
-							{ value: 1, label: '按角色' },
+							{ value: 0, label: 'By user' },
+							{ value: 1, label: 'By role' },
 							{
 								value: 2,
-								label: '按部门',
+								label: 'By department',
 							},
-							{ value: 3, label: '通知公告' },
+							{ value: 3, label: 'Notices and Announcements' },
 						],
 					}),
 					form: {
@@ -145,7 +145,7 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 						rules: [
 							{
 								required: true,
-								message: '必选项',
+								message: 'Must-have options',
 								// @ts-ignore
 								trigger: ['blur', 'change'],
 							},
@@ -153,7 +153,7 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 					},
 				},
 				target_user: {
-					title: '目标用户',
+					title: 'Target user',
 					search: {
 						disabled: true,
 					},
@@ -175,12 +175,12 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 								columns: [
 									{
 										prop: 'name',
-										label: '用户名称',
+										label: 'Username',
 										width: 120,
 									},
 									{
 										prop: 'phone',
-										label: '用户电话',
+										label: 'User phone number',
 										width: 120,
 									},
 								],
@@ -190,10 +190,10 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 							return form.target_type === 0;
 						}),
 						rules: [
-							// 表单校验规则
+							// Form verification rules
 							{
 								required: true,
-								message: '必填项',
+								message: 'Required',
 							},
 						],
 					},
@@ -210,7 +210,7 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 					},
 				},
 				target_role: {
-					title: '目标角色',
+					title: 'Target role',
 					search: {
 						disabled: true,
 					},
@@ -233,11 +233,11 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 								columns: [
 									{
 										prop: 'name',
-										label: '角色名称',
+										label: 'Role name',
 									},
 									{
 										prop: 'key',
-										label: '权限标识',
+										label: 'Permission ID',
 									},
 								],
 							},
@@ -246,10 +246,10 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 							return form.target_type === 1;
 						}),
 						rules: [
-							// 表单校验规则
+							// Form verification rules
 							{
 								required: true,
-								message: '必填项',
+								message: 'Required',
 							},
 						],
 					},
@@ -266,7 +266,7 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 					},
 				},
 				target_dept: {
-					title: '目标部门',
+					title: 'Target Department',
 					search: {
 						disabled: true,
 					},
@@ -288,16 +288,16 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 								columns: [
 									{
 										prop: 'name',
-										label: '部门名称',
+										label: 'Department name',
 										width: 150,
 									},
 									{
 										prop: 'status_label',
-										label: '状态',
+										label: 'state',
 									},
 									{
 										prop: 'parent_name',
-										label: '父级部门',
+										label: 'Parent department',
 									},
 								],
 							},
@@ -306,10 +306,10 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 							return form.target_type === 2;
 						}),
 						rules: [
-							// 表单校验规则
+							// Form verification rules
 							{
 								required: true,
-								message: '必填项',
+								message: 'Required',
 							},
 						],
 					},
@@ -326,7 +326,7 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 					},
 				},
 				content: {
-					title: '内容',
+					title: 'content',
 					column: {
 						width: 300,
 						show: false,
@@ -334,17 +334,17 @@ export default function ({ crudExpose, context }: CreateCrudOptionsProps): Creat
 					type: ['editor-wang5', 'colspan'],
 					form: {
 						rules: [
-							// 表单校验规则
+							// Form verification rules
 							{
 								required: true,
-								message: '必填项',
+								message: 'Required',
 							},
 						],
 						component: {
 							disabled: false,
-							id: '1', // 当同一个页面有多个editor时，需要配置不同的id
+							id: '1', // When there are multiple pageseditorhour，Need to configure differentlyid
 							editorConfig: {
-								// 是否只读
+								// Read only
 								readOnly: compute((context) => {
 									const { mode } = context;
 									if (mode === 'add') {

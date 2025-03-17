@@ -1,6 +1,6 @@
 <template>
 	<div class="pccm-item" v-if="RoleMenuBtn.$state.length > 0">
-		<div class="menu-form-alert">配置操作功能接口权限，配置数据权限点击小齿轮</div>
+		<div class="menu-form-alert">Configure operation function interface permissions，Configure data permissions click pinion</div>
 		<el-checkbox v-for="btn in RoleMenuBtn.$state" :key="btn.id" v-model="btn.isCheck" @change="handleCheckChange(btn)">
 			<div class="btn-item">
 				{{ btn.data_range !== null ? `${btn.name}(${formatDataRange(btn.data_range)})` : btn.name }}
@@ -12,9 +12,9 @@
 			</div>
 		</el-checkbox>
 	</div>
-	<el-dialog v-model="dialogVisible" title="数据权限配置" width="400px" :close-on-click-modal="false" :before-close="handleDialogClose">
+	<el-dialog v-model="dialogVisible" title="Data permission configuration" width="400px" :close-on-click-modal="false" :before-close="handleDialogClose">
 		<div class="pc-dialog">
-			<el-select v-model="selectBtn.data_range" @change="handlePermissionRangeChange" placeholder="请选择">
+			<el-select v-model="selectBtn.data_range" @change="handlePermissionRangeChange" placeholder="Please select">
 				<el-option v-for="item in dataPermissionRange" :key="item.value" :label="item.label" :value="item.value" />
 			</el-select>
 			<el-tree-select
@@ -32,8 +32,8 @@
 		</div>
 		<template #footer>
 			<div>
-				<el-button type="primary" @click="handleDialogConfirm"> 确定</el-button>
-				<el-button @click="handleDialogClose"> 取消</el-button>
+				<el-button type="primary" @click="handleDialogConfirm"> Sure</el-button>
+				<el-button @click="handleDialogClose"> Cancel</el-button>
 			</div>
 		</template>
 	</el-dialog>
@@ -48,34 +48,34 @@ import { RoleMenuBtnType } from '../types';
 import { getRoleToDeptAll, setRoleMenuBtn, setRoleMenuBtnDataRange } from './api';
 import XEUtils from 'xe-utils';
 import { ElMessage } from 'element-plus';
-const RoleDrawer = RoleDrawerStores(); // 角色-菜单
-const RoleMenuTree = RoleMenuTreeStores(); // 角色-菜单
-const RoleMenuBtn = RoleMenuBtnStores(); // 角色-菜单-按钮
+const RoleDrawer = RoleDrawerStores(); // Role-menu
+const RoleMenuTree = RoleMenuTreeStores(); // Role-menu
+const RoleMenuBtn = RoleMenuBtnStores(); // Role-menu-Button
 const dialogVisible = ref(false);
-// 选中的按钮
+// Selected button
 const selectBtn = ref<RoleMenuBtnType>({
 	id: 0,
 	menu_btn_pre_id: 0,
-	/** 是否选中 */
+	/** Whether to select */
 	isCheck: false,
-	/** 按钮名称 */
+	/** Button name */
 	name: '',
-	/** 数据权限范围 */
+	/** Data permission range */
 	data_range: 0,
 	dept: [],
 });
 /**
- * 数据权限范围
+ * Data permission range
  */
 const dataPermissionRange = ref([
-	{ label: '仅本人数据权限', value: 0 },
-	{ label: '本部门及以下数据权限', value: 1 },
-	{ label: '本部门数据权限', value: 2 },
-	{ label: '全部数据权限', value: 3 },
-	{ label: '自定数据权限', value: 4 },
+	{ label: 'Only the data permissions', value: 0 },
+	{ label: 'This department and the following data permissions', value: 1 },
+	{ label: 'Data permissions of this department', value: 2 },
+	{ label: 'All data permissions', value: 3 },
+	{ label: 'Custom data permissions', value: 4 },
 ]);
 /**
- * 自定义数据权限的部门树配置
+ * Customize department tree configuration for data permissions
  */
 const defaultTreeProps = {
 	children: 'children',
@@ -84,7 +84,7 @@ const defaultTreeProps = {
 };
 
 /**
- * 自定数据权限下拉选择事件
+ * Custom data permission drop-down selection event
  */
 const handlePermissionRangeChange = async (val: number) => {
 	if (val < 4) {
@@ -92,7 +92,7 @@ const handlePermissionRangeChange = async (val: number) => {
 	}
 };
 /**
- * 格式化按钮数据范围
+ * Format button data range
  */
 const formatDataRange = computed(() => {
 	return function (datarange: number) {
@@ -105,7 +105,7 @@ const formatDataRange = computed(() => {
 	};
 });
 /**
- * 勾选按钮
+ * Check button
  */
 const handleCheckChange = async (btn: RoleMenuBtnType) => {
 	const put_data = {
@@ -120,7 +120,7 @@ const handleCheckChange = async (btn: RoleMenuBtnType) => {
 };
 
 /**
- * 按钮-数据范围确定
+ * Button-Data range determination
  */
 const handleDialogConfirm = async () => {
 	const { data, msg } = await setRoleMenuBtnDataRange(selectBtn.value);
@@ -129,14 +129,14 @@ const handleDialogConfirm = async () => {
 	ElMessage({ message: msg, type: 'success' });
 };
 /**
- * 数据范围关闭
+ * Data range is closed
  */
 const handleDialogClose = () => {
 	dialogVisible.value = false;
 };
 
 /**
- * 齿轮点击
+ * Gear click
  */
 const handleSettingClick = async (btn: RoleMenuBtnType) => {
 	selectBtn.value = btn;
@@ -144,11 +144,11 @@ const handleSettingClick = async (btn: RoleMenuBtnType) => {
 };
 
 /**
- * 部门数据
+ * Departmental data
  *
  */
 const deptData = ref<number[]>([]);
-// 页面打开后获取列表数据
+// Get list data after the page is opened
 onMounted(async () => {
 	const res = await getRoleToDeptAll({ role: RoleDrawer.roleId, menu_button: selectBtn.value.id });
 	const depts = XEUtils.toArrayTree(res.data, { parentKey: 'parent', strict: false });
@@ -174,7 +174,7 @@ onMounted(async () => {
 .btn-item {
 	display: flex;
 	align-items: center;
-	justify-content: center; /* 水平居中 */
+	justify-content: center; /* Center horizontally */
 	.el-icon {
 		margin-left: 5px;
 	}

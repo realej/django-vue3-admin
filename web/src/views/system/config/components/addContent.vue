@@ -1,46 +1,46 @@
 <template>
 	<div style="padding: 20px">
 		<el-form ref="formRef" :model="form" :rules="rules" label-width="80px">
-			<el-form-item label="所属分组" prop="parent">
-				<el-select v-model="form.parent" placeholder="请选择分组" clearable>
+			<el-form-item label="Grouping" prop="parent">
+				<el-select v-model="form.parent" placeholder="Please select Grouping" clearable>
 					<el-option :label="item.title" :value="item.id" :key="index" v-for="(item, index) in parentOptions"></el-option>
 				</el-select>
 			</el-form-item>
-			<el-form-item label="标题" prop="title">
-				<el-input v-model="form.title" placeholder="请输入" clearable></el-input>
+			<el-form-item label="title" prop="title">
+				<el-input v-model="form.title" placeholder="Please enter" clearable></el-input>
 			</el-form-item>
-			<el-form-item label="key值" prop="key">
-				<el-input v-model="form.key" placeholder="请输入" clearable></el-input>
+			<el-form-item label="keyvalue" prop="key">
+				<el-input v-model="form.key" placeholder="Please enter" clearable></el-input>
 			</el-form-item>
-			<el-form-item label="表单类型" prop="form_item_type">
-				<el-select v-model="form.form_item_type" placeholder="请选择" clearable>
+			<el-form-item label="Form Type" prop="form_item_type">
+				<el-select v-model="form.form_item_type" placeholder="Please select" clearable>
 					<el-option :label="item.label" :value="item.value" :key="index" v-for="(item, index) in dictionary('config_form_type')"></el-option>
 				</el-select>
 			</el-form-item>
 			<el-form-item
 				v-if="[4, 5, 6].indexOf(form.form_item_type) > -1"
-				label="字典key"
+				label="dictionarykey"
 				prop="setting"
-				:rules="[{ required: true, message: '不能为空' }]"
+				:rules="[{ required: true, message: 'Can't be empty' }]"
 			>
-				<el-input v-model="form.setting" placeholder="请输入dictionary中key值" clearable></el-input>
+				<el-input v-model="form.setting" placeholder="Please enterdictionarymiddlekeyvalue" clearable></el-input>
 			</el-form-item>
 			<div v-if="[13, 14].indexOf(form.form_item_type) > -1">
 				<associationTable ref="associationTableRef" v-model="form.setting" @updateVal="associationTableUpdate"></associationTable>
 			</div>
-			<el-form-item label="校验规则">
-				<el-select v-model="form.rule" multiple placeholder="请选择(可多选)" clearable>
+			<el-form-item label="Verification rules">
+				<el-select v-model="form.rule" multiple placeholder="Please select(Multiple choices are available)" clearable>
 					<el-option :label="item.label" :value="item.value" :key="index" v-for="(item, index) in ruleOptions"></el-option>
 				</el-select>
 			</el-form-item>
-			<el-form-item label="提示信息" prop="placeholder">
-				<el-input v-model="form.placeholder" placeholder="请输入" clearable></el-input>
+			<el-form-item label="Prompt information" prop="placeholder">
+				<el-input v-model="form.placeholder" placeholder="Please enter" clearable></el-input>
 			</el-form-item>
-			<el-form-item label="排序" prop="sort">
+			<el-form-item label="Sort" prop="sort">
 				<el-input-number v-model="form.sort" :min="0" :max="99"></el-input-number>
 			</el-form-item>
 			<el-form-item>
-				<el-button type="primary" @click="onSubmit(formRef)">立即创建</el-button>
+				<el-button type="primary" @click="onSubmit(formRef)">Create now</el-button>
 			</el-form-item>
 		</el-form>
 	</div>
@@ -67,45 +67,45 @@ const rules = reactive<FormRules>({
 	parent: [
 		{
 			required: true,
-			message: '请选择',
+			message: 'Please select',
 		},
 	],
 	title: [
 		{
 			required: true,
-			message: '请输入',
+			message: 'Please enter',
 		},
 	],
 	key: [
 		{
 			required: true,
-			message: '请输入',
+			message: 'Please enter',
 		},
 		{
 			pattern: /^[A-Za-z0-9_]+$/,
-			message: '请输入数字、字母或下划线',
+			message: 'Please enter a number、Letter or underline',
 		},
 	],
 	form_item_type: [
 		{
 			required: true,
-			message: '请输入',
+			message: 'Please enter',
 		},
 	],
 });
 let parentOptions: any = ref([]);
 let ruleOptions = ref([
 	{
-		label: '必填项',
-		value: '{"required": true, "message": "必填项不能为空"}',
+		label: 'Required',
+		value: '{"required": true, "message": "Required fields cannot be empty"}',
 	},
 	{
-		label: '邮箱',
-		value: '{ "type": "email", "message": "请输入正确的邮箱地址"}',
+		label: 'Mail',
+		value: '{ "type": "email", "message": "Please enter the correct email address"}',
 	},
 	{
-		label: 'URL地址',
-		value: '{ "type": "url", "message": "请输入正确的URL地址"}',
+		label: 'URLaddress',
+		value: '{ "type": "url", "message": "Please enter the correct oneURLaddress"}',
 	},
 ]);
 const getParent = () => {
@@ -126,7 +126,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
 		if (valid) {
 			api.AddObj(form).then((res: any) => {
 				if (res.code == 2000) {
-          successMessage('新增成功');
+          successMessage('New addition successful');
           refreshView()
         }
 			});
@@ -136,7 +136,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
 	});
 };
 
-// 关联表数据更新
+// Related table data update
 const associationTableUpdate = () => {
 	return new Promise(function (resolve, reject) {
 		if (associationTableRef) {

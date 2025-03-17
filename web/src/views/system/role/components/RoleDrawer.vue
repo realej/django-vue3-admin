@@ -1,7 +1,7 @@
 <template>
 	<el-drawer
 		v-model="RoleDrawer.drawerVisible"
-		title="权限配置"
+		title="Permission configuration"
 		direction="rtl"
 		size="80%"
 		:close-on-click-modal="false"
@@ -10,9 +10,9 @@
 	>
 		<template #header>
 			<div>
-				当前授权角色：
+				Current authorized role：
 				<el-tag style="margin-right: 20px">{{ RoleDrawer.roleName }}</el-tag>
-				授权人员：
+				Authorized Personnel：
 				<el-button size="small" :icon="UserFilled" @click="handleUsers">{{ RoleDrawer.users.length }}</el-button>
 			</div>
 		</template>
@@ -25,15 +25,15 @@
 			<pane min-size="20">
 				<div class="pane-box">
 					<el-tabs v-model="activeName" class="demo-tabs">
-						<el-tab-pane label="接口权限" name="first"><MenuBtnCom /></el-tab-pane>
-						<el-tab-pane label="列字段权限" name="second"><MenuFieldCom /></el-tab-pane>
+						<el-tab-pane label="Interface permissions" name="first"><MenuBtnCom /></el-tab-pane>
+						<el-tab-pane label="Column field permissions" name="second"><MenuFieldCom /></el-tab-pane>
 					</el-tabs>
 				</div>
 			</pane>
 		</splitpanes>
 	</el-drawer>
 
-	<el-dialog v-model="dialogVisible" title="授权用户" width="700px" :close-on-click-modal="false">
+	<el-dialog v-model="dialogVisible" title="Authorized User" width="700px" :close-on-click-modal="false">
 		<RoleUsersCom />
 	</el-dialog>
 </template>
@@ -50,26 +50,26 @@ const MenuTreeCom = defineAsyncComponent(() => import('./RoleMenuTree.vue'));
 const MenuBtnCom = defineAsyncComponent(() => import('./RoleMenuBtn.vue'));
 const MenuFieldCom = defineAsyncComponent(() => import('./RoleMenuField.vue'));
 const RoleUsersCom = defineAsyncComponent(() => import('./RoleUsers.vue'));
-const RoleDrawer = RoleDrawerStores(); // 抽屉参数
-const RoleUsers = RoleUsersStores(); // 角色-用户
+const RoleDrawer = RoleDrawerStores(); // Drawer parameters
+const RoleUsers = RoleUsersStores(); // Role-user
 const activeName = ref('first');
 
 const dialogVisible = ref(false);
 
 const handleUsers = () => {
 	dialogVisible.value = true;
-	RoleUsers.get_all_users(); // 获取所有用户
-	RoleUsers.set_right_users(RoleDrawer.$state.users); // 设置已选中用户
+	RoleUsers.get_all_users(); // Get all users
+	RoleUsers.set_right_users(RoleDrawer.$state.users); // Settings selected users
 };
 </script>
 
 <style lang="scss" scoped>
 .pane-box {
-	width: 100vw; /* 视口宽度 */
-	height: 100vh; /* 视口高度 */
-	max-width: 100%; /* 确保不超过父元素的宽度 */
-	max-height: 100%; /* 确保不超过父元素的高度 */
-	overflow: auto; /* 当内容超出容器尺寸时显示滚动条 */
+	width: 100vw; /* Viewport width */
+	height: 100vh; /* Viewport height */
+	max-width: 100%; /* Make sure not exceeds the width of the parent element */
+	max-height: 100%; /* Make sure not exceeds the height of the parent element */
+	overflow: auto; /* Show scrollbar when content exceeds container size */
 	padding: 10px;
 	background-color: #fff;
 }

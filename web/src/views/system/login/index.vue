@@ -16,7 +16,7 @@
 <!--				<span class="login-right-warp-two"></span>-->
 				<div class="login-right-warp-mian">
 					<div class="login-right-warp-main-title">
-            {{userInfos.pwd_change_count===0?'初次登录修改密码':'欢迎登录'}}
+            {{userInfos.pwd_change_count===0?'First login to modify password':'Welcome to log in'}}
           </div>
 					<div class="login-right-warp-main-form">
 						<div v-if="!state.isScan">
@@ -28,7 +28,7 @@
 									<Account />
 								</el-tab-pane>
 
-								<!-- TODO 手机号码登录未接入，展示隐藏 -->
+								<!-- TODO Mobile phone number login is not connected，Show Hidden -->
 								<!-- <el-tab-pane :label="$t('message.label.two2')" name="mobile">
 									<Mobile />
 								</el-tab-pane> -->
@@ -45,19 +45,19 @@
 		</div>
 
 		<div class="login-authorization z-10">
-			<p>Copyright © {{ getSystemConfig['login.copyright'] || '2021-2024 北京信码新创科技有限公司' }} 版权所有</p>
+			<p>Copyright © {{ getSystemConfig['login.copyright'] || '2021-2024 Beijing Xinma Xinchuang Technology Co., Ltd.' }} all rights reserved</p>
 			<p class="la-other" style="margin-top: 5px;">
 				<a href="https://beian.miit.gov.cn" target="_blank">{{ getSystemConfig['login.keep_record'] ||
-					'京ICP备2021031018号' }}</a>
+					'BeijingICPPrepare2021031018Number' }}</a>
 				|
 				<a :href="getSystemConfig['login.help_url'] ? getSystemConfig['login.help_url'] : '#'"
-					target="_blank">帮助</a>
+					target="_blank">help</a>
 				|
 				<a
-					:href="getSystemConfig['login.privacy_url'] ? getBaseURL(getSystemConfig['login.privacy_url']) : '#'">隐私</a>
+					:href="getSystemConfig['login.privacy_url'] ? getBaseURL(getSystemConfig['login.privacy_url']) : '#'">privacy</a>
 				|
 				<a
-					:href="getSystemConfig['login.clause_url'] ? getBaseURL(getSystemConfig['login.clause_url']) : '#'">条款</a>
+					:href="getSystemConfig['login.clause_url'] ? getBaseURL(getSystemConfig['login.clause_url']) : '#'">Terms</a>
 			</p>
 		</div>
 	</div>
@@ -76,7 +76,7 @@ import loginMain from '/@/assets/login-main.svg';
 import loginBg from '/@/assets/login-bg.png';
 import { SystemConfigStore } from '/@/stores/systemConfig'
 import { getBaseURL } from "/@/utils/baseUrl";
-// 引入组件
+// Introducing components
 const Account = defineAsyncComponent(() => import('/@/views/system/login/component/account.vue'));
 const Mobile = defineAsyncComponent(() => import('/@/views/system/login/component/mobile.vue'));
 const Scan = defineAsyncComponent(() => import('/@/views/system/login/component/scan.vue'));
@@ -85,7 +85,7 @@ import _ from "lodash-es";
 import {useUserInfo} from "/@/stores/userInfo";
 const { userInfos } = storeToRefs(useUserInfo());
 
-// 定义变量内容
+// Define variable content
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive({
@@ -103,7 +103,7 @@ watch(()=>userInfos.value.pwd_change_count,(val)=>{
 },{deep:true,immediate:true})
 
 
-// 获取布局配置信息
+// Get layout configuration information
 const getThemeConfig = computed(() => {
 	return themeConfig.value;
 });
@@ -127,7 +127,7 @@ const siteBg = computed(() => {
 	}
 });
 
-// 页面加载时
+// When the page loads
 onMounted(() => {
 	NextLoading.done();
 });

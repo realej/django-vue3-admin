@@ -1,5 +1,5 @@
 <template>
-  <!--   你的自定义受控组件-->
+  <!--   Your custom controlled components-->
   <div>
     <el-tag :type="randomType">{{ data }}</el-tag>
   </div>
@@ -15,11 +15,11 @@ const props = defineProps({
   }
 })
 
-// template上使用data
+// templateUse ondata
 const data = ref()
 watch(() => {
       return props.modelValue
-    }, // 监听modelValue的变化，
+    }, // monitormodelValueChanges，
     (value) => {
       if (typeof value === "string") {
         data.value = value
@@ -30,8 +30,8 @@ watch(() => {
         data.value = null
       }
 
-    }, // 当modelValue值触发后，同步修改data.value的值
-    {immediate: true} // 立即触发一次，给data赋值初始值
+    }, // whenmodelValueAfter the value is triggered，Synchronous modificationdata.valueValue of
+    {immediate: true} // Trigger once immediately，GivedataAssign initial value
 )
 
 const tagType = ['success', 'info', 'warning', 'danger']

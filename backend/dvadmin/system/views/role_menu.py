@@ -13,7 +13,7 @@ from dvadmin.utils.viewset import CustomModelViewSet
 
 class RoleMenuPermissionSerializer(CustomModelSerializer):
     """
-    菜单按钮-序列化器
+    Menu Buttons-Serializer
     """
 
     class Meta:
@@ -24,7 +24,7 @@ class RoleMenuPermissionSerializer(CustomModelSerializer):
 
 class RoleMenuPermissionInitSerializer(CustomModelSerializer):
     """
-    初始化菜单按钮-序列化器
+    Initialize menu button-Serializer
     """
 
     class Meta:
@@ -34,7 +34,7 @@ class RoleMenuPermissionInitSerializer(CustomModelSerializer):
 
 class RoleMenuPermissionCreateUpdateSerializer(CustomModelSerializer):
     """
-    初始化菜单按钮-序列化器
+    Initialize menu button-Serializer
     """
 
     class Meta:
@@ -45,12 +45,12 @@ class RoleMenuPermissionCreateUpdateSerializer(CustomModelSerializer):
 
 class RoleMenuPermissionViewSet(CustomModelViewSet):
     """
-    菜单按钮接口
-    list:查询
-    create:新增
-    update:修改
-    retrieve:单例
-    destroy:删除
+    Menu Button Interface
+    list:Query
+    create:New
+    update:Revise
+    retrieve:Single case
+    destroy:delete
     """
     queryset = RoleMenuPermission.objects.all()
     serializer_class = RoleMenuPermissionSerializer
@@ -61,26 +61,26 @@ class RoleMenuPermissionViewSet(CustomModelViewSet):
     @action(methods=['post'],detail=False)
     def save_auth(self,request):
         """
-        保存页面菜单授权
+        Save page menu authorization
         :param request:
         :return:
         """
         body = request.data
         role_id = body.get('role',None)
         if role_id is None:
-            return ErrorResponse(msg="未获取到角色参数")
+            return ErrorResponse(msg="Role parameters not obtained")
         menu_list = body.get('menu',None)
         if menu_list is None:
-            return ErrorResponse(msg="未获取到菜单参数")
+            return ErrorResponse(msg="Menu parameters not obtained")
         obj_list = RoleMenuPermission.objects.filter(role__id=role_id).values_list('menu__id',flat=True)
         old_set = set(obj_list)
         new_set = set(menu_list)
-        #need_update = old_set.intersection(new_set) # 需要更新的
-        need_del = old_set.difference(new_set) # 需要删除的
-        need_add = new_set.difference(old_set) # 需要新增的
+        #need_update = old_set.intersection(new_set) # Need to be updated
+        need_del = old_set.difference(new_set) # Need to be deleted
+        need_add = new_set.difference(old_set) # Need new ones
         RoleMenuPermission.objects.filter(role__id=role_id,menu__in=list(need_del)).delete()
         data = [{"role": role_id, "menu": item} for item in list(need_add)]
         serializer = RoleMenuPermissionSerializer(data=data,many=True,request=request)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            return DetailResponse(msg="保存成功",data=serializer.data)
+            return DetailResponse(msg="Save successfully",data=serializer.data)

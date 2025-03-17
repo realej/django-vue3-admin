@@ -50,7 +50,7 @@ export function lazyLoadDept(query: UserPageQuery) {
 }
 
 /**
- * 上下移动
+ * Move up and down
  */
 export function deptMoveUp(obj: AddReq) {
 	return request({
@@ -69,7 +69,7 @@ export function deptMoveDown(obj: AddReq) {
 }
 
 /**
- * 用户相关接口
+ * User-related interface
  */
 export function getDeptUserList(query: PageQuery) {
 	return request({
@@ -80,7 +80,7 @@ export function getDeptUserList(query: PageQuery) {
 }
 
 /**
- * 获取所有部门列表
+ * Get a list of all departments
  */
 export function getAllDeptList() {
 	return request({

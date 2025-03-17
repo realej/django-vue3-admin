@@ -21,7 +21,7 @@
 				</div>
 				<div class="layout-lock-screen-date-top">
 					<SvgIcon name="ele-Top" />
-					<div class="layout-lock-screen-date-top-text">上滑解锁</div>
+					<div class="layout-lock-screen-date-top-text">Slide up to unlock</div>
 				</div>
 			</div>
 			<transition name="el-zoom-in-center">
@@ -33,7 +33,7 @@
 						<div class="layout-lock-screen-login-box-name">Administrator</div>
 						<div class="layout-lock-screen-login-box-value">
 							<el-input
-								placeholder="请输入密码"
+								placeholder="Please enter your password"
 								ref="layoutLockScreenInputRef"
 								v-model="state.lockScreenPassword"
 								@keyup.enter.native.stop="onLockScreenSubmit()"
@@ -66,7 +66,7 @@ import { Local } from '/@/utils/storage';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 
-// 定义变量内容
+// Define variable content
 const layoutLockScreenDateRef = ref<HtmlType>();
 const layoutLockScreenInputRef = ref();
 const storesThemeConfig = useThemeConfig();
@@ -89,27 +89,27 @@ const state = reactive({
 	lockScreenPassword: '',
 });
 
-// 鼠标按下 pc
+// Press the mouse pc
 const onDownPc = (down: MouseEvent) => {
 	state.isFlags = true;
 	state.downClientY = down.clientY;
 };
-// 鼠标按下 app
+// Press the mouse app
 const onDownApp = (down: TouchEvent) => {
 	state.isFlags = true;
 	state.downClientY = down.touches[0].clientY;
 };
-// 鼠标移动 pc
+// Mouse movement pc
 const onMovePc = (move: MouseEvent) => {
 	state.moveDifference = move.clientY - state.downClientY;
 	onMove();
 };
-// 鼠标移动 app
+// Mouse movement app
 const onMoveApp = (move: TouchEvent) => {
 	state.moveDifference = move.touches[0].clientY - state.downClientY;
 	onMove();
 };
-// 鼠标移动事件
+// Mouse movement event
 const onMove = () => {
 	if (state.isFlags) {
 		const el = <HTMLElement>state.querySelectorEl;
@@ -129,7 +129,7 @@ const onMove = () => {
 		}
 	}
 };
-// 鼠标松开
+// Release the mouse
 const onEnd = () => {
 	state.isFlags = false;
 	state.transparency = 1;
@@ -137,26 +137,26 @@ const onEnd = () => {
 		(<HTMLElement>state.querySelectorEl).setAttribute('style', `top:0px;opacity:1;transition:all 0.3s ease;`);
 	}
 };
-// 获取要拖拽的初始元素
+// Get the initial element to be dragged
 const initGetElement = () => {
 	nextTick(() => {
 		state.querySelectorEl = layoutLockScreenDateRef.value;
 	});
 };
-// 时间初始化
+// Time initialization
 const initTime = () => {
 	state.time.hm = formatDate(new Date(), 'HH:MM');
 	state.time.s = formatDate(new Date(), 'SS');
-	state.time.mdq = formatDate(new Date(), 'mm月dd日，WWW');
+	state.time.mdq = formatDate(new Date(), 'mmmoonddday，WWW');
 };
-// 时间初始化定时器
+// Time initialization timer
 const initSetTime = () => {
 	initTime();
 	state.setIntervalTime = window.setInterval(() => {
 		initTime();
 	}, 1000);
 };
-// 锁屏时间定时器
+// Lock screen time timer
 const initLockScreen = () => {
 	if (themeConfig.value.isLockScreen) {
 		state.isShowLockScreenIntervalTime = window.setInterval(() => {
@@ -171,24 +171,24 @@ const initLockScreen = () => {
 		clearInterval(state.isShowLockScreenIntervalTime);
 	}
 };
-// 存储布局配置
+// Storage layout configuration
 const setLocalThemeConfig = () => {
 	themeConfig.value.isDrawer = false;
 	Local.set('themeConfig', themeConfig.value);
 };
-// 密码输入点击事件
+// Password input click event
 const onLockScreenSubmit = () => {
 	themeConfig.value.isLockScreen = false;
 	themeConfig.value.lockScreenTime = 30;
 	setLocalThemeConfig();
 };
-// 页面加载时
+// When the page loads
 onMounted(() => {
 	initGetElement();
 	initSetTime();
 	initLockScreen();
 });
-// 页面卸载时
+// When the page is uninstalled
 onUnmounted(() => {
 	window.clearInterval(state.setIntervalTime);
 	window.clearInterval(state.isShowLockScreenIntervalTime);

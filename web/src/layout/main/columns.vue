@@ -17,27 +17,27 @@ import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 
-// 引入组件
+// Introducing components
 const LayoutAside = defineAsyncComponent(() => import('/@/layout/component/aside.vue'));
 const LayoutHeader = defineAsyncComponent(() => import('/@/layout/component/header.vue'));
 const LayoutMain = defineAsyncComponent(() => import('/@/layout/component/main.vue'));
 const ColumnsAside = defineAsyncComponent(() => import('/@/layout/component/columnsAside.vue'));
 
-// 定义变量内容
+// Define variable content
 const layoutScrollbarRef = ref<RefType>('');
 const layoutMainRef = ref<InstanceType<typeof LayoutMain>>();
 const route = useRoute();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 
-// 重置滚动条高度
+// Reset scrollbar height
 const updateScrollbar = () => {
-	// 更新父级 scrollbar
+	// Update parent scrollbar
 	layoutScrollbarRef.value.update();
-	// 更新子级 scrollbar
+	// Update child level scrollbar
 	layoutMainRef.value!.layoutMainScrollbarRef.update();
 };
-// 重置滚动条高度，由于组件是异步引入的
+// Reset scrollbar height，Since the components are introduced asynchronously
 const initScrollBarHeight = () => {
 	nextTick(() => {
 		setTimeout(() => {
@@ -47,18 +47,18 @@ const initScrollBarHeight = () => {
 		}, 500);
 	});
 };
-// 页面加载时
+// When the page loads
 onMounted(() => {
 	initScrollBarHeight();
 });
-// 监听路由的变化，切换界面时，滚动条置顶
+// Listen to changes in routes，When switching interface，Scroll bar top
 watch(
 	() => route.path,
 	() => {
 		initScrollBarHeight();
 	}
 );
-// 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
+// monitor themeConfig Changes in configuration files，Update menu el-scrollbar The height of
 watch(
 	themeConfig,
 	() => {

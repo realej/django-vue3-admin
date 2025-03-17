@@ -27,14 +27,14 @@ import { ElMessage } from 'element-plus';
 import XEUtils from 'xe-utils';
 import { RoleMenuTreeType } from '../types';
 
-const RoleDrawer = RoleDrawerStores(); // 角色-抽屉
-const RoleMenuTree = RoleMenuTreeStores(); // 角色-菜单
-const RoleMenuBtn = RoleMenuBtnStores(); // 角色-菜单-按钮
-const RoleMenuField = RoleMenuFieldStores(); // 角色-菜单-列字段
-const RoleMenuFieldHeader = RoleMenuFieldHeaderStores();// 角色-菜单-列字段
-const menuData = ref<RoleMenuTreeType[]>([]); // 菜单列表数据
-const menuDefaultCheckedKeys = ref<(number | string | undefined)[]>([]); // 默认选中的菜单列表
-// 菜单配置
+const RoleDrawer = RoleDrawerStores(); // Role-drawer
+const RoleMenuTree = RoleMenuTreeStores(); // Role-menu
+const RoleMenuBtn = RoleMenuBtnStores(); // Role-menu-Button
+const RoleMenuField = RoleMenuFieldStores(); // Role-menu-Column fields
+const RoleMenuFieldHeader = RoleMenuFieldHeaderStores();// Role-menu-Column fields
+const menuData = ref<RoleMenuTreeType[]>([]); // Menu list data
+const menuDefaultCheckedKeys = ref<(number | string | undefined)[]>([]); // The menu list selected by default
+// Menu Configuration
 const defaultTreeProps = {
 	children: 'children',
 	label: 'name',
@@ -42,9 +42,9 @@ const defaultTreeProps = {
 };
 
 /**
- * 菜单复选框选中
- * @param node：当前节点的 Node 对象
- * @param checked：布尔值，表示当前节点是否被选中
+ * Menu check box selected
+ * @param node：The current node's Node Object
+ * @param checked：Boolean value，Indicates whether the current node is selected
  */
 const handleMenuChange = (node: any, checked: boolean) => {
 	setRoleMenu({ roleId: RoleDrawer.roleId, menuId: node.id, isCheck: checked }).then((res: any) => {
@@ -52,26 +52,26 @@ const handleMenuChange = (node: any, checked: boolean) => {
 	});
 };
 /**
- * 菜单点击事件
+ * Menu click event
  */
 const handleMenuClick = async (selectNode: RoleMenuTreeType) => {
 	if (!selectNode.is_catalog) {
-		RoleMenuTree.setRoleMenuTree(selectNode); // 更新当前选中的菜单
-		// 获取当前菜单的按钮列表
+		RoleMenuTree.setRoleMenuTree(selectNode); // Update the currently selected menu
+		// Get the button list for the current menu
 		const { data } = await getRoleMenuBtnField({
 			roleId: RoleDrawer.roleId,
 			menuId: selectNode.id,
 		});
-		RoleMenuBtn.setState(data.menu_btn); // 更新按钮列表
-		RoleMenuField.setState(data.menu_field); // 更新列字段列表
+		RoleMenuBtn.setState(data.menu_btn); // Update button list
+		RoleMenuField.setState(data.menu_field); // Update column field list
 	} else {
-		RoleMenuBtn.setState([]); // 更新按钮列表
-		RoleMenuField.setState([]); // 更新列字段列表
+		RoleMenuBtn.setState([]); // Update button list
+		RoleMenuField.setState([]); // Update column field list
 	}
 	RoleMenuFieldHeader.$reset()
 };
 
-// 页面打开后获取列表数据
+// Get list data after the page is opened
 onMounted(async () => {
 	menuData.value = await getRoleMenu({ roleId: RoleDrawer.roleId });
 	menuDefaultCheckedKeys.value = XEUtils.toTreeArray(menuData.value)

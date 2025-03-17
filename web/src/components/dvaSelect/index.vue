@@ -1,5 +1,5 @@
 <template>
-  <!--   你的自定义受控组件-->
+  <!--   Your custom controlled components-->
   <el-select-v2
       v-model="data"
       :options="options"
@@ -16,14 +16,14 @@ import {useUi} from "@fast-crud/fast-crud";
 import {request} from "/@/utils/service";
 
 const props = defineProps({
-  dict: { // 接收来自FastCrud配置中的dict数据
+  dict: { // Received fromFastCrudIn configurationdictdata
     type: Array,
     required: true,
   },
   modelValue: {}
 })
 const emit = defineEmits(['update:modelValue'])
-// 获取数据
+// Get data
 const dataList = ref([])
 
 function getData(params) {
@@ -36,11 +36,11 @@ function getData(params) {
 
 }
 
-// template上使用data
+// templateUse ondata
 const data = ref()
 // const data = computed({
 //   get: () => {
-//     console.log("有默认值", props.modelValue)
+//     console.log("There is a default value", props.modelValue)
 //     //getData({id:props.modelValue})
 //
 //     console.log(11, dataList)
@@ -67,7 +67,7 @@ const selectProps = ref({
 watch(
     () => {
       return props.modelValue
-    }, // 监听modelValue的变化，
+    }, // monitormodelValueChanges，
     (value) => {
       // data.value = value
       request({
@@ -84,19 +84,19 @@ watch(
           data.value = null
         }
       })
-    }, // 当modelValue值触发后，同步修改data.value的值
-    {immediate: true} // 立即触发一次，给data赋值初始值
+    }, // whenmodelValueAfter the value is triggered，Synchronous modificationdata.valueValue of
+    {immediate: true} // Trigger once immediately，GivedataAssign initial value
 )
-//获取表单校验上下文
+//Get the form verification context
 const {ui} = useUi()
 const formValidator = ui.formItem.injectFormItemContext();
-// 当data需要变化时，上报给父组件
-// 父组件监听到update:modelValue事件后，会更新props.modelValue的值
-// 然后watch会被触发，修改data.value的值。
+// whendataWhen changes are needed，Report to parent component
+// Parent component listens toupdate:modelValueAfter the incident，Will be updatedprops.modelValueValue of
+// ThenwatchWill be triggered，Revisedata.valueValue of。
 function onDataChange(value) {
   emit('update:modelValue', value)
   data.value = value
-  //触发校验
+  //Trigger verification
   formValidator.onChange()
   formValidator.onBlur()
 }

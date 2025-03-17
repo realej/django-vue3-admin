@@ -1,96 +1,96 @@
 <template>
 	<div class="menu-form-com">
 		<div class="menu-form-alert">
-			1.红色星号表示必填;<br />
-			2.添加菜单，如果是目录，组件地址为空即可;<br />
-			3.添加根节点菜单，父级菜单为空即可;
+			1.Red asterisk means required;<br />
+			2.Add menu，If it's a directory，The component address is empty;<br />
+			3.Add root node menu，The parent menu is empty;
 		</div>
 		<el-form ref="formRef" :rules="rules" :model="menuFormData" label-width="80px" label-position="right">
-			<el-form-item label="菜单名称" prop="name">
-				<el-input v-model="menuFormData.name" placeholder="请输入菜单名称" />
+			<el-form-item label="Menu name" prop="name">
+				<el-input v-model="menuFormData.name" placeholder="Please enter the menu name" />
 			</el-form-item>
-			<el-form-item label="父级菜单" prop="parent">
+			<el-form-item label="Parent menu" prop="parent">
 				<el-tree-select v-model="menuFormData.parent" :props="defaultTreeProps" :data="deptDefaultList"
 					:cache-data="props.cacheData" lazy check-strictly clearable :load="handleTreeLoad"
-					placeholder="请选择父级菜单" style="width: 100%" />
+					placeholder="Please select the parent menu" style="width: 100%" />
 			</el-form-item>
 
-			<el-form-item label="路由地址" prop="web_path">
-				<el-input v-model="menuFormData.web_path" placeholder="请输入路由地址，请以/开头" />
+			<el-form-item label="Routing address" prop="web_path">
+				<el-input v-model="menuFormData.web_path" placeholder="Please enter the routing address，Please/beginning" />
 			</el-form-item>
 
-			<el-form-item label="图标" prop="icon">
+			<el-form-item label="icon" prop="icon">
 				<IconSelector clearable v-model="menuFormData.icon" />
 			</el-form-item>
 
 			<el-row>
 				<el-col :span="12">
-					<el-form-item required label="状态">
-						<el-switch v-model="menuFormData.status" width="60" inline-prompt active-text="启用"
-							inactive-text="禁用" />
+					<el-form-item required label="state">
+						<el-switch v-model="menuFormData.status" width="60" inline-prompt active-text="Enable"
+							inactive-text="Disabled" />
 					</el-form-item>
 				</el-col>
 				<el-col :span="12">
-					<el-form-item v-if="menuFormData.status" required label="侧边显示">
-						<el-switch v-model="menuFormData.visible" width="60" inline-prompt active-text="显示"
-							inactive-text="隐藏" />
+					<el-form-item v-if="menuFormData.status" required label="Side display">
+						<el-switch v-model="menuFormData.visible" width="60" inline-prompt active-text="show"
+							inactive-text="hide" />
 					</el-form-item>
 				</el-col>
 			</el-row>
 
 			<el-row>
 				<el-col :span="12">
-					<el-form-item required label="是否目录">
-						<el-switch v-model="menuFormData.is_catalog" width="60" inline-prompt active-text="是"
-							inactive-text="否" />
+					<el-form-item required label="Whether to directory">
+						<el-switch v-model="menuFormData.is_catalog" width="60" inline-prompt active-text="yes"
+							inactive-text="no" />
 					</el-form-item>
 				</el-col>
 				<el-col :span="12">
-					<el-form-item v-if="!menuFormData.is_catalog" required label="外链接">
-						<el-switch v-model="menuFormData.is_link" width="60" inline-prompt active-text="是"
-							inactive-text="否" />
+					<el-form-item v-if="!menuFormData.is_catalog" required label="External link">
+						<el-switch v-model="menuFormData.is_link" width="60" inline-prompt active-text="yes"
+							inactive-text="no" />
 					</el-form-item>
 				</el-col>
 				<el-col :span="12">
-					<el-form-item required v-if="!menuFormData.is_catalog" label="是否固定">
-						<el-switch v-model="menuFormData.is_affix" width="60" inline-prompt active-text="是"
-							inactive-text="否" />
+					<el-form-item required v-if="!menuFormData.is_catalog" label="Is it fixed or not">
+						<el-switch v-model="menuFormData.is_affix" width="60" inline-prompt active-text="yes"
+							inactive-text="no" />
 					</el-form-item>
 				</el-col>
 				<el-col :span="12">
-					<el-form-item v-if="!menuFormData.is_catalog && menuFormData.is_link" required label="是否内嵌">
-						<el-switch v-model="menuFormData.is_iframe" width="60" inline-prompt active-text="是"
-							inactive-text="否" />
+					<el-form-item v-if="!menuFormData.is_catalog && menuFormData.is_link" required label="Is it embedded?">
+						<el-switch v-model="menuFormData.is_iframe" width="60" inline-prompt active-text="yes"
+							inactive-text="no" />
 					</el-form-item>
 				</el-col>
 			</el-row>
 
-			<el-form-item label="备注">
+			<el-form-item label="Remark">
 				<el-input v-model="menuFormData.description" maxlength="200" show-word-limit type="textarea"
-					placeholder="请输入备注" />
+					placeholder="Please enter a note" />
 			</el-form-item>
 
 			<el-divider></el-divider>
 
 			<div style="min-height: 184px">
-				<el-form-item v-if="!menuFormData.is_catalog && !menuFormData.is_link" label="组件地址" prop="component">
+				<el-form-item v-if="!menuFormData.is_catalog && !menuFormData.is_link" label="Component address" prop="component">
 					<el-autocomplete class="w-full" v-model="menuFormData.component" :fetch-suggestions="querySearch"
-						:trigger-on-focus="false" clearable :debounce="100" placeholder="输入组件地址" />
+						:trigger-on-focus="false" clearable :debounce="100" placeholder="Enter component address" />
 				</el-form-item>
 
-				<el-form-item v-if="!menuFormData.is_catalog && !menuFormData.is_link" label="组件名称"
+				<el-form-item v-if="!menuFormData.is_catalog && !menuFormData.is_link" label="Component name"
 					prop="component_name">
-					<el-input v-model="menuFormData.component_name" placeholder="请输入组件名称" />
+					<el-input v-model="menuFormData.component_name" placeholder="Please enter the component name" />
 				</el-form-item>
 
-				<el-form-item v-if="!menuFormData.is_catalog && menuFormData.is_link" label="外链接" prop="link_url">
-					<el-input v-model="menuFormData.link_url" placeholder="请输入外链接地址" />
-          <el-alert :title="`输入{{token}}可自动替换系统 token `" type="info" />
+				<el-form-item v-if="!menuFormData.is_catalog && menuFormData.is_link" label="External link" prop="link_url">
+					<el-input v-model="menuFormData.link_url" placeholder="Please enter the external link address" />
+          <el-alert :title="`enter{{token}}Automatically replace the system token `" type="info" />
 				</el-form-item>
 
-				<el-form-item v-if="!menuFormData.is_catalog" label="缓存">
-					<el-switch v-model="menuFormData.cache" width="60" inline-prompt active-text="启用"
-						inactive-text="禁用" />
+				<el-form-item v-if="!menuFormData.is_catalog" label="cache">
+					<el-switch v-model="menuFormData.cache" width="60" inline-prompt active-text="Enable"
+						inactive-text="Disabled" />
 				</el-form-item>
 			</div>
 
@@ -98,8 +98,8 @@
 		</el-form>
 
 		<div class="menu-form-btns">
-			<el-button @click="handleSubmit" type="primary" :loading="menuBtnLoading">保存</el-button>
-			<el-button @click="handleCancel">取消</el-button>
+			<el-button @click="handleSubmit" type="primary" :loading="menuBtnLoading">keep</el-button>
+			<el-button @click="handleCancel">Cancel</el-button>
 		</div>
 	</div>
 </template>
@@ -138,7 +138,7 @@ const validateWebPath = (rule: any, value: string, callback: Function) => {
 	if (reg) {
 		callback();
 	} else {
-		callback(new Error('请输入正确的地址'));
+		callback(new Error('Please enter the correct address'));
 	}
 };
 
@@ -149,7 +149,7 @@ const validateLinkUrl = (rule: any, value: string, callback: Function) => {
 	if (reg) {
 		callback();
 	} else {
-		callback(new Error('请输入正确的地址'));
+		callback(new Error('Please enter the correct address'));
 	}
 };
 
@@ -163,11 +163,11 @@ const emit = defineEmits(['drawerClose']);
 const formRef = ref<InstanceType<typeof ElForm>>();
 
 const rules = reactive<FormRules>({
-	web_path: [{ required: true, message: '请输入正确的地址', validator: validateWebPath, trigger: 'blur' }],
-	name: [{ required: true, message: '菜单名称必填', trigger: 'blur' }],
-	component: [{ required: true, message: '请输入组件地址', trigger: 'blur' }],
-	component_name: [{ required: true, message: '请输入组件名称', trigger: 'blur' }],
-	link_url: [{ required: true, message: '请输入外链接地址', validator: validateLinkUrl, trigger: 'blur' }],
+	web_path: [{ required: true, message: 'Please enter the correct address', validator: validateWebPath, trigger: 'blur' }],
+	name: [{ required: true, message: 'Menu name required', trigger: 'blur' }],
+	component: [{ required: true, message: 'Please enter the component address', trigger: 'blur' }],
+	component_name: [{ required: true, message: 'Please enter the component name', trigger: 'blur' }],
+	link_url: [{ required: true, message: 'Please enter the external link address', validator: validateLinkUrl, trigger: 'blur' }],
 });
 
 let deptDefaultList = ref<MenuTreeItemType[]>([]);
@@ -221,7 +221,7 @@ const querySearch = (queryString: string, cb: any) => {
 		});
 	});
 	const results = queryString ? fileLists.filter(createFilter(queryString)) : fileLists;
-	// 统一去掉/src/views/前缀
+	// Remove it uniformly/src/views/Prefix
 	results.forEach((val) => {
 		val.label = val.label.replace('/src/views/', '');
 		val.value = val.value.replace('/src/views/', '');
@@ -236,7 +236,7 @@ const createFilter = (queryString: string) => {
 };
 
 /**
- * 树的懒加载
+ * Lazy loading of the tree
  */
 const handleTreeLoad = (node: Node, resolve: Function) => {
 	if (node.level !== 0) {
@@ -274,7 +274,7 @@ const handleCancel = (type: string = '') => {
 };
 
 /**
- * 初始化
+ * initialization
  */
 onMounted(async () => {
 	props.treeData.map((item) => {

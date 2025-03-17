@@ -16,15 +16,15 @@ import {toRaw} from "vue";
 import {checkVersion} from "/@/utils/upgrade";
 
 /**
- * 1、前端控制路由时：isRequestRoutes 为 false，需要写 roles，需要走 setFilterRoute 方法。
- * 2、后端控制路由时：isRequestRoutes 为 true，不需要写 roles，不需要走 setFilterRoute 方法），
- * 相关方法已拆解到对应的 `backEnd.ts` 与 `frontEnd.ts`（他们互不影响，不需要同时改 2 个文件）。
- * 特别说明：
- * 1、前端控制：路由菜单由前端去写（无菜单管理界面，有角色管理界面），角色管理中有 roles 属性，需返回到 userInfo 中。
- * 2、后端控制：路由菜单由后端返回（有菜单管理界面、有角色管理界面）
+ * 1、When front-end controls routing：isRequestRoutes for false，Need to write roles，Need to leave setFilterRoute method。
+ * 2、When the backend controls routing：isRequestRoutes for true，No need to write roles，No need to leave setFilterRoute method），
+ * The relevant methods have been disassembled to the corresponding `backEnd.ts` and `frontEnd.ts`（They don't affect each other，No need to change at the same time 2 A file）。
+ * Special Note：
+ * 1、Front-end control：The routing menu is written by the front end（No menu management interface，Have a role management interface），There are role management roles property，Need to return to userInfo middle。
+ * 2、Backend control：The routing menu is returned by the backend（There is a menu management interface、Have a role management interface）
  */
 
-// 读取 `/src/stores/themeConfig.ts` 是否开启后端控制路由配置
+// Read `/src/stores/themeConfig.ts` Whether to enable backend control routing configuration
 const storesThemeConfig = useThemeConfig(pinia);
 const {themeConfig} = storeToRefs(storesThemeConfig);
 const {isRequestRoutes} = themeConfig.value;
@@ -32,25 +32,25 @@ import {useUserInfo} from "/@/stores/userInfo";
 const { userInfos } = storeToRefs(useUserInfo());
 
 /**
- * 创建一个可以被 Vue 应用程序使用的路由实例
+ * Create a Vue The routing example used by the application
  * @method createRouter(options: RouterOptions): Router
- * @link 参考：https://next.router.vuejs.org/zh/api/#createrouter
+ * @link reference：https://next.router.vuejs.org/zh/api/#createrouter
  */
 export const router = createRouter({
     history: createWebHashHistory(),
     /**
-     * 说明：
-     * 1、notFoundAndNoPower 默认添加 404、401 界面，防止一直提示 No match found for location with path 'xxx'
-     * 2、backEnd.ts(后端控制路由)、frontEnd.ts(前端控制路由) 中也需要加 notFoundAndNoPower 404、401 界面。
-     *    防止 404、401 不在 layout 布局中，不设置的话，404、401 界面将全屏显示
+     * illustrate：
+     * 1、notFoundAndNoPower Added by default 404、401 interface，Prevent prompts No match found for location with path 'xxx'
+     * 2、backEnd.ts(Backend control routing)、frontEnd.ts(Front-end control routing) You also need to add notFoundAndNoPower 404、401 interface。
+     *    prevent 404、401 Not here layout In layout，If not set，404、401 The interface will be displayed in full screen
      */
     routes: [...notFoundAndNoPower, ...staticRoutes]
 });
 
 /**
- * 路由多级嵌套数组处理成一维数组
- * @param arr 传入路由菜单数据数组
- * @returns 返回处理后的一维路由菜单数组
+ * Routing multi-level nested arrays are processed into one-dimensional arrays
+ * @param arr Incoming routing menu data array
+ * @returns Returns the processed one-dimensional routing menu array
  */
 export function formatFlatteningRoutes(arr: any) {
     if (arr.length <= 0) return false;
@@ -63,11 +63,11 @@ export function formatFlatteningRoutes(arr: any) {
 }
 
 /**
- * 一维数组处理成多级嵌套数组（只保留二级：也就是二级以上全部处理成只有二级，keep-alive 支持二级缓存）
- * @description isKeepAlive 处理 `name` 值，进行缓存。顶级关闭，全部不缓存
- * @link 参考：https://v3.cn.vuejs.org/api/built-in-components.html#keep-alive
- * @param arr 处理后的一维路由菜单数组
- * @returns 返回将一维数组重新处理成 `定义动态路由（dynamicRoutes）` 的格式
+ * Process one-dimensional array into multi-level nested arrays（Only the second level is retained：That is, all levels two or above are processed to only level two，keep-alive Supports Level 2 cache）
+ * @description isKeepAlive deal with `name` value，Cache。Top Close，No cache
+ * @link reference：https://v3.cn.vuejs.org/api/built-in-components.html#keep-alive
+ * @param arr Processed one-dimensional routing menu array
+ * @returns Return to reprocess the one-dimensional array into `Define dynamic routing（dynamicRoutes）` Format
  */
 export function formatTwoStageRoutes(arr: any) {
     if (arr.length <= 0) return false;
@@ -77,15 +77,15 @@ export function formatTwoStageRoutes(arr: any) {
         if (v.path === '/') {
             newArr.push({component: v.component,name: v.name,path: v.path,redirect: v.redirect,meta: v.meta,children: []});
         } else {
-            // 判断是否是动态路由（xx/:id/:name），用于 tagsView 等中使用
-            // 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
+            // Determine whether it is a dynamic routing（xx/:id/:name），For tagsView Used in other places
+            // repair：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
             if (v.path.indexOf('/:') > -1) {
                 v.meta['isDynamic'] = true;
                 v.meta['isDynamicPath'] = v.path;
             }
             newArr[0].children.push({...v});
-            // 存 name 值，keep-alive 中 include 使用，实现路由的缓存
-            // 路径：/@/layout/routerView/parent.vue
+            // live name value，keep-alive middle include use，Implement routing cache
+            // path：/@/layout/routerView/parent.vue
             if (newArr[0].meta.isKeepAlive && v.meta.isKeepAlive && v.component_name != "") {
                 cacheList.push(v.name);
                 const stores = useKeepALiveNames(pinia);
@@ -98,9 +98,9 @@ export function formatTwoStageRoutes(arr: any) {
 
 const frameOutRoutes = staticRoutes.map(item => item.path)
 
-// 路由加载前
+// Before the route loads
 router.beforeEach(async (to, from, next) => {
-    // 检查浏览器本地版本与线上版本是否一致，判断是否需要刷新页面进行更新
+    // Check whether the browser's local version is consistent with the online version，Determine whether the page needs to be refreshed for updates
     await checkVersion()
     NProgress.configure({showSpinner: false});
     if (to.meta.title) NProgress.start();
@@ -126,10 +126,10 @@ router.beforeEach(async (to, from, next) => {
             const {routesList} = storeToRefs(storesRoutesList);
             if (routesList.value.length === 0) {
                 if (isRequestRoutes) {
-                    // 后端控制路由：路由数据初始化，防止刷新时丢失
+                    // Backend control routing：Routing data initialization，Prevent loss during refresh
                     await initBackEndControlRoutes();
-                    // 解决刷新时，一直跳 404 页面问题，关联问题 No match found for location with path 'xxx'
-                    // to.query 防止页面刷新时，普通路由带参数时，参数丢失。动态路由（xxx/:id/:name"）isDynamic 无需处理
+                    // Resolve refresh time，Keep jumping 404 Page Problems，Related issues No match found for location with path 'xxx'
+                    // to.query Prevent page refresh，When normal routes have parameters，Parameters are missing。Dynamic routing（xxx/:id/:name"）isDynamic No processing required
 
                     next({ path: to.path, query: to.query });
                 } else {
@@ -144,10 +144,10 @@ router.beforeEach(async (to, from, next) => {
     }
 });
 
-// 路由加载后
+// After the route is loaded
 router.afterEach(() => {
     NProgress.done();
 });
 
-// 导出路由
+// Export the route
 export default router;

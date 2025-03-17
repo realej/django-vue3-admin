@@ -3,7 +3,7 @@
     <slot name="input" v-bind="{}">
       <div v-if="props.showInput" style="width: 100%;" :class="props.inputClass" :style="props.inputStyle">
         <el-select v-if="props.inputType === 'selector'" v-model="data" suffix-icon="arrow-down" clearable
-          :multiple="props.multiple" placeholder="请选择文件" @click="selectVisiable = true && !props.disabled"
+          :multiple="props.multiple" placeholder="Please select a file" @click="selectVisiable = true && !props.disabled"
           :disabled="props.disabled" @clear="selectedInit" @remove-tag="selectedInit">
           <el-option v-for="item, index in listAllData" :key="index" :value="String(item[props.valueKey])"
             :label="item.name" />
@@ -69,34 +69,34 @@
     <el-dialog v-model="selectVisiable" :draggable="true" width="50%" :align-center="false" :append-to-body="true"
       @open="if (listData.length === 0) listRequest();" @close="onClose" @closed="onClosed" modal-class="_overlay">
       <template #header>
-        <span class="el-dialog__title">文件选择</span>
+        <span class="el-dialog__title">File selection</span>
         <el-divider style="margin: 0;" />
       </template>
       <div style="padding: 4px;">
         <div style="width: 100%; display: flex; justify-content: space-between; gap: 12px;">
           <el-tabs style="width: 100%;" v-model="tabsActived" :type="props.tabsType" :stretch="true"
             @tab-change="handleTabChange" v-if="!isSuperTenent">
-            <el-tab-pane v-if="props.tabsShow & SHOW.IMAGE" :name="0" label="图片" />
-            <el-tab-pane v-if="props.tabsShow & SHOW.VIDEO" :name="1" label="视频" />
-            <el-tab-pane v-if="props.tabsShow & SHOW.AUDIO" :name="2" label="音频" />
-            <el-tab-pane v-if="props.tabsShow & SHOW.OTHER" :name="3" label="其他" />
+            <el-tab-pane v-if="props.tabsShow & SHOW.IMAGE" :name="0" label="picture" />
+            <el-tab-pane v-if="props.tabsShow & SHOW.VIDEO" :name="1" label="video" />
+            <el-tab-pane v-if="props.tabsShow & SHOW.AUDIO" :name="2" label="Audio" />
+            <el-tab-pane v-if="props.tabsShow & SHOW.OTHER" :name="3" label="other" />
           </el-tabs>
           <el-tabs style="width: 100%;" v-model="tabsActived" :type="props.tabsType" :stretch="true"
             @tab-change="handleTabChange" v-if="isTenentMode">
-            <el-tab-pane v-if="props.tabsShow & SHOW.IMAGE" :name="4" label="系统图片" />
-            <el-tab-pane v-if="props.tabsShow & SHOW.VIDEO" :name="5" label="系统视频" />
-            <el-tab-pane v-if="props.tabsShow & SHOW.AUDIO" :name="6" label="系统音频" />
-            <el-tab-pane v-if="props.tabsShow & SHOW.OTHER" :name="7" label="系统其他" />
+            <el-tab-pane v-if="props.tabsShow & SHOW.IMAGE" :name="4" label="System Picture" />
+            <el-tab-pane v-if="props.tabsShow & SHOW.VIDEO" :name="5" label="System Video" />
+            <el-tab-pane v-if="props.tabsShow & SHOW.AUDIO" :name="6" label="System audio" />
+            <el-tab-pane v-if="props.tabsShow & SHOW.OTHER" :name="7" label="Other system" />
           </el-tabs>
         </div>
         <el-row justify="space-between" class="headerBar">
           <el-col :span="12">
             <slot name="actionbar-left">
-              <el-input v-model="filterForm.name" :placeholder="`请输入${TypeLabel[tabsActived % 4]}名`"
+              <el-input v-model="filterForm.name" :placeholder="`Please enter${TypeLabel[tabsActived % 4]}name`"
                 prefix-icon="search" clearable @change="listRequest" />
               <div>
                 <el-tag v-if="props.multiple" type="primary" effect="light">
-                  一共选中&nbsp;{{ data?.length || 0 }}&nbsp;个文件
+                  Selected in total&nbsp;{{ data?.length || 0 }}&nbsp;A file
                 </el-tag>
               </div>
             </slot>
@@ -109,10 +109,10 @@
                   :data="{ upload_method: 1 }" :show-file-list="true" :accept="AcceptList[tabsActived % 4]"
                   :on-success="() => { listRequest(); listRequestAll(); uploadRef.clearFiles(); }"
                   v-if="props.showUploadButton">
-                  <el-button type="primary" icon="plus">上传{{ TypeLabel[tabsActived % 4] }}</el-button>
+                  <el-button type="primary" icon="plus">Upload{{ TypeLabel[tabsActived % 4] }}</el-button>
                 </el-upload>
                 <el-button type="info" icon="link" @click="netVisiable = true" v-if="props.showNetButton">
-                  网络{{ TypeLabel[tabsActived % 4] }}
+                  network{{ TypeLabel[tabsActived % 4] }}
                 </el-button>
               </template>
             </slot>
@@ -120,7 +120,7 @@
         </el-row>
         <div v-if="!listData.length">
           <slot name="empty">
-            <el-empty description="无内容，请上传" style="width: 100%; height: calc(50vh); margin-top: 24px; padding: 4px;" />
+            <el-empty description="No content，Please upload" style="width: 100%; height: calc(50vh); margin-top: 24px; padding: 4px;" />
           </slot>
         </div>
         <div ref="listContainerRef" class="listContainer" v-else>
@@ -138,12 +138,12 @@
             :hide-on-single-page="false" @change="handlePageChange" />
         </div>
       </div>
-      <!-- 只要在获取中，就最大程度阻止关闭dialog -->
+      <!-- Just in the acquisition，Stop closing as much as possibledialog -->
       <el-dialog v-model="netVisiable" :draggable="false" width="50%" :align-center="false" :append-to-body="true"
-        :title="'网络' + TypeLabel[tabsActived % 4] + '上传'" @closed="netUrl = ''" :close-on-click-modal="!netLoading"
+        :title="'network' + TypeLabel[tabsActived % 4] + 'Upload'" @closed="netUrl = ''" :close-on-click-modal="!netLoading"
         :close-on-press-escape="!netLoading" :show-close="!netLoading" modal-class="_overlay">
-        <el-form-item :label="TypeLabel[tabsActived % 4] + '链接'">
-          <el-input v-model="netUrl" placeholder="请输入网络连接" clearable @input="netChange">
+        <el-form-item :label="TypeLabel[tabsActived % 4] + 'Link'">
+          <el-input v-model="netUrl" placeholder="Please enter the network connection" clearable @input="netChange">
             <template #prepend>
               <el-select v-model="netPrefix" style="width: 110px;">
                 <el-option v-for="item, index in ['HTTP://', 'HTTPS://']" :key="index" :label="item" :value="item" />
@@ -152,15 +152,15 @@
           </el-input>
         </el-form-item>
         <template #footer>
-          <el-button v-if="!netLoading" type="default" @click="netVisiable = false">取消</el-button>
+          <el-button v-if="!netLoading" type="default" @click="netVisiable = false">Cancel</el-button>
           <el-button type="primary" @click="confirmNetUrl" :loading="netLoading">
-            {{ netLoading ? '网络文件获取中...' : '确定' }}
+            {{ netLoading ? 'Network file acquisition...' : 'Sure' }}
           </el-button>
         </template>
       </el-dialog>
       <template #footer v-if="props.showInput">
-        <el-button type="default" @click="onClose">取消</el-button>
-        <el-button type="primary" @click="onSave">确定</el-button>
+        <el-button type="default" @click="onClose">Cancel</el-button>
+        <el-button type="primary" @click="onSave">Sure</el-button>
       </template>
     </el-dialog>
   </div>
@@ -182,7 +182,7 @@ const userInfos = storeToRefs(useUserInfo()).userInfos;
 const isTenentMode = !!(pluginsAll && pluginsAll.length && pluginsAll.indexOf('dvadmin3-tenants-web') >= 0);
 const isSuperTenent = (userInfos.value as any).schema_name === 'public';
 
-const TypeLabel = ['图片', '视频', '音频', '文件']
+const TypeLabel = ['picture', 'video', 'Audio', 'document']
 const AcceptList = ['image/*', 'video/*', 'audio/*', ''];
 const props = defineProps({
   modelValue: {},
@@ -195,26 +195,26 @@ const props = defineProps({
   tabsType: { type: Object as PropType<'' | 'card' | 'border-card'>, default: '' },
   itemSize: { type: Number, default: 100 },
 
-  // 1000图片 100视频 10音频 1 其他 控制tabs的显示
+  // 1000picture 100video 10Audio 1 other controltabsDisplay of
   tabsShow: { type: Number, default: SHOW.ALL },
 
-  // 是否可以多选，默认单选
-  // 该值为true时inputType必须是selector（暂不支持其他type的多选）
+  // Can I choose multiple options，Default single selection
+  // This value istruehourinputTypeMust beselector（No other support yettypeMultiple choices）
   multiple: { type: Boolean, default: false },
 
-  // 是否可选，该参数用于只上传和展示而不选择和绑定model的情况
+  // Is it optional?，This parameter is used to upload and display only without selecting and bindingmodelThe situation
   selectable: { type: Boolean, default: true },
 
-  // 该参数用于控制是否显示表单item。若赋值为false，则不会显示表单item，也不会显示底部按钮
-  // 如果不显示表单item，则无法触发dialog，需要父组件通过修改本组件暴露的 selectVisiable 状态来控制dialog
+  // This parameter is used to control whether the form is displayeditem。If the value isfalse，The form will not be displayeditem，The bottom button will not be displayed either
+  // If the form is not displayeditem，It cannot be triggereddialog，The parent component needs to be exposed by modifying the selectVisiable Status to controldialog
   showInput: { type: Boolean, default: true },
 
-  // 表单item类型，不为selector是需要设置valueKey，否则可能获取不到媒体数据
+  // Formitemtype，Not forselectorYes, you need to set it upvalueKey，Otherwise, media data may not be available
   inputType: { type: Object as PropType<'selector' | 'image' | 'video' | 'audio'>, default: 'selector' },
-  // inputType不为selector时生效
+  // inputTypeNot forselectorTake effect when
   inputSize: { type: Number, default: 100 },
 
-  // v-model绑定的值是file数据的哪个key，默认是url
+  // v-modelThe bound value isfileWhich datakey，The default isurl
   valueKey: { type: String, default: 'url' },
 
   showUploadButton: { type: Boolean, default: true },
@@ -230,11 +230,11 @@ const fileApi = {
   DelObj: (id: DelReq) => request({ url: fileApiPrefix + id + '/', method: 'delete', data: { id } }),
   GetAll: () => request({ url: fileApiPrefix + 'get_all/' }),
 };
-// 过滤表单
+// Filter form
 const filterForm = reactive({ name: '' });
-// 分页表单
+// Pagination Form
 const pageForm = reactive({ page: 1, limit: 10, total: 0 });
-// 展示的数据列表
+// Displayed data list
 const listData = ref<any[]>([]);
 const listAllData = ref<any[]>([]);
 const listRequest = async () => {
@@ -261,16 +261,16 @@ const listRequestAll = async () => {
   let res = await fileApi.GetAll();
   listAllData.value = res.data;
 };
-// tab改变时触发
+// tabTriggered when changing
 const handleTabChange = (name: string) => { pageForm.page = 1; listRequest(); };
-// 分页器改变时触发
+// Triggered when the paging device changes
 const handlePageChange = (currentPage: number, pageSize: number) => { pageForm.page = currentPage; pageForm.limit = pageSize; listRequest(); };
-// 选择的行为
+// The behavior of choice
 const listContainerRef = ref<any>();
 const onItemClick = async (e: MouseEvent) => {
   if (!props.selectable) return;
   let target = e.target as HTMLElement;
-  let flat = 0;  // -1删除 0不变 1添加
+  let flat = 0;  // -1delete 0constant 1Add to
   while (!target.dataset.id) target = target.parentElement as HTMLElement;
   let fileId = target.dataset.id;
   if (props.multiple) {
@@ -282,7 +282,7 @@ const onItemClick = async (e: MouseEvent) => {
       else _l.splice(_l.indexOf(fileId), 1);
       data.value = _l;
     } else data.value = [fileId];
-    // 去重排序，<降序，>升序
+    // Dereorder，<descending order，>Ascending order
     data.value = Array.from(new Set(data.value)).sort();
   } else {
     for (let i of listContainerRef.value?.children) (i as HTMLElement).classList.remove('active');
@@ -291,10 +291,10 @@ const onItemClick = async (e: MouseEvent) => {
   }
   // onDataChange(data.value);
 };
-// 每次列表刷新都得更新一下选择状态，因为所有标签页共享列表
+// Each time the list is refreshed, the selection status must be updated.，Because all tabs share list
 const selectedInit = async () => {
   if (!props.selectable) return;
-  await nextTick(); // 不等待一次不会刷新
+  await nextTick(); // Will not refresh if you don't wait once
   for (let i of (listContainerRef.value?.children || [])) {
     i.classList.remove('active');
     let fid = (i as HTMLElement).dataset.id;
@@ -317,20 +317,20 @@ const onClosed = () => {
   clearState();
   emit('onClosed');
 };
-// 清空状态
+// Clear status
 const clearState = () => {
   filterForm.name = '';
   pageForm.page = 1;
   pageForm.limit = 10;
   pageForm.total = 0;
   listData.value = [];
-  // all数据不能清，因为all只会在挂载的时候赋值一次
+  // allThe data cannot be clear，becauseallIt will only be assigned once when mounted
   // listAllData.value = [];
 };
 const clear = () => { data.value = null; onDataChange(null); }
 
 
-// 网络文件部分
+// Network file part
 const netLoading = ref<boolean>(false);
 const netVisiable = ref<boolean>(false);
 const netUrl = ref<string>('');
@@ -350,7 +350,7 @@ const confirmNetUrl = () => {
   }, 10 * 1000);
   fetch(netPrefix.value + netUrl.value, { signal: controller.signal }).then(async (res: Response) => {
     clearTimeout(timeout);
-    if (!res.ok) errorNotification(`网络${TypeLabel[tabsActived.value % 4]}获取失败！`);
+    if (!res.ok) errorNotification(`network${TypeLabel[tabsActived.value % 4]}Failed to obtain！`);
     const _ = res.url.split('?')[0].split('/');
     let filename = _[_.length - 1];
     // let filetype = res.headers.get('content-type')?.split('/')[1] || '';
@@ -360,14 +360,14 @@ const confirmNetUrl = () => {
     form.append('file', file);
     form.append('upload_method', '1');
     fetch(getBaseURL() + 'api/system/file/', { method: 'post', body: form })
-      .then(() => successNotification('网络文件上传成功！'))
+      .then(() => successNotification('The online file upload was successful！'))
       .then(() => { netVisiable.value = false; listRequest(); listRequestAll(); })
-      .catch(() => errorNotification('网络文件上传失败！'))
+      .catch(() => errorNotification('Network file upload failed！'))
       .then(() => netLoading.value = false);
   }).catch((err: any) => {
     console.log(err);
     clearTimeout(timeout);
-    errorNotification(`网络${TypeLabel[tabsActived.value % 4]}获取失败！`);
+    errorNotification(`network${TypeLabel[tabsActived.value % 4]}Failed to obtain！`);
     netLoading.value = false;
   });
 };
@@ -375,7 +375,7 @@ const confirmNetUrl = () => {
 
 
 
-// fs-crud部分
+// fs-crudpart
 const data = ref<any>(null);
 const emit = defineEmits(['update:modelValue', 'onSave', 'onClose', 'onClosed']);
 watch(
@@ -395,7 +395,7 @@ defineExpose({ data, onDataChange, selectVisiable, clearState, clear });
 
 onMounted(() => {
   if (props.multiple && props.inputType !== 'selector')
-    throw new Error('FileSelector组件属性multiple为true时inputType必须为selector');
+    throw new Error('FileSelectorComponent propertiesmultiplefortruehourinputTypeMust beselector');
   listRequestAll();
   console.log('fileselector tenentmdoe', isTenentMode);
   console.log('fileselector supertenent', isSuperTenent);

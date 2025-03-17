@@ -1,6 +1,6 @@
 @import './index.scss';
 
-/* 页面宽度小于768px
+/* Page width is less than768px
 ------------------------------- */
 @media screen and (max-width: $sm) {
 	.big-data-down-left {
@@ -49,7 +49,7 @@
 	}
 }
 
-/* 页面宽度大于768px小于1200px
+/* Page width is greater than768pxLess than1200px
 ------------------------------- */
 @media screen and (min-width: $sm) and (max-width: $lg) {
 	.chart-warp-bottom {
@@ -70,7 +70,7 @@
 	}
 }
 
-/* 页面宽度小于1200px
+/* Page width is less than1200px
 ------------------------------- */
 @media screen and (max-width: $lg) {
 	.chart-warp-top {

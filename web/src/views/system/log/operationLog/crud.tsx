@@ -47,15 +47,15 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 			},
 			columns: {
 				_index: {
-					title: '序号',
+					title: 'Serial number',
 					form: { show: false },
 					column: {
 						//type: 'index',
 						align: 'center',
 						width: '70px',
-						columnSetDisabled: true, //禁止在列设置中选择
+						columnSetDisabled: true, //Disable selection in column settings
 						formatter: (context) => {
-							//计算序号,你可以自定义计算规则，此处为翻页累加
+							//Calculate the serial number,You can customize calculation rules，Here is the page recapture
 							let index = context.index ?? 1;
 							let pagination = crudExpose!.crudBinding.value.pagination;
 							return ((pagination!.currentPage ?? 1) - 1) * pagination!.pageSize + index + 1;
@@ -63,7 +63,7 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					},
 				},
 				search: {
-					title: '关键词',
+					title: 'Keywords',
 					column: {
 						show: false,
 					},
@@ -73,7 +73,7 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 							props: {
 								clearable: true,
 							},
-							placeholder: '请输入关键词',
+							placeholder: 'Please enter keywords',
 						},
 					},
 					form: {
@@ -86,7 +86,7 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					},
 				},
 				request_modular: {
-					title: '请求模块',
+					title: 'Request module',
 					search: {
 						disabled: false,
 					},
@@ -97,12 +97,12 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					form: {
 						disabled: true,
 						component: {
-							placeholder: '请输入请求模块',
+							placeholder: 'Please enter the request module',
 						},
 					},
 				},
 				request_path: {
-					title: '请求地址',
+					title: 'Request address',
 					search: {
 						disabled: false,
 					},
@@ -113,17 +113,17 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					form: {
 						disabled: true,
 						component: {
-							placeholder: '请输入请求地址',
+							placeholder: 'Please enter the request address',
 						},
 					},
 				},
 				request_body: {
 					column: {
 						showOverflowTooltip: true,
-						width: 200, //列宽
-						minWidth: 100, //最小列宽
+						width: 200, //Column width
+						minWidth: 100, //Minimum column width
 					},
-					title: '请求参数',
+					title: 'Request parameters',
 					search: {
 						disabled: true,
 					},
@@ -138,12 +138,12 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 								minRows: 2,
 								maxRows: 8,
 							},
-							placeholder: '请输入关键词',
+							placeholder: 'Please enter keywords',
 						},
 					},
 				},
 				request_method: {
-					title: '请求方法',
+					title: 'Request method',
 					type: 'input',
 					search: {
 						disabled: false,
@@ -154,13 +154,13 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					form: {
 						disabled: true,
 						component: {
-							placeholder: '请输入请求方法',
+							placeholder: 'Please enter the request method',
 						},
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				request_msg: {
-					title: '操作说明',
+					title: 'Operation Instructions',
 					disabled: true,
 					form: {
 						component: {
@@ -169,7 +169,7 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					},
 				},
 				request_ip: {
-					title: 'IP地址',
+					title: 'IPaddress',
 					search: {
 						disabled: false,
 					},
@@ -180,13 +180,13 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					form: {
 						disabled: true,
 						component: {
-							placeholder: '请输入IP地址',
+							placeholder: 'Please enterIPaddress',
 						},
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				request_browser: {
-					title: '请求浏览器',
+					title: 'Request a browser',
 					type: 'input',
 					column:{
 						minWidth: 120,
@@ -194,10 +194,10 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					form: {
 						disabled: true,
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				response_code: {
-					title: '响应码',
+					title: 'Response code',
 					search: {
 						disabled: true,
 					},
@@ -208,10 +208,10 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					form: {
 						disabled: true,
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				request_os: {
-					title: '操作系统',
+					title: 'operating system',
 					disabled: true,
 					search: {
 						disabled: true,
@@ -223,10 +223,10 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					form: {
 						disabled: true,
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				json_result: {
-					title: '返回信息',
+					title: 'Return information',
 					search: {
 						disabled: true,
 					},
@@ -237,10 +237,10 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					form: {
 						disabled: true,
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				creator_name: {
-					title: '操作人',
+					title: 'Operator',
 					column:{
 						minWidth: 100,
 					},

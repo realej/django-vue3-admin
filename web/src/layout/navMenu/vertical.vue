@@ -37,59 +37,59 @@ import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import other from '/@/utils/other';
 
-// 引入组件
+// Introducing components
 const SubItem = defineAsyncComponent(() => import('/@/layout/navMenu/subItem.vue'));
 
-// 定义父组件传过来的值
+// Define the value passed by the parent component
 const props = defineProps({
-	// 菜单列表
+	// Menu List
 	menuList: {
 		type: Array<RouteRecordRaw>,
 		default: () => [],
 	},
 });
 
-// 定义变量内容
+// Define variable content
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const route = useRoute();
 const state = reactive({
-	// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
+	// repair：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
 	defaultActive: route.meta.isDynamic ? route.meta.isDynamicPath : route.path,
 	isCollapse: false,
 });
 
-// 获取父级菜单数据
+// Get parent menu data
 const menuLists = computed(() => {
 	return <RouteItems>props.menuList;
 });
-// 获取布局配置信息
+// Get layout configuration information
 const getThemeConfig = computed(() => {
 	return themeConfig.value;
 });
-// 菜单高亮（详情时，父级高亮）
+// Menu highlighted（When details，Parent Highlight）
 const setParentHighlight = (currentRoute: RouteToFrom) => {
 	const { path, meta } = currentRoute;
 	const pathSplit = meta?.isDynamic ? meta.isDynamicPath!.split('/') : path!.split('/');
 	if (pathSplit.length >= 4 && meta?.isHide) return pathSplit.splice(0, 3).join('/');
 	else return path;
 };
-// 打开外部链接
+// Open an external link
 const onALinkClick = (val: RouteItem) => {
 	other.handleOpenLink(val);
 };
-// 页面加载时
+// When the page loads
 onMounted(() => {
 	state.defaultActive = setParentHighlight(route);
 });
-// 路由更新时
+// When routing updates
 onBeforeRouteUpdate((to) => {
-	// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
+	// repair：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
 	state.defaultActive = setParentHighlight(to);
 	const clientWidth = document.body.clientWidth;
 	if (clientWidth < 1000) themeConfig.value.isCollapse = false;
 });
-// 设置菜单的收起/展开
+// Settings menu closed/Expand
 watch(
 	themeConfig.value,
 	() => {

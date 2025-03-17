@@ -12,10 +12,10 @@ import qs from 'qs';
 import { getBaseURL } from './baseUrl';
 import { successMessage } from './message.js';
 /**
- * @description 创建请求实例
+ * @description Create a request instance
  */
 function createService() {
-	// 创建一个 axios 实例
+	// Create a axios Example
 	const service = axios.create({
 		timeout: 20000,
 		headers: {
@@ -39,36 +39,36 @@ function createService() {
 			},
 		},
 	});
-	// 请求拦截
+	// Request for interception
 	service.interceptors.request.use(
 		(config) => config,
 		(error) => {
-			// 发送失败
+			// Send failed
 			console.log(error);
 			return Promise.reject(error);
 		}
 	);
-	// 响应拦截
+	// Response to intercept
 	service.interceptors.response.use(
 		(response) => {
 			if (response.config.responseType === 'blob') {
 				return response;
 			}
-			// dataAxios 是 axios 返回数据中的 data
+			// dataAxios yes axios Returns the data data
 			const dataAxios = response.data;
-			// 这个状态码是和后端约定的
+			// This status code is agreed with the backend
 			const { code } = dataAxios;
-			// swagger判断
+			// swaggerJudgment
 			if (dataAxios.swagger != undefined) {
 				return dataAxios;
 			}
-			// 根据 code 进行判断
+			// according to code Make a judgment
 			if (code === undefined) {
-				// 如果没有 code 代表这不是项目后端开发的接口
-				errorCreate(`非标准返回：${dataAxios}， ${response.config.url}`, false);
+				// If not code It means this is not the interface for the project backend development
+				errorCreate(`Non-standard return：${dataAxios}， ${response.config.url}`, false);
 				return dataAxios;
 			} else {
-				// 有 code 代表这是一个后端接口 可以进行进一步的判断
+				// have code This means this is a backend interface Further judgments can be made
 				switch (code) {
 					case 400:
 						// Local.clear();
@@ -79,8 +79,8 @@ function createService() {
 					case 401:
 						// Local.clear();
 						Session.clear();
-						dataAxios.msg = '登录认证失败，请重新登录';
-						ElMessageBox.alert(dataAxios.msg, '提示', {
+						dataAxios.msg = 'Login authentication failed，Please log in again';
+						ElMessageBox.alert(dataAxios.msg, 'hint', {
 							confirmButtonText: 'OK',
 							callback: (action: Action) => {
 								// window.location.reload();
@@ -91,7 +91,7 @@ function createService() {
 					case 2000:
 						// @ts-ignore
 						if (response.config.unpack === false) {
-							//如果不需要解包
+							//If you don't need to unpack it
 							return dataAxios;
 						}
 						return dataAxios;
@@ -99,7 +99,7 @@ function createService() {
 						errorCreate(`${dataAxios.msg}: ${response.config.url}`);
 						break;
 					default:
-						// 不是正确的 code
+						// Not correct code
 						errorCreate(`${dataAxios.msg}: ${response.config.url}`);
 						break;
 				}
@@ -110,13 +110,13 @@ function createService() {
 			const status = get(error, 'response.status');
 			switch (status) {
 				case 400:
-					error.message = '请求错误';
+					error.message = 'Request error';
 					break;
 				case 401:
 					// Local.clear();
 					Session.clear();
-					error.message = '登录授权过期，请重新登录';
-					ElMessageBox.alert(error.message, '提示', {
+					error.message = 'Login authorization expires，Please log in again';
+					ElMessageBox.alert(error.message, 'hint', {
 						confirmButtonText: 'OK',
 						callback: (action: Action) => {
 							window.location.reload();
@@ -124,31 +124,31 @@ function createService() {
 					});
 					break;
 				case 403:
-					error.message = '拒绝访问';
+					error.message = 'access denied';
 					break;
 				case 404:
-					error.message = `请求地址出错: ${error.response.config.url}`;
+					error.message = `An error occurred in requesting address: ${error.response.config.url}`;
 					break;
 				case 408:
-					error.message = '请求超时';
+					error.message = 'Request timeout';
 					break;
 				case 500:
-					error.message = '服务器内部错误';
+					error.message = 'Internal server error';
 					break;
 				case 501:
-					error.message = '服务未实现';
+					error.message = 'Service not implemented';
 					break;
 				case 502:
-					error.message = '网关错误';
+					error.message = 'Gateway error';
 					break;
 				case 503:
-					error.message = '服务不可用';
+					error.message = 'Service not available';
 					break;
 				case 504:
-					error.message = '网关超时';
+					error.message = 'Gateway timeout';
 					break;
 				case 505:
-					error.message = 'HTTP版本不受支持';
+					error.message = 'HTTPVersion not supported';
 					break;
 				default:
 					break;
@@ -165,8 +165,8 @@ function createService() {
 }
 
 /**
- * @description 创建请求方法
- * @param {Object} service axios 实例
+ * @description Create a request method
+ * @param {Object} service axios Example
  */
 function createRequestFunction(service: any) {
 	return function (config: any) {
@@ -189,22 +189,22 @@ function createRequestFunction(service: any) {
 	};
 }
 
-// 用于真实网络请求的实例和请求方法
+// Instances and request methods for real network requests
 export const service = createService();
 export const request = createRequestFunction(service);
 
-// 用于模拟网络请求的实例和请求方法
+// Instances and request methods for simulating network requests
 export const serviceForMock = createService();
 export const requestForMock = createRequestFunction(serviceForMock);
 
 /**
- * 下载文件
+ * Download the file
  * @param url
  * @param params
  * @param method
  * @param filename
  */
-export const downloadFile = function ({ url, params, method, filename = '文件导出' }: any) {
+export const downloadFile = function ({ url, params, method, filename = 'File Export' }: any) {
 	// return request({ url: url, method: method, params: params })
 	// 	.then((res: any) => successMessage(res.msg));
 	request({
@@ -214,9 +214,9 @@ export const downloadFile = function ({ url, params, method, filename = '文件�
 		responseType: 'blob'
 		// headers: {Accept: 'application/vnd.openxmlformats-officedocument'}
 	}).then((res: any) => {
-		// console.log(res.headers['content-type']); // 根据content-type不同来判断是否异步下载
-		// if (res.headers && res.headers['Content-type'] === 'application/json') return successMessage('导入任务已创建，请前往‘下载中心’等待下载');
-		if (res.headers['content-type'] === 'application/json') return successMessage('导入任务已创建，请前往‘下载中心’等待下载');
+		// console.log(res.headers['content-type']); // according tocontent-typeDifferent to determine whether to download asynchronously
+		// if (res.headers && res.headers['Content-type'] === 'application/json') return successMessage('Import task has been created，Please go‘Download Center’Waiting for download');
+		if (res.headers['content-type'] === 'application/json') return successMessage('Import task has been created，Please go‘Download Center’Waiting for download');
 		const xlsxName = window.decodeURI(res.headers['content-disposition'].split('=')[1])
 		const fileName = xlsxName || `${filename}.xlsx`
 		if (res) {
@@ -227,7 +227,7 @@ export const downloadFile = function ({ url, params, method, filename = '文件�
 			elink.href = URL.createObjectURL(blob)
 			document.body.appendChild(elink)
 			elink.click()
-			URL.revokeObjectURL(elink.href) // 释放URL 对象0
+			URL.revokeObjectURL(elink.href) // releaseURL Object0
 			document.body.removeChild(elink)
 		}
 	})

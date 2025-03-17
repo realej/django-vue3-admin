@@ -3,39 +3,39 @@
   "name": "dvadmin3",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
-  "description": "dvadmin3前端项目icon",
+  "description": "dvadmin3Front-end projecticon",
   "glyphs": [
     {
       "icon_id": "630252",
-      "name": "消息中心",
+      "name": "Message Center",
       "font_class": "xiaoxizhongxin",
       "unicode": "e665",
       "unicode_decimal": 58981
     },
     {
       "icon_id": "10465939",
-      "name": "系统设置",
+      "name": "System Settings",
       "font_class": "xitongshezhi",
       "unicode": "e7ba",
       "unicode_decimal": 59322
     },
     {
       "icon_id": "13952258",
-      "name": "操作日志",
+      "name": "Operation log",
       "font_class": "caozuorizhi",
       "unicode": "e611",
       "unicode_decimal": 58897
     },
     {
       "icon_id": "26876046",
-      "name": "管理登录日志",
+      "name": "Manage login logs",
       "font_class": "guanlidenglurizhi",
       "unicode": "ea45",
       "unicode_decimal": 59973
     },
     {
       "icon_id": "4520330",
-      "name": "日志",
+      "name": "log",
       "font_class": "rizhi",
       "unicode": "e60c",
       "unicode_decimal": 58892

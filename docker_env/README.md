@@ -1,64 +1,64 @@
-# docker 镜像打包
+# docker Mirror packing
 
-### 打包web基础Build包
+### PackwebBaseBuildBag
 
 ~~~sh
-# 编译打包到本地
+# Compile and package locally
 docker build -f ./docker_env/web/DockerfileBuild -t registry.cn-zhangjiakou.aliyuncs.com/dvadmin-pro/dvadmin3-base-web:16.19-alpine .
-# 上传到阿里云仓库
+# Upload to Alibaba Cloud Repository
 docker push registry.cn-zhangjiakou.aliyuncs.com/dvadmin-pro/dvadmin3-base-web:16.19-alpine
 
 ~~~
 
-### 打包Backend基础Build包
+### PackBackendBaseBuildBag
 
 ~~~sh
-# 编译打包到本地
+# Compile and package locally
 docker build -f ./docker_env/django/DockerfileBuild -t registry.cn-zhangjiakou.aliyuncs.com/dvadmin-pro/dvadmin3-base-backend:latest .
-# 上传到阿里云仓库
+# Upload to Alibaba Cloud Repository
 docker push registry.cn-zhangjiakou.aliyuncs.com/dvadmin-pro/dvadmin3-base-backend:latest
 ~~~
 
-### 运行前端
+### Run the front end
 
 ~~~
 docker build -f ./docker_env/web/Dockerfile -t dvadmin-pro-web .
 ~~~
 
-### 运行后端
+### Run the backend
 
 ~~~
 docker build -f ./docker_env/django/Dockerfile -t dvadmin-pro-django .
 ~~~
 
-### 运行celery
+### runcelery
 
 ~~~
 docker build -f ./docker_env/celery/Dockerfile -t dvadmin-pro-celery .
 ~~~
 
-## docker-compose 运行
+## docker-compose run
 
 ~~~
-# 先安装docker-compose (自行百度安装),执行此命令等待安装，如有使用celery插件请打开docker-compose.yml中celery 部分注释
+# Install firstdocker-compose (Install on Baidu),Execute this command to wait for installation，If usedceleryPlease open the plugindocker-compose.ymlmiddlecelery Partial comments
 docker-compose up -d
-# 初始化后端数据(第一次执行即可)
+# Initialize backend data(Just execute it for the first time)
 docker exec -ti dvadmin-django bash
 python manage.py makemigrations 
 python manage.py migrate
 python manage.py init -y
 exit
 
-前端地址：http://127.0.0.1:8080
-后端地址：http://127.0.0.1:8000
-# 在服务器上请把127.0.0.1 换成自己公网ip
-账号：superadmin 密码：admin123456
+Front-end address：http://127.0.0.1:8080
+Backend address：http://127.0.0.1:8000
+# Please put it on the server127.0.0.1 Change it to your own public networkip
+account：superadmin password：admin123456
 
-# docker-compose 停止
+# docker-compose stop
 docker-compose down
-#  docker-compose 重启
+#  docker-compose Restart
 docker-compose restart
-#  docker-compose 启动时重新进行 build
+#  docker-compose Restart on startup build
 docker-compose up -d --build
 
 ~~~

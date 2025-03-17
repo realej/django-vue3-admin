@@ -18,7 +18,7 @@ const alias: Record<string, string> = {
 
 const viteConfig = defineConfig((mode: ConfigEnv) => {
 	const env = loadEnv(mode.mode, process.cwd());
-	// 当Vite构建时，生成版本文件
+	// whenViteWhen building，Generate version file
 	generateVersionFile()
 	return {
 		plugins: [vue(), vueJsx(), vueSetupExtend()],

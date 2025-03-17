@@ -1,19 +1,19 @@
 import { ElMessage } from 'element-plus';
 
 /**
- * 颜色转换函数
- * @method hexToRgb hex 颜色转 rgb 颜色
- * @method rgbToHex rgb 颜色转 Hex 颜色
- * @method getDarkColor 加深颜色值
- * @method getLightColor 变浅颜色值
+ * Color conversion function
+ * @method hexToRgb hex Color conversion rgb color
+ * @method rgbToHex rgb Color conversion Hex color
+ * @method getDarkColor Deep color value
+ * @method getLightColor Lighter color value
  */
 export function useChangeColor() {
-	// str 颜色值字符串
+	// str Color value string
 	const hexToRgb = (str: string): any => {
 		let hexs: any = '';
 		let reg = /^\#?[0-9A-Fa-f]{6}$/;
 		if (!reg.test(str)) {
-			ElMessage.warning('输入错误的hex');
+			ElMessage.warning('Incorrect inputhex');
 			return '';
 		}
 		str = str.replace('#', '');
@@ -21,33 +21,33 @@ export function useChangeColor() {
 		for (let i = 0; i < 3; i++) hexs[i] = parseInt(hexs[i], 16);
 		return hexs;
 	};
-	// r 代表红色 | g 代表绿色 | b 代表蓝色
+	// r Represents red | g Represents green | b Represents blue
 	const rgbToHex = (r: any, g: any, b: any): string => {
 		let reg = /^\d{1,3}$/;
 		if (!reg.test(r) || !reg.test(g) || !reg.test(b)) {
-			ElMessage.warning('输入错误的rgb颜色值');
+			ElMessage.warning('Incorrect inputrgbColor value');
 			return '';
 		}
 		let hexs = [r.toString(16), g.toString(16), b.toString(16)];
 		for (let i = 0; i < 3; i++) if (hexs[i].length == 1) hexs[i] = `0${hexs[i]}`;
 		return `#${hexs.join('')}`;
 	};
-	// color 颜色值字符串 | level 变浅的程度，限0-1之间
+	// color Color value string | level The degree of lightening，limit0-1between
 	const getDarkColor = (color: string, level: number): string => {
 		let reg = /^\#?[0-9A-Fa-f]{6}$/;
 		if (!reg.test(color)) {
-			ElMessage.warning('输入错误的hex颜色值');
+			ElMessage.warning('Incorrect inputhexColor value');
 			return '';
 		}
 		let rgb = useChangeColor().hexToRgb(color);
 		for (let i = 0; i < 3; i++) rgb[i] = Math.floor(rgb[i] * (1 - level));
 		return useChangeColor().rgbToHex(rgb[0], rgb[1], rgb[2]);
 	};
-	// color 颜色值字符串 | level 加深的程度，限0-1之间
+	// color Color value string | level Deepening degree，limit0-1between
 	const getLightColor = (color: string, level: number): string => {
 		let reg = /^\#?[0-9A-Fa-f]{6}$/;
 		if (!reg.test(color)) {
-			ElMessage.warning('输入错误的hex颜色值');
+			ElMessage.warning('Incorrect inputhexColor value');
 			return '';
 		}
 		let rgb = useChangeColor().hexToRgb(color);

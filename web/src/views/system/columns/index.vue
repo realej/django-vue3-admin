@@ -3,17 +3,17 @@
 		<el-row class="columns-el-row" :gutter="10">
 			<el-col :span="6">
 				<div class="columns-box columns-left">
-					<ItemCom title="角色" type="role" showPagination @fetchData="fetchRoleData" @itemClick="handleClick" />
+					<ItemCom title="Role" type="role" showPagination @fetchData="fetchRoleData" @itemClick="handleClick" />
 				</div>
 			</el-col>
 <!--      <el-col :span="4">-->
 <!--        <div class="columns-box columns-left">-->
-<!--          <ItemCom title="菜单" type="menu" showPagination @fetchData="fetchMenuData" @itemClick="handleClick" />-->
+<!--          <ItemCom title="menu" type="menu" showPagination @fetchData="fetchMenuData" @itemClick="handleClick" />-->
 <!--        </div>-->
 <!--      </el-col>-->
 			<el-col :span="8">
 				<div class="columns-box columns-center">
-					<ItemCom title="模型表" type="model" label="showText" value="key" @fetchData="fetchModelData" @itemClick="handleClick" />
+					<ItemCom title="Model table" type="model" label="showText" value="key" @fetchData="fetchModelData" @itemClick="handleClick" />
 				</div>
 			</el-col>
 			<el-col :span="10">
@@ -41,7 +41,7 @@ let currentInfo = reactive<CurrentInfoType>({
 });
 
 /**
- * 获取角色
+ * Get the role
  * @param query
  * @param callback
  */
@@ -51,7 +51,7 @@ const fetchRoleData = async (query: PageQuery, callback: Function) => {
 };
 
 /**
- * 获取菜单
+ * Get menu
  * @param query
  * @param callback
  */

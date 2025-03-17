@@ -43,10 +43,10 @@
 			</el-button>
 		</el-form-item>
 	</el-form>
-	<!--      申请试用-->
+	<!--      Apply for trial-->
 	<div style="text-align: center" v-if="showApply()">
 		<el-button class="login-content-apply" link type="primary" plain round @click="applyBtnClick">
-			<span>申请试用</span>
+			<span>Apply for trial</span>
 		</el-button>
 	</div>
 </template>
@@ -98,9 +98,9 @@ export default defineComponent({
 		const validatePass = (rule, value, callback) => {
 			const pwdRegex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z]).{8,30}');
 			if (value === '') {
-				callback(new Error('请输入密码'));
+				callback(new Error('Please enter your password'));
 			} else if (!pwdRegex.test(value)) {
-				callback(new Error('您的密码复杂度太低(密码中必须包含字母、数字)'));
+				callback(new Error('Your password is too complex(The password must contain letters、number)'));
 			} else {
 				if (state.ruleForm.password !== '') {
 					formRef.value.validateField('password');
@@ -110,9 +110,9 @@ export default defineComponent({
 		};
 		const validatePass2 = (rule, value, callback) => {
 			if (value === '') {
-				callback(new Error('请再次输入密码'));
+				callback(new Error('Please enter your password again'));
 			} else if (value !== state.ruleForm.password) {
-				callback(new Error('两次输入密码不一致!'));
+				callback(new Error('The password is inconsistent when entering the two times!'));
 			} else {
 				callback();
 			}
@@ -120,12 +120,12 @@ export default defineComponent({
 
 		const rules = reactive<FormRules>({
 			username: [
-				{ required: true, message: '请填写账号', trigger: 'blur' },
+				{ required: true, message: 'Please fill in your account number', trigger: 'blur' },
 			],
 			password: [
 				{
 					required: true,
-					message: '请填写密码',
+					message: 'Please fill in your password',
 					trigger: 'blur',
 				},
 				{
@@ -136,7 +136,7 @@ export default defineComponent({
 			password_regain: [
 				{
 					required: true,
-					message: '请填写密码',
+					message: 'Please fill in your password',
 					trigger: 'blur',
 				},
 				{
@@ -146,7 +146,7 @@ export default defineComponent({
 			],
 		})
 		const formRef = ref();
-		// 时间获取
+		// Time acquisition
 		const currentTime = computed(() => {
 			return formatAxis(new Date());
 		});
@@ -162,39 +162,39 @@ export default defineComponent({
 					loginApi.loginChangePwd({ ...state.ruleForm, password: Md5.hashStr(state.ruleForm.password), password_regain: Md5.hashStr(state.ruleForm.password_regain) }).then((res: any) => {
 						if (res.code === 2000) {
 							if (!themeConfig.value.isRequestRoutes) {
-								// 前端控制路由，2、请注意执行顺序
+								// Front-end control routing，2、Please note the order of execution
 								initFrontEndControlRoutes();
 								loginSuccess();
 							} else {
-								// 模拟后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-								// 添加完动态路由，再进行 router 跳转，否则可能报错 No match found for location with path "/"
+								// Simulate backend control routing，isRequestRoutes for true，Turn on the backend control routing
+								// Add dynamic routes，Go again router Jump，Otherwise, an error may be reported No match found for location with path "/"
 								initBackEndControlRoutes();
-								// 执行完 initBackEndControlRoutes，再执行 signInSuccess
+								// Completed execution initBackEndControlRoutes，Execute again signInSuccess
 								loginSuccess();
 							}
 						}
 					}).catch((err: any) => {
-						// 登录错误之后，刷新验证码
-						errorMessage("登录失败")
+						// After login error，Refresh the verification code
+						errorMessage("Login failed")
 					});
 				} else {
-					errorMessage("请填写登录信息")
+					errorMessage("Please fill in the login information")
 				}
 			})
 
 		};
 
 
-		// 登录成功后的跳转
+		// Jump after successful login
 		const loginSuccess = () => {
 
-			//获取所有字典
+			//Get all dictionaries
 			DictionaryStore().getSystemDictionarys();
 
-			// 初始化登录成功时间问候语
+			// Initialization login success time greeting
 			let currentTimeInfo = currentTime.value;
-			// 登录成功，跳到转首页
-			// 如果是复制粘贴的路径，非首页/登录页，那么登录成功后重定向到对应的路径中
+			// Login successfully，Jump to the home page
+			// If it is a copy-paste path，Non-Home/Login page，Then redirect to the corresponding path after logging in successfully
 			if (route.query?.redirect) {
 				router.push({
 					path: <string>route.query?.redirect,
@@ -203,20 +203,20 @@ export default defineComponent({
 			} else {
 				router.push('/');
 			}
-			// 登录成功提示
-			// 关闭 loading
+			// Login success prompt
+			// closure loading
 			state.loading.signIn = true;
 			const signInText = t('message.signInText');
 			ElMessage.success(`${currentTimeInfo}，${signInText}`);
-			// 添加 loading，防止第一次进入界面时出现短暂空白
+			// Add to loading，Prevent short-term blanks when entering the interface for the first time
 			NextLoading.start();
 		};
 		onMounted(() => {
 			state.ruleForm.username = Cookies.get('username')
-			//获取系统配置
+			//Get system configuration
 			SystemConfigStore().getSystemConfigs();
 		});
-		// 是否显示申请试用按钮
+		// Whether to display the application trial button
 		const showApply = () => {
 			return window.location.href.indexOf('public') != -1
 		}

@@ -20,14 +20,14 @@ from dvadmin.system.models import DownloadCenter
 
 class ImportSerializerMixin:
     """
-    自定义导入模板、导入功能
+    Custom import templates、Import function
     """
 
-    # 导入字段
+    # Import fields
     import_field_dict = {}
-    # 导入序列化器
+    # Import the serializer
     import_serializer_class = None
-    # 表格表头最大宽度，默认50个字符
+    # Maximum width of table header，default50Characters
     export_column_width = 50
 
     def is_number(self,num):
@@ -47,7 +47,7 @@ class ImportSerializerMixin:
 
     def get_string_len(self, string):
         """
-        获取字符串最大长度
+        Get the maximum length of the string
         :param string:
         :return:
         """
@@ -61,26 +61,26 @@ class ImportSerializerMixin:
         return round(length, 1) if length <= self.export_column_width else self.export_column_width
 
     @action(methods=['get','post'],detail=False)
-    @transaction.atomic  # Django 事务,防止出错
+    @transaction.atomic  # Django Transactions,Prevent errors
     def import_data(self, request: Request, *args, **kwargs):
         """
-        导入模板
+        Import templates
         :param request:
         :param args:
         :param kwargs:
         :return:
         """
-        assert self.import_field_dict, "'%s' 请配置对应的导出模板字段。" % self.__class__.__name__
-        # 导出模板
+        assert self.import_field_dict, "'%s' Please configure the corresponding export template field。" % self.__class__.__name__
+        # Export templates
         if request.method == "GET":
-            # 示例数据
+            # Sample data
             queryset = self.filter_queryset(self.get_queryset())
-            # 导出excel 表
+            # Exportexcel surface
             response = HttpResponse(content_type="application/msexcel")
             response["Access-Control-Expose-Headers"] = f"Content-Disposition"
             response[
                 "Content-Disposition"
-            ] = f'attachment;filename={quote(str(f"导入{get_verbose_name(queryset)}模板.xlsx"))}'
+            ] = f'attachment;filename={quote(str(f"Import{get_verbose_name(queryset)}template.xlsx"))}'
             wb = Workbook()
             ws1 = wb.create_sheet("data", 1)
             ws1.sheet_state = "hidden"
@@ -88,7 +88,7 @@ class ImportSerializerMixin:
             row = get_column_letter(len(self.import_field_dict) + 1)
             column = 10
             header_data = [
-                "序号",
+                "Serial number",
             ]
             validation_data_dict = {}
             for index, ele in enumerate(self.import_field_dict.values()):
@@ -114,18 +114,18 @@ class ImportSerializerMixin:
                     dv.add(f"{get_column_letter(index + 2)}2:{get_column_letter(index + 2)}1048576")
                 else:
                     header_data.append(ele)
-            # 添加数据列
+            # Add a column of data
             ws1.append(list(validation_data_dict.keys()))
             for index, validation_data in enumerate(validation_data_dict.values()):
                 for inx, ele in enumerate(validation_data):
                     ws1[f"{get_column_letter(index + 1)}{inx + 2}"] = ele
-            # 插入导出模板正式数据
+            # Insert export template official data
             df_len_max = [self.get_string_len(ele) for ele in header_data]
             ws.append(header_data)
-            # 　更新列宽
+            # 　Update column width
             for index, width in enumerate(df_len_max):
                 ws.column_dimensions[get_column_letter(index + 1)].width = width
-            tab = Table(displayName="Table1", ref=f"A1:{row}{column}")  # 名称管理器
+            tab = Table(displayName="Table1", ref=f"A1:{row}{column}")  # Name Manager
             style = TableStyleInfo(
                 name="TableStyleLight11",
                 showFirstColumn=True,
@@ -138,15 +138,15 @@ class ImportSerializerMixin:
             wb.save(response)
             return response
         else:
-            # 从excel中组织对应的数据结构，然后使用序列化器保存
+            # fromexcelThe corresponding data structure of the organization，Then save using the serializer
             queryset = self.filter_queryset(self.get_queryset())
-            # 获取多对多字段
+            # Get many to many fields
             m2m_fields = [
                 ele.name
                 for ele in queryset.model._meta.get_fields()
                 if hasattr(ele, "many_to_many") and ele.many_to_many == True
             ]
-            import_field_dict = {'id':'更新主键(勿改)',**self.import_field_dict}
+            import_field_dict = {'id':'Update the primary key(Do not change)',**self.import_field_dict}
             data = import_to_data(request.data.get("url"), import_field_dict, m2m_fields)
             for ele in data:
                 filter_dic = {'id':ele.get('id')}
@@ -155,26 +155,26 @@ class ImportSerializerMixin:
                 serializer = self.import_serializer_class(instance, data=ele, request=request)
                 serializer.is_valid(raise_exception=True)
                 serializer.save()
-            return DetailResponse(msg=f"导入成功！")
+            return DetailResponse(msg=f"Import successfully！")
 
     @action(methods=['get'],detail=False)
     def update_template(self,request):
         queryset = self.filter_queryset(self.get_queryset())
-        assert self.import_field_dict, "'%s' 请配置对应的导入模板字段。" % self.__class__.__name__
-        assert self.import_serializer_class, "'%s' 请配置对应的导入序列化器。" % self.__class__.__name__
+        assert self.import_field_dict, "'%s' Please configure the corresponding import template field。" % self.__class__.__name__
+        assert self.import_serializer_class, "'%s' Please configure the corresponding import serializer。" % self.__class__.__name__
         data = self.import_serializer_class(queryset, many=True, request=request).data
-        # 导出excel 表
+        # Exportexcel surface
         response = HttpResponse(content_type="application/msexcel")
         response["Access-Control-Expose-Headers"] = f"Content-Disposition"
-        response["content-disposition"] = f'attachment;filename={quote(str(f"导出{get_verbose_name(queryset)}.xlsx"))}'
+        response["content-disposition"] = f'attachment;filename={quote(str(f"Export{get_verbose_name(queryset)}.xlsx"))}'
         wb = Workbook()
         ws1 = wb.create_sheet("data", 1)
         ws1.sheet_state = "hidden"
         ws = wb.active
         import_field_dict = {}
-        header_data = ["序号","更新主键(勿改)"]
+        header_data = ["Serial number","Update the primary key(Do not change)"]
         hidden_header = ["#","id"]
-        #----设置选项----
+        #----Setting options----
         validation_data_dict = {}
         for index, item in enumerate(self.import_field_dict.items()):
             items = list(item)
@@ -204,7 +204,7 @@ class ImportSerializerMixin:
             else:
                 header_data.append(value)
                 hidden_header.append(key)
-        # 添加数据列
+        # Add a column of data
         ws1.append(list(validation_data_dict.keys()))
         for index, validation_data in enumerate(validation_data_dict.values()):
             for inx, ele in enumerate(validation_data):
@@ -225,17 +225,17 @@ class ImportSerializerMixin:
                             results_list.append(str(val))
                         else:
                             results_list.append(val)
-                        # 计算最大列宽度
+                        # Calculate the maximum column width
                         if isinstance(val,str):
                             result_column_width = self.get_string_len(val)
                             if h_index != 0 and result_column_width > df_len_max[h_index]:
                                 df_len_max[h_index] = result_column_width
             ws.append([index+1,*results_list])
             column += 1
-        # 　更新列宽
+        # 　Update column width
         for index, width in enumerate(df_len_max):
             ws.column_dimensions[get_column_letter(index + 1)].width = width
-        tab = Table(displayName="Table", ref=f"A1:{row}{column}")  # 名称管理器
+        tab = Table(displayName="Table", ref=f"A1:{row}{column}")  # Name Manager
         style = TableStyleInfo(
             name="TableStyleLight11",
             showFirstColumn=True,
@@ -251,14 +251,14 @@ class ImportSerializerMixin:
 
 class ExportSerializerMixin:
     """
-    自定义导出功能
+    Custom export function
     """
 
-    # 导出字段
+    # Export fields
     export_field_label = []
-    # 导出序列化器
+    # Export serializer
     export_serializer_class = None
-    # 表格表头最大宽度，默认50个字符
+    # Maximum width of table header，default50Characters
     export_column_width = 50
 
     def is_number(self,num):
@@ -278,7 +278,7 @@ class ExportSerializerMixin:
 
     def get_string_len(self, string):
         """
-        获取字符串最大长度
+        Get the maximum length of the string
         :param string:
         :return:
         """
@@ -294,33 +294,33 @@ class ExportSerializerMixin:
     @action(methods=['get'],detail=False)
     def export_data(self, request: Request, *args, **kwargs):
         """
-        导出功能
+        Export function
         :param request:
         :param args:
         :param kwargs:
         :return:
         """
         queryset = self.filter_queryset(self.get_queryset())
-        assert self.export_field_label, "'%s' 请配置对应的导出模板字段。" % self.__class__.__name__
-        assert self.export_serializer_class, "'%s' 请配置对应的导出序列化器。" % self.__class__.__name__
+        assert self.export_field_label, "'%s' Please configure the corresponding export template field。" % self.__class__.__name__
+        assert self.export_serializer_class, "'%s' Please configure the corresponding export serializer。" % self.__class__.__name__
         data = self.export_serializer_class(queryset, many=True, request=request).data
         try:
             async_export_data.delay(
                 data,
-                str(f"导出{get_verbose_name(queryset)}-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx"),
-                DownloadCenter.objects.create(creator=request.user, task_name=f'{get_verbose_name(queryset)}数据导出任务', dept_belong_id=request.user.dept_id).pk,
+                str(f"Export{get_verbose_name(queryset)}-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx"),
+                DownloadCenter.objects.create(creator=request.user, task_name=f'{get_verbose_name(queryset)}Data Export Task', dept_belong_id=request.user.dept_id).pk,
                 self.export_field_label
             )
-            return SuccessResponse(msg="导入任务已创建，请前往‘下载中心’等待下载")
+            return SuccessResponse(msg="Import task has been created，Please go‘Download Center’Waiting for download")
         except:
             pass
-        # 导出excel 表
+        # Exportexcel surface
         response = HttpResponse(content_type="application/msexcel")
         response["Access-Control-Expose-Headers"] = f"Content-Disposition"
-        response["content-disposition"] = f'attachment;filename={quote(str(f"导出{get_verbose_name(queryset)}.xlsx"))}'
+        response["content-disposition"] = f'attachment;filename={quote(str(f"Export{get_verbose_name(queryset)}.xlsx"))}'
         wb = Workbook()
         ws = wb.active
-        header_data = ["序号", *self.export_field_label.values()]
+        header_data = ["Serial number", *self.export_field_label.values()]
         hidden_header = ["#", *self.export_field_label.keys()]
         df_len_max = [self.get_string_len(ele) for ele in header_data]
         row = get_column_letter(len(self.export_field_label) + 1)
@@ -335,16 +335,16 @@ class ExportSerializerMixin:
                             results_list.append("")
                         else:
                             results_list.append(val)
-                        # 计算最大列宽度
+                        # Calculate the maximum column width
                         result_column_width = self.get_string_len(val)
                         if h_index !=0 and result_column_width > df_len_max[h_index]:
                             df_len_max[h_index] = result_column_width
             ws.append([index + 1, *results_list])
             column += 1
-        # 　更新列宽
+        # 　Update column width
         for index, width in enumerate(df_len_max):
             ws.column_dimensions[get_column_letter(index + 1)].width = width
-        tab = Table(displayName="Table", ref=f"A1:{row}{column}")  # 名称管理器
+        tab = Table(displayName="Table", ref=f"A1:{row}{column}")  # Name Manager
         style = TableStyleInfo(
             name="TableStyleLight11",
             showFirstColumn=True,

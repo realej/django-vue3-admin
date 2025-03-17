@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: 猿小天
+@author: Yuan Xiaotian
 @contact: QQ:1638245306
 @Created on: 2021/5/31 031 22:08
-@Remark: 公共基础model类
+@Remark: Public Basicsmodelkind
 """
 from datetime import datetime
 from importlib import import_module
@@ -15,7 +15,7 @@ from django.conf import settings
 from django.db import models
 from rest_framework.request import Request
 
-table_prefix = settings.TABLE_PREFIX  # 数据库表名前缀
+table_prefix = settings.TABLE_PREFIX  # Database table name prefix
 
 
 class SoftDeleteQuerySet(models.QuerySet):
@@ -23,14 +23,14 @@ class SoftDeleteQuerySet(models.QuerySet):
 
 
 class SoftDeleteManager(models.Manager):
-    """支持软删除"""
+    """Support soft deletion"""
 
     def __init__(self, *args, **kwargs):
         self.__add_is_del_filter = False
         super(SoftDeleteManager, self).__init__(*args, **kwargs)
 
     def filter(self, *args, **kwargs):
-        # 考虑是否主动传入is_deleted
+        # Consider whether to send it activelyis_deleted
         if not kwargs.get('is_deleted') is None:
             self.__add_is_del_filter = True
         return super(SoftDeleteManager, self).filter(*args, **kwargs)
@@ -46,28 +46,28 @@ class SoftDeleteManager(models.Manager):
 
 class SoftDeleteModel(models.Model):
     """
-    软删除模型
-    一旦继承,就将开启软删除
+    Soft Delete Model
+    Once inherited,Soft deletion will be enabled
     """
-    is_deleted = models.BooleanField(verbose_name="是否软删除", help_text='是否软删除', default=False, db_index=True)
+    is_deleted = models.BooleanField(verbose_name="Is it soft deleted?", help_text='Is it soft deleted?', default=False, db_index=True)
     objects = SoftDeleteManager()
 
     class Meta:
         abstract = True
-        verbose_name = '软删除模型'
+        verbose_name = 'Soft Delete Model'
         verbose_name_plural = verbose_name
 
     def delete(self, using=None, soft_delete=True, *args, **kwargs):
         """
-        重写删除方法,直接开启软删除
+        Rewrite the delete method,Turn on soft deletion directly
         """
         if soft_delete:
             self.is_deleted = True
             self.save(using=using)
-            # 级联软删除关联对象
+            # Cascading soft delete associated objects
             for related_object in self._meta.related_objects:
                 related_model = getattr(self, related_object.get_accessor_name())
-                # 处理一对多和多对多的关联对象
+                # Handle one-to-many and many-to-many related objects
                 if related_object.one_to_many or related_object.many_to_many:
                     related_objects = related_model.all()
                 elif related_object.one_to_one:
@@ -83,25 +83,25 @@ class SoftDeleteModel(models.Model):
 
 class CoreModel(models.Model):
     """
-    核心标准抽象模型模型,可直接继承使用
-    增加审计字段, 覆盖字段时, 字段名称请勿修改, 必须统一审计字段名称
+    Core Standard Abstract Model Model,Can be directly inherited and used
+    Add audit fields, When overwriting fields, Do not modify the field name, Audit field names must be unified
     """
     id = models.BigAutoField(primary_key=True, help_text="Id", verbose_name="Id")
-    description = models.CharField(max_length=255, verbose_name="描述", null=True, blank=True, help_text="描述")
+    description = models.CharField(max_length=255, verbose_name="describe", null=True, blank=True, help_text="describe")
     creator = models.ForeignKey(to=settings.AUTH_USER_MODEL, related_query_name='creator_query', null=True,
-                                verbose_name='创建人', help_text="创建人", on_delete=models.SET_NULL,
+                                verbose_name='Founder', help_text="Founder", on_delete=models.SET_NULL,
                                 db_constraint=False)
-    modifier = models.CharField(max_length=255, null=True, blank=True, help_text="修改人", verbose_name="修改人")
-    dept_belong_id = models.CharField(max_length=255, help_text="数据归属部门", null=True, blank=True,
-                                      verbose_name="数据归属部门")
-    update_datetime = models.DateTimeField(auto_now=True, null=True, blank=True, help_text="修改时间",
-                                           verbose_name="修改时间")
-    create_datetime = models.DateTimeField(auto_now_add=True, null=True, blank=True, help_text="创建时间",
-                                           verbose_name="创建时间")
+    modifier = models.CharField(max_length=255, null=True, blank=True, help_text="Modify", verbose_name="Modify")
+    dept_belong_id = models.CharField(max_length=255, help_text="Data Attribution Department", null=True, blank=True,
+                                      verbose_name="Data Attribution Department")
+    update_datetime = models.DateTimeField(auto_now=True, null=True, blank=True, help_text="Modification time",
+                                           verbose_name="Modification time")
+    create_datetime = models.DateTimeField(auto_now_add=True, null=True, blank=True, help_text="Creation time",
+                                           verbose_name="Creation time")
 
     class Meta:
         abstract = True
-        verbose_name = '核心模型'
+        verbose_name = 'Core Model'
         verbose_name_plural = verbose_name
 
     def get_request_user(self, request: Request):
@@ -167,7 +167,7 @@ class CoreModel(models.Model):
         return [field.name for field in self.get_all_fields() if field.name not in self.exclude_fields]
 
     def to_data(self):
-        """将模型转化为字典（去除不包含字段）(注意与to_dict_data区分)。
+        """Convert the model to a dictionary（Remove fields not included）(Pay attention toto_dict_datadistinguish)。
         """
         res = {}
         for field in self.get_need_fields_names():
@@ -180,7 +180,7 @@ class CoreModel(models.Model):
         return self.to_data()
 
     def to_dict_data(self):
-        """需要导出的字段（去除不包含字段）（注意与to_data区分）
+        """Fields that need to be exported（Remove fields not included）（Pay attention toto_datadistinguish）
         """
         return {field: getattr(self, field) for field in self.get_need_fields_names()}
 
@@ -189,19 +189,19 @@ class CoreModel(models.Model):
         return self.to_dict_data()
 
     def insert(self, request):
-        """插入模型
+        """Insert the model
         """
-        assert self.pk is None, f'模型{self.__class__.__name__}还没有保存到数据中，不能手动指定ID'
+        assert self.pk is None, f'Model{self.__class__.__name__}Not saved to data yet，Cannot specify manuallyID'
         validated_data = {**self.common_insert_data(request), **self.DICT_DATA}
         return self.__class__._default_manager.create(**validated_data)
 
     def update(self, request, update_data: dict[str, any] = None):
-        """更新模型
+        """Update the model
         """
-        assert isinstance(update_data, dict), 'update_data必须为字典'
+        assert isinstance(update_data, dict), 'update_dataMust be a dictionary'
         validated_data = {**self.common_insert_data(request), **update_data}
         for key, value in validated_data.items():
-            # 不允许修改id,pk,uuid字段
+            # No modification allowedid,pk,uuidFields
             if key in ['id', 'pk', 'uuid']:
                 continue
             if hasattr(self, key):
@@ -212,7 +212,7 @@ class CoreModel(models.Model):
 
 def get_all_models_objects(model_name=None):
     """
-    获取所有 models 对象
+    Get all models Object
     :return: {}
     """
     settings.ALL_MODELS_OBJECTS = {}
@@ -230,7 +230,7 @@ def get_all_models_objects(model_name=None):
 
 
 def get_model_from_app(app_name):
-    """获取模型里的字段"""
+    """Get fields in the model"""
     model_module = import_module(app_name + '.models')
     exclude_models = getattr(model_module, 'exclude_models', [])
     filter_model = [
@@ -251,7 +251,7 @@ def get_model_from_app(app_name):
 
 def get_custom_app_models(app_name=None):
     """
-    获取所有项目下的app里的models
+    Get all the items underappInsidemodels
     """
     if app_name:
         return get_model_from_app(app_name)

@@ -1,29 +1,29 @@
 <template>
 	<div class="columns-form-com">
 		<el-form ref="formRef" :model="formData" :rules="formRules" label-width="80px">
-			<el-form-item label="字段名" prop="field_name">
-				<el-input v-model="formData.field_name" placeholder="请输入字段名" />
+			<el-form-item label="Field name" prop="field_name">
+				<el-input v-model="formData.field_name" placeholder="Please enter a field name" />
 			</el-form-item>
 
-			<el-form-item label="列名" prop="title">
-				<el-input v-model="formData.title" placeholder="请输入列名" />
+			<el-form-item label="List name" prop="title">
+				<el-input v-model="formData.title" placeholder="Please enter the column name" />
 			</el-form-item>
 
-			<el-form-item label="创建显示">
+			<el-form-item label="Create a display">
 				<el-switch v-model="formData.is_create" />
 			</el-form-item>
 
-			<el-form-item label="编辑显示">
+			<el-form-item label="Edit display">
 				<el-switch v-model="formData.is_update" />
 			</el-form-item>
 
-			<el-form-item label="查询显示">
+			<el-form-item label="Query display">
 				<el-switch v-model="formData.is_query" />
 			</el-form-item>
 
 			<el-form-item>
-				<el-button type="primary" @click="handleSubmit" :loading="btnLoading"> 确定 </el-button>
-				<el-button @click="handleClose">取消</el-button>
+				<el-button type="primary" @click="handleSubmit" :loading="btnLoading"> Sure </el-button>
+				<el-button @click="handleClose">Cancel</el-button>
 			</el-form-item>
 		</el-form>
 	</div>
@@ -51,8 +51,8 @@ const emit = defineEmits(['drawerClose']);
 
 const formRef = ref<FormInstance>();
 const formRules = reactive({
-	field_name: [{ required: true, message: '请输入字段名！', trigger: 'blur' }],
-	title: [{ required: true, message: '请输入列名！', trigger: 'blur' }],
+	field_name: [{ required: true, message: 'Please enter a field name！', trigger: 'blur' }],
+	title: [{ required: true, message: 'Please enter the column name！', trigger: 'blur' }],
 });
 
 let formData = reactive<ColumnsFormDataType>({

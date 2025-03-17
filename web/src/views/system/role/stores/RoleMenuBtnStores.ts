@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia';
 import { RoleMenuBtnType } from '../types';
 /**
- * 权限配置：角色-菜单-按钮
+ * Permission configuration：Role-menu-Button
  */
 
 export const RoleMenuBtnStores = defineStore('RoleMenuBtnStores', {
 	state: (): RoleMenuBtnType[] => [],
 	actions: {
 		/**
-		 * 初始化
+		 * initialization
 		 */
 		setState(data: RoleMenuBtnType[]) {
 			this.$state = data;

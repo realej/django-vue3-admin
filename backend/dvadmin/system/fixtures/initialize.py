@@ -1,4 +1,4 @@
-# 初始化
+# initialization
 import os
 
 import django
@@ -19,55 +19,55 @@ class Initialize(CoreInitialize):
 
     def init_dept(self):
         """
-        初始化部门信息
+        Initialize department information
         """
         self.init_base(DeptInitSerializer, unique_fields=['name', 'parent','key'])
 
     def init_role(self):
         """
-        初始化角色信息
+        Initialize role information
         """
         self.init_base(RoleInitSerializer, unique_fields=['key'])
 
     def init_users(self):
         """
-        初始化用户信息
+        Initialize user information
         """
         self.init_base(UsersInitSerializer, unique_fields=['username'])
 
     def init_menu(self):
         """
-        初始化菜单信息
+        Initialize menu information
         """
         self.init_base(MenuInitSerializer, unique_fields=['name', 'web_path', 'component', 'component_name'])
 
     def init_role_menu(self):
         """
-        初始化角色菜单信息
+        Initialize the role menu information
         """
         self.init_base(RoleMenuInitSerializer, unique_fields=['role__key', 'menu__web_path', 'menu__component_name'])
 
     def init_role_menu_button(self):
         """
-        初始化角色菜单按钮信息
+        Initialize the role menu button information
         """
         self.init_base(RoleMenuButtonInitSerializer, unique_fields=['role__key', 'menu_button__value'])
 
     def init_api_white_list(self):
         """
-        初始API白名单
+        initialAPIWhitelist
         """
         self.init_base(ApiWhiteListInitSerializer, unique_fields=['url', 'method', ])
 
     def init_dictionary(self):
         """
-        初始化字典表
+        Initialize the dictionary table
         """
         self.init_base(DictionaryInitSerializer, unique_fields=['value', 'parent', ])
 
     def init_system_config(self):
         """
-        初始化系统配置表
+        Initialize the system configuration table
         """
         self.init_base(SystemConfigInitSerializer, unique_fields=['key', 'parent', ])
 

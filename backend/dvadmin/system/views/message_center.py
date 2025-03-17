@@ -16,7 +16,7 @@ from dvadmin.utils.viewset import CustomModelViewSet
 
 class MessageCenterSerializer(CustomModelSerializer):
     """
-    消息中心-序列化器
+    Message Center-Serializer
     """
     role_info = DynamicSerializerMethodField()
     user_info = DynamicSerializerMethodField()
@@ -69,7 +69,7 @@ class MessageCenterSerializer(CustomModelSerializer):
 
 class MessageCenterTargetUserSerializer(CustomModelSerializer):
     """
-    目标用户序列化器-序列化器
+    Target user serializer-Serializer
     """
 
     class Meta:
@@ -80,7 +80,7 @@ class MessageCenterTargetUserSerializer(CustomModelSerializer):
 
 class MessageCenterTargetUserListSerializer(CustomModelSerializer):
     """
-    目标用户序列化器-序列化器
+    Target user serializer-Serializer
     """
     role_info = DynamicSerializerMethodField()
     user_info = DynamicSerializerMethodField()
@@ -141,7 +141,7 @@ class MessageCenterTargetUserListSerializer(CustomModelSerializer):
 
 def websocket_push(user_id, message):
     """
-    主动推送消息
+    Proactively push messages
     """
     username = "user_" + str(user_id)
     channel_layer = get_channel_layer()
@@ -156,22 +156,22 @@ def websocket_push(user_id, message):
 
 class MessageCenterCreateSerializer(CustomModelSerializer):
     """
-    消息中心-新增-序列化器
+    Message Center-New-Serializer
     """
 
     def save(self, **kwargs):
         data = super().save(**kwargs)
         initial_data = self.initial_data
         target_type = initial_data.get('target_type')
-        # 在保存之前,根据目标类型,把目标用户查询出来并保存
+        # Before saving,According to the target type,Query and save the target user
         users = initial_data.get('target_user', [])
-        if target_type in [1]:  # 按角色
+        if target_type in [1]:  # By role
             target_role = initial_data.get('target_role', [])
             users = Users.objects.filter(role__id__in=target_role).values_list('id', flat=True)
-        if target_type in [2]:  # 按部门
+        if target_type in [2]:  # By department
             target_dept = initial_data.get('target_dept', [])
             users = Users.objects.filter(dept__id__in=target_dept).values_list('id', flat=True)
-        if target_type in [3]:  # 系统通知
+        if target_type in [3]:  # System Notification
             users = Users.objects.values_list('id', flat=True)
         targetuser_data = []
         for user in users:
@@ -185,7 +185,7 @@ class MessageCenterCreateSerializer(CustomModelSerializer):
         for user in users:
             unread_count = MessageCenterTargetUser.objects.filter(users__id=user, is_read=False).count()
             websocket_push(user, message={"sender": 'system', "contentType": 'SYSTEM',
-                                          "content": '您有一条新消息~', "unread": unread_count})
+                                          "content": 'You have a new news~', "unread": unread_count})
         return data
 
     class Meta:
@@ -196,12 +196,12 @@ class MessageCenterCreateSerializer(CustomModelSerializer):
 
 class MessageCenterViewSet(CustomModelViewSet):
     """
-    消息中心接口
-    list:查询
-    create:新增
-    update:修改
-    retrieve:单例
-    destroy:删除
+    Message Center Interface
+    list:Query
+    create:New
+    update:Revise
+    retrieve:Single case
+    destroy:delete
     """
     queryset = MessageCenter.objects.order_by('create_datetime')
     serializer_class = MessageCenterSerializer
@@ -215,7 +215,7 @@ class MessageCenterViewSet(CustomModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         """
-        重写查看
+        Rewrite View
         """
         pk = kwargs.get('pk')
         user_id = self.request.user.id
@@ -225,16 +225,16 @@ class MessageCenterViewSet(CustomModelViewSet):
             queryset.save()
         instance = self.get_object()
         serializer = self.get_serializer(instance)
-        # 主动推送消息
+        # Proactively push messages
         unread_count = MessageCenterTargetUser.objects.filter(users__id=user_id, is_read=False).count()
         websocket_push(user_id, message={"sender": 'system', "contentType": 'TEXT',
-                                         "content": '您查看了一条消息~', "unread": unread_count})
-        return DetailResponse(data=serializer.data, msg="获取成功")
+                                         "content": 'You checked a message~', "unread": unread_count})
+        return DetailResponse(data=serializer.data, msg="Get successful")
 
     @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
     def get_self_receive(self, request):
         """
-        获取接收到的消息
+        Get the received message
         """
         self_user_id = self.request.user.id
         # queryset = MessageCenterTargetUser.objects.filter(users__id=self_user_id).order_by('-create_datetime')
@@ -245,12 +245,12 @@ class MessageCenterViewSet(CustomModelViewSet):
             serializer = MessageCenterTargetUserListSerializer(page, many=True, request=request)
             return self.get_paginated_response(serializer.data)
         serializer = MessageCenterTargetUserListSerializer(queryset, many=True, request=request)
-        return SuccessResponse(data=serializer.data, msg="获取成功")
+        return SuccessResponse(data=serializer.data, msg="Get successful")
 
     @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
     def get_newest_msg(self, request):
         """
-        获取最新的一条消息
+        Get the latest message
         """
         self_user_id = self.request.user.id
         queryset = MessageCenterTargetUser.objects.filter(users__id=self_user_id).order_by('create_datetime').last()
@@ -258,4 +258,4 @@ class MessageCenterViewSet(CustomModelViewSet):
         if queryset:
             serializer = MessageCenterTargetUserListSerializer(queryset.messagecenter, many=False, request=request)
             data = serializer.data
-        return DetailResponse(data=data, msg="获取成功")
+        return DetailResponse(data=data, msg="Get successful")

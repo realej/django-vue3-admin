@@ -48,14 +48,14 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 				name: 'file_type',
 				type: '',
 				options: [
-					{ value: 0, label: '图片' },
-					{ value: 1, label: '视频' },
-					{ value: 2, label: '音频' },
-					{ value: 3, label: '其他' },
+					{ value: 0, label: 'picture' },
+					{ value: 1, label: 'video' },
+					{ value: 2, label: 'Audio' },
+					{ value: 3, label: 'other' },
 				]
 			},
 			rowHandle: {
-				//固定右侧
+				//Fix the right side
 				fixed: 'right',
 				width: 200,
 				show: false,
@@ -75,15 +75,15 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 			},
 			columns: {
 				_index: {
-					title: '序号',
+					title: 'Serial number',
 					form: { show: false },
 					column: {
 						//type: 'index',
 						align: 'center',
 						width: '70px',
-						columnSetDisabled: true, //禁止在列设置中选择
+						columnSetDisabled: true, //Disable selection in column settings
 						formatter: (context) => {
-							//计算序号,你可以自定义计算规则，此处为翻页累加
+							//Calculate the serial number,You can customize calculation rules，Here is the page recapture
 							let index = context.index ?? 1;
 							let pagination = crudExpose!.crudBinding.value.pagination;
 							return ((pagination!.currentPage ?? 1) - 1) * pagination!.pageSize + index + 1;
@@ -91,7 +91,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 				},
 				search: {
-					title: '关键词',
+					title: 'Keywords',
 					column: {
 						show: false,
 					},
@@ -101,7 +101,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 							props: {
 								clearable: true,
 							},
-							placeholder: '请输入关键词',
+							placeholder: 'Please enter keywords',
 						},
 					},
 					form: {
@@ -114,7 +114,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 				},
 				name: {
-					title: '文件名称',
+					title: 'File name',
 					search: {
 						show: true,
 					},
@@ -124,13 +124,13 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 					form: {
 						component: {
-							placeholder: '请输入文件名称',
+							placeholder: 'Please enter the file name',
 							clearable: true
 						},
 					},
 				},
 				preview: {
-					title: '预览',
+					title: 'Preview',
 					column: {
 						minWidth: 120,
 						align: 'center'
@@ -140,7 +140,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					}
 				},
 				url: {
-					title: '文件地址',
+					title: 'File address',
 					type: 'file-uploader',
 					search: {
 						disabled: true,
@@ -150,7 +150,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 				},
 				md5sum: {
-					title: '文件MD5',
+					title: 'documentMD5',
 					search: {
 						disabled: true,
 					},
@@ -162,7 +162,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 				},
 				mime_type: {
-					title: '文件类型',
+					title: 'File Type',
 					type: 'input',
 					form: {
 						show: false,
@@ -172,14 +172,14 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					}
 				},
 				file_type: {
-					title: '文件类型',
+					title: 'File Type',
 					type: 'dict-select',
 					dict: dict({
 						data: [
-							{ label: '图片', value: 0, color: 'success' },
-							{ label: '视频', value: 1, color: 'warning' },
-							{ label: '音频', value: 2, color: 'danger' },
-							{ label: '其他', value: 3, color: 'primary' },
+							{ label: 'picture', value: 0, color: 'success' },
+							{ label: 'video', value: 1, color: 'warning' },
+							{ label: 'Audio', value: 2, color: 'danger' },
+							{ label: 'other', value: 3, color: 'primary' },
 						]
 					}),
 					column: {
@@ -191,12 +191,12 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					form: {
 						show: false,
 						component: {
-							placeholder: '请选择文件类型'
+							placeholder: 'Please select a file type'
 						}
 					}
 				},
 				size: {
-					title: '文件大小',
+					title: 'File size',
 					column: {
 						minWidth: 120
 					},
@@ -205,12 +205,12 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					}
 				},
 				upload_method: {
-					title: '上传方式',
+					title: 'Upload method',
 					type: 'dict-select',
 					dict: dict({
 						data: [
-							{ label: '默认上传', value: 0, color: 'primary' },
-							{ label: '文件选择器上传', value: 1, color: 'warning' },
+							{ label: 'Upload by default', value: 0, color: 'primary' },
+							{ label: 'File selector upload', value: 1, color: 'warning' },
 						]
 					}),
 					column: {
@@ -221,7 +221,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					}
 				},
 				create_datetime: {
-					title: '创建时间',
+					title: 'Creation time',
 					column: {
 						minWidth: 160
 					},
@@ -230,7 +230,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					}
 				},
 				// fileselectortest: {
-				// 	title: '文件选择器测试',
+				// 	title: 'File selector test',
 				// 	type: 'file-selector',
 				// 	width: 200,
 				// 	form: {

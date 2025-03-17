@@ -19,7 +19,7 @@ export function GetObj(id: InfoReq) {
 }
 
 /**
- * 获取自己接收的消息
+ * Get the message you received
  * @param query
  * @returns {*}
  * @constructor

@@ -1,7 +1,7 @@
 import { nextTick } from 'vue';
 import * as svg from '@element-plus/icons-vue';
 
-// 获取阿里字体图标
+// Get Alibaba font icon
 const getAlicdnIconfont = () => {
 	return new Promise((resolve, reject) => {
 		nextTick(() => {
@@ -23,12 +23,12 @@ const getAlicdnIconfont = () => {
 				}
 			}
 			if (sheetsIconList.length > 0) resolve(sheetsIconList);
-			else reject('未获取到值，请刷新重试');
+			else reject('No value was obtained，Please refresh and try again');
 		});
 	});
 };
 
-// 初始化获取 css 样式，获取 element plus 自带 svg 图标，增加了 ele- 前缀，使用时：ele-Aim
+// Initialization acquisition css style，Get element plus Bring your own svg icon，Added ele- Prefix，When using：ele-Aim
 const getElementPlusIconfont = () => {
 	return new Promise((resolve, reject) => {
 		nextTick(() => {
@@ -38,19 +38,19 @@ const getElementPlusIconfont = () => {
 				sheetsIconList.push(`ele-${icons[i].name}`);
 			}
 			if (sheetsIconList.length > 0) resolve(sheetsIconList);
-			else reject('未获取到值，请刷新重试');
+			else reject('No value was obtained，Please refresh and try again');
 		});
 	});
 };
 
-// 初始化获取 css 样式，这里使用 fontawesome 的图标
+// Initialization acquisition css style，Used here fontawesome Icons
 const getAwesomeIconfont = () => {
 	return new Promise((resolve, reject) => {
 		nextTick(() => {
 			const styles: any = document.styleSheets;
 			let sheetsList = [];
 			let sheetsIconList = [];
-		    // 判断fontFamily是否是本地加载
+		    // JudgmentfontFamilyIs it loaded locally
 			for (let i = 0; i < styles.length; i++) {
 				const rules = styles[i].cssRules || styles[i].rules;
 				if (rules) {
@@ -82,16 +82,16 @@ const getAwesomeIconfont = () => {
 				}
 			}
 			if (sheetsIconList.length > 0) resolve(sheetsIconList.reverse());
-			else reject('未获取到值，请刷新重试');
+			else reject('No value was obtained，Please refresh and try again');
 		});
 	});
 };
 
 /**
- * 获取字体图标 `document.styleSheets`
- * @method ali 获取阿里字体图标 `<i class="iconfont 图标类名"></i>`
- * @method ele 获取 element plus 自带图标 `<i class="图标类名"></i>`
- * @method ali 获取 fontawesome 的图标 `<i class="fa 图标类名"></i>`
+ * Get font icons `document.styleSheets`
+ * @method ali Get Alibaba font icon `<i class="iconfont Icon Class Name"></i>`
+ * @method ele Get element plus Bring your own icon `<i class="Icon Class Name"></i>`
+ * @method ali Get fontawesome Icons `<i class="fa Icon Class Name"></i>`
  */
 const initIconfont = {
 	// iconfont
@@ -108,5 +108,5 @@ const initIconfont = {
 	},
 };
 
-// 导出方法
+// Export method
 export default initIconfont;

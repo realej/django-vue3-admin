@@ -11,14 +11,14 @@ import { createCrudOptions } from './crud';
 import { useExpose, useCrud } from '@fast-crud/fast-crud';
 import { ElMessageBox } from 'element-plus';
 
-//抽屉是否显示
+//Is the drawer displayed?
 const drawer = ref(false);
 
-//抽屉关闭确认
+//Drawer closing confirmation
 const handleClose = (done: () => void) => {
-	ElMessageBox.confirm('您确定要关闭?', {
-		confirmButtonText: '确定',
-		cancelButtonText: '取消',
+	ElMessageBox.confirm('You are sure to close?', {
+		confirmButtonText: 'Sure',
+		cancelButtonText: 'Cancel',
 		type: 'warning',
 	})
 		.then(() => {
@@ -33,7 +33,7 @@ const { crudBinding, crudRef, crudExpose } = useFs({ createCrudOptions, context:
 const { setSearchFormData, doRefresh } = crudExpose;
 
 defineExpose({ drawer, setSearchFormData, doRefresh });
-// 页面打开后获取列表数据
+// Get list data after the page is opened
 onMounted(() => {
 	crudExpose.doRefresh();
 });

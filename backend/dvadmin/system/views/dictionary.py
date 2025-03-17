@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: 猿小天
+@author: Yuan Xiaotian
 @contact: QQ:1638245306
 @Created on: 2021/6/3 003 0:30
-@Remark: 字典管理
+@Remark: Dictionary Management
 """
 from rest_framework import serializers
 from rest_framework.views import APIView
@@ -18,7 +18,7 @@ from dvadmin.utils.viewset import CustomModelViewSet
 
 class DictionarySerializer(CustomModelSerializer):
     """
-    字典-序列化器
+    dictionary-Serializer
     """
 
     class Meta:
@@ -32,20 +32,20 @@ class DictionarySerializer(CustomModelSerializer):
 
 class DictionaryCreateUpdateSerializer(CustomModelSerializer):
     """
-    字典管理 创建/更新时的列化器
+    Dictionary Management create/The serializer at update time
     """
     value = serializers.CharField(max_length=100)
 
     def validate_value(self, value):
         """
-        在父级的字典编号验证重复性
+        Verify repetition in parent dictionary number
         """
         initial_data = self.initial_data
         parent = initial_data.get('parent',None)
         if parent is None:
             unique =  Dictionary.objects.filter(value=value).exists()
             if unique:
-                raise serializers.ValidationError("字典编号不能重复")
+                raise serializers.ValidationError("Dictionary number cannot be repeated")
         return value
 
     class Meta:
@@ -55,12 +55,12 @@ class DictionaryCreateUpdateSerializer(CustomModelSerializer):
 
 class DictionaryViewSet(CustomModelViewSet):
     """
-    字典管理接口
-    list:查询
-    create:新增
-    update:修改
-    retrieve:单例
-    destroy:删除
+    Dictionary Management Interface
+    list:Query
+    create:New
+    update:Revise
+    retrieve:Single case
+    destroy:delete
     """
     queryset = Dictionary.objects.all()
     serializer_class = DictionarySerializer
@@ -86,7 +86,7 @@ class DictionaryViewSet(CustomModelViewSet):
 
 class InitDictionaryViewSet(APIView):
     """
-    获取初始化配置
+    Get initialization configuration
     """
     authentication_classes = []
     permission_classes = []
@@ -103,5 +103,5 @@ class InitDictionaryViewSet(APIView):
             else:
                 data = self.queryset.filter(parent__value=dictionary_key, status=True).values('label', 'value', 'type',
                                                                                               'color')
-            return SuccessResponse(data=data, msg="获取成功")
-        return SuccessResponse(data=[], msg="获取成功")
+            return SuccessResponse(data=data, msg="Get successful")
+        return SuccessResponse(data=[], msg="Get successful")

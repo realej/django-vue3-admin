@@ -1,57 +1,57 @@
 import Cookies from 'js-cookie';
 
 /**
- * window.localStorage 浏览器永久缓存
- * @method set 设置永久缓存
- * @method get 获取永久缓存
- * @method remove 移除永久缓存
- * @method clear 移除全部永久缓存
+ * window.localStorage Browser permanent cache
+ * @method set Setting up permanent cache
+ * @method get Get permanent cache
+ * @method remove Remove permanent cache
+ * @method clear Remove all permanent caches
  */
 export const Local = {
-	// 设置永久缓存
+	// Setting up permanent cache
 	set(key: string, val: any) {
 		window.localStorage.setItem(key, JSON.stringify(val));
 	},
-	// 获取永久缓存
+	// Get permanent cache
 	get(key: string) {
 		let json = <string>window.localStorage.getItem(key);
 		return JSON.parse(json);
 	},
-	// 移除永久缓存
+	// Remove permanent cache
 	remove(key: string) {
 		window.localStorage.removeItem(key);
 	},
-	// 移除全部永久缓存
+	// Remove all permanent caches
 	clear() {
 		window.localStorage.clear();
 	},
 };
 
 /**
- * window.sessionStorage 浏览器临时缓存
- * @method set 设置临时缓存
- * @method get 获取临时缓存
- * @method remove 移除临时缓存
- * @method clear 移除全部临时缓存
+ * window.sessionStorage Temporary browser cache
+ * @method set Setting up temporary cache
+ * @method get Get temporary cache
+ * @method remove Remove temporary cache
+ * @method clear Remove all temporary caches
  */
 export const Session = {
-	// 设置临时缓存
+	// Setting up temporary cache
 	set(key: string, val: any) {
 		if (key === 'token') return Cookies.set(key, val);
 		window.sessionStorage.setItem(key, JSON.stringify(val));
 	},
-	// 获取临时缓存
+	// Get temporary cache
 	get(key: string) {
 		if (key === 'token') return Cookies.get(key);
 		let json = <string>window.sessionStorage.getItem(key);
 		return JSON.parse(json);
 	},
-	// 移除临时缓存
+	// Remove temporary cache
 	remove(key: string) {
 		if (key === 'token') return Cookies.remove(key);
 		window.sessionStorage.removeItem(key);
 	},
-	// 移除全部临时缓存
+	// Remove all temporary caches
 	clear() {
 		Cookies.remove('token');
 		window.sessionStorage.clear();

@@ -22,7 +22,7 @@
 			</div>
 			<template #dropdown>
 				<el-dropdown-menu>
-					<el-dropdown-item command="zh-cn" :disabled="state.disabledI18n === 'zh-cn'">简体中文</el-dropdown-item>
+					<el-dropdown-item command="zh-cn" :disabled="state.disabledI18n === 'zh-cn'">Simplified Chinese</el-dropdown-item>
 					<el-dropdown-item command="en" :disabled="state.disabledI18n === 'en'">English</el-dropdown-item>
 					<el-dropdown-item command="zh-tw" :disabled="state.disabledI18n === 'zh-tw'">繁體中文</el-dropdown-item>
 				</el-dropdown-menu>
@@ -117,11 +117,11 @@ import { Session, Local } from '/@/utils/storage';
 import headerImage from '/@/assets/img/headerImage.png';
 import websocket from '/@/utils/websocket';
 import { InfoFilled } from '@element-plus/icons-vue'
-// 引入组件
+// Introducing components
 const UserNews = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/userNews.vue'));
 const Search = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/search.vue'));
 
-// 定义变量内容
+// Define variable content
 const { locale, t } = useI18n();
 const router = useRouter();
 const stores = useUserInfo();
@@ -135,7 +135,7 @@ const state = reactive({
 	disabledSize: 'large',
 });
 
-// 设置分割样式
+// Set split style
 const layoutUserFlexNum = computed(() => {
 	let num: string | number = '';
 	const { layout, isClassicSplitMenu } = themeConfig.value;
@@ -145,10 +145,10 @@ const layoutUserFlexNum = computed(() => {
 	return num;
 });
 
-// 定义变量内容
+// Define variable content
 const { isSocketOpen } = storeToRefs(useUserInfo());
 
-// websocket状态
+// websocketstate
 const onlinePopoverRef = ref()
 const onlineConfirmEvent = () => {
   if (!isSocketOpen.value) {
@@ -156,13 +156,13 @@ const onlineConfirmEvent = () => {
       websocket.reconnect_current = 1
       websocket.reconnect()
   }
-  // 手动隐藏弹出
+  // Manually hide pop-up
   unref(onlinePopoverRef).popperRef?.delayHide?.()
 }
-// 全屏点击时
+// When clicking on full screen
 const onScreenfullClick = () => {
 	if (!screenfull.isEnabled) {
-		ElMessage.warning('暂不不支持全屏');
+		ElMessage.warning('Full screen is not supported yet');
 		return false;
 	}
 	screenfull.toggle();
@@ -171,11 +171,11 @@ const onScreenfullClick = () => {
 		else state.isScreenfull = false;
 	});
 };
-// 布局配置 icon 点击时
+// Layout configuration icon When clicked
 const onLayoutSetingClick = () => {
 	mittBus.emit('openSetingsDrawer');
 };
-// 下拉菜单点击时
+// When the drop-down menu is clicked
 const onHandleCommandClick = (path: string) => {
 	if (path === 'logOut') {
 		ElMessageBox({
@@ -203,9 +203,9 @@ const onHandleCommandClick = (path: string) => {
 			},
 		})
 			.then(async () => {
-				// 清除缓存/token等
+				// Clear cache/tokenwait
 				Session.clear();
-				// 使用 reload 时，不需要调用 resetRoute() 重置路由
+				// use reload hour，No call required resetRoute() Reset the routing
 				window.location.reload();
 			})
 			.catch(() => {});
@@ -215,11 +215,11 @@ const onHandleCommandClick = (path: string) => {
 		router.push(path);
 	}
 };
-// 菜单搜索点击
+// Menu Search Click
 const onSearchClick = () => {
 	searchRef.value.openSearch();
 };
-// 组件大小改变
+// Component size changes
 const onComponentSizeChange = (size: string) => {
 	Local.remove('themeConfig');
 	themeConfig.value.globalComponentSize = size;
@@ -227,7 +227,7 @@ const onComponentSizeChange = (size: string) => {
 	initI18nOrSize('globalComponentSize', 'disabledSize');
 	window.location.reload();
 };
-// 语言切换
+// Language Switching
 const onLanguageChange = (lang: string) => {
 	Local.remove('themeConfig');
 	themeConfig.value.globalI18n = lang;
@@ -236,11 +236,11 @@ const onLanguageChange = (lang: string) => {
 	other.useTitle();
 	initI18nOrSize('globalI18n', 'disabledI18n');
 };
-// 初始化组件大小/i18n
+// Initialize component size/i18n
 const initI18nOrSize = (value: string, attr: string) => {
 	state[attr] = Local.get('themeConfig')[value];
 };
-// 页面加载时
+// When the page loads
 onMounted(() => {
 	if (Local.get('themeConfig')) {
 		initI18nOrSize('globalComponentSize', 'disabledSize');
@@ -248,7 +248,7 @@ onMounted(() => {
 	}
 });
 
-//消息中心的未读数量
+//Unread count of message center
 import { messageCenterStore } from '/@/stores/messageCenter';
 const messageCenter = messageCenterStore();
 </script>

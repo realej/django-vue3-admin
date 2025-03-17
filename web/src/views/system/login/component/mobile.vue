@@ -32,13 +32,13 @@
 <script lang="ts">
 import { toRefs, reactive, defineComponent } from 'vue';
 
-// 定义接口来定义对象的类型
+// Define an interface to define the type of an object
 interface LoginMobileState {
 	username: any;
 	code: string | number | undefined;
 }
 
-// 定义对象与类型
+// Define objects and types
 const ruleForm: LoginMobileState = {
 	username: '',
 	code: '',

@@ -57,17 +57,17 @@ class FileSerializer(CustomModelSerializer):
             if file_path:
                 validated_data['file_url'] = file_path
             else:
-                raise ValueError("上传失败")
+                raise ValueError("Upload failed")
         elif file_engine == 'cos':
             from dvadmin_cloud_storage.views.tencent import tencent_cos_upload
             file_path = tencent_cos_upload(file)
             if file_path:
                 validated_data['file_url'] = file_path
             else:
-                raise ValueError("上传失败")
+                raise ValueError("Upload failed")
         else:
             validated_data['url'] = file
-        # 审计字段
+        # Audit fields
         try:
             request_user = self.request.user
             validated_data['dept_belong_id'] = request_user.dept.id
@@ -86,8 +86,8 @@ class FileAllSerializer(CustomModelSerializer):
 
 
 class FileFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(field_name="name", lookup_expr="icontains", help_text="文件名")
-    mime_type = django_filters.CharFilter(field_name="mime_type", lookup_expr="icontains", help_text="文件类型")
+    name = django_filters.CharFilter(field_name="name", lookup_expr="icontains", help_text="file name")
+    mime_type = django_filters.CharFilter(field_name="mime_type", lookup_expr="icontains", help_text="File Type")
 
     class Meta:
         model = FileList
@@ -96,12 +96,12 @@ class FileFilter(django_filters.FilterSet):
 
 class FileViewSet(CustomModelViewSet):
     """
-    文件管理接口
-    list:查询
-    create:新增
-    update:修改
-    retrieve:单例
-    destroy:删除
+    File management interface
+    list:Query
+    create:New
+    update:Revise
+    retrieve:Single case
+    destroy:delete
     """
     queryset = FileList.objects.all()
     serializer_class = FileSerializer

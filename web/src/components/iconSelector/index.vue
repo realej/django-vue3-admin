@@ -55,56 +55,56 @@ import type { TabsPaneContext } from 'element-plus';
 import initIconfont from '/@/utils/getStyleSheets';
 import '/@/theme/iconSelector.scss';
 
-// 定义父组件传过来的值
+// Define the value passed by the parent component
 const props = defineProps({
-	// 输入框前置内容
+	// Input box prefix
 	prepend: {
 		type: String,
 		default: () => 'ele-Pointer',
 	},
-	// 输入框占位文本
+	// Input box placeholder text
 	placeholder: {
 		type: String,
-		default: () => '请输入内容搜索图标或者选择图标',
+		default: () => 'Please enter content to search icon or select the icon',
 	},
-	// 输入框占位文本
+	// Input box placeholder text
 	size: {
 		type: String,
 		default: () => 'default',
 	},
-	// 弹窗标题
+	// Pop-up title
 	title: {
 		type: String,
-		default: () => '请选择图标',
+		default: () => 'Please select the icon',
 	},
-	// 禁用
+	// Disabled
 	disabled: {
 		type: Boolean,
 		default: () => false,
 	},
-	// 是否可清空
+	// Is it emptiable?
 	clearable: {
 		type: Boolean,
 		default: () => true,
 	},
-	// 自定义空状态描述文字
+	// Customize empty status description text
 	emptyDescription: {
 		type: String,
-		default: () => '无相关图标',
+		default: () => 'No related icons',
 	},
-	// 双向绑定值，默认为 modelValue，
-	// 参考：https://v3.cn.vuejs.org/guide/migration/v-model.html#%E8%BF%81%E7%A7%BB%E7%AD%96%E7%95%A5
-	// 参考：https://v3.cn.vuejs.org/guide/component-custom-events.html#%E5%A4%9A%E4%B8%AA-v-model-%E7%BB%91%E5%AE%9A
+	// Bidirectional binding value，Default is modelValue，
+	// reference：https://v3.cn.vuejs.org/guide/migration/v-model.html#%E8%BF%81%E7%A7%BB%E7%AD%96%E7%95%A5
+	// reference：https://v3.cn.vuejs.org/guide/component-custom-events.html#%E5%A4%9A%E4%B8%AA-v-model-%E7%BB%91%E5%AE%9A
 	modelValue: String,
 });
 
-// 定义子组件向父组件传值/事件
+// Define child components to pass values ​​to parent components/event
 const emit = defineEmits(['update:modelValue', 'get', 'clear']);
 
-// 引入组件
+// Introducing components
 const IconList = defineAsyncComponent(() => import('/@/components/iconSelector/list.vue'));
 
-// 定义变量内容
+// Define variable content
 const inputWidthRef = ref();
 const state = reactive({
 	fontIconPrefix: '',
@@ -119,13 +119,13 @@ const state = reactive({
 	},
 });
 
-// 处理 input 获取焦点时，modelValue 有值时，改变 input 的 placeholder 值
+// deal with input When getting focus，modelValue When there is a value，Change input of placeholder value
 const onIconFocus = () => {
 	if (!props.modelValue) return false;
 	state.fontIconSearch = '';
 	state.fontIconPlaceholder = props.modelValue;
 };
-// 处理 input 失去焦点时，为空将清空 input 值，为点击选中图标时，将取原先值
+// deal with input When the focus is lost，Empty will clear input value，When the icon is selected for clicking，Will take the original value
 const onIconBlur = () => {
 	const list = fontIconTabNameList();
 	setTimeout(() => {
@@ -133,7 +133,7 @@ const onIconBlur = () => {
 		if (icon.length <= 0) state.fontIconSearch = '';
 	}, 300);
 };
-// 图标搜索及图标数据显示
+// Icon search and icon data display
 const fontIconSheetsFilterList = computed(() => {
 	const list = fontIconTabNameList();
 	if (!state.fontIconSearch) return list;
@@ -142,7 +142,7 @@ const fontIconSheetsFilterList = computed(() => {
 		if (item.toLowerCase().indexOf(search) !== -1) return item;
 	});
 });
-// 根据 tab name 类型设置图标
+// according to tab name Type Settings Icon
 const fontIconTabNameList = () => {
 	let iconList: any = [];
 	if (state.fontIconTabActive === 'ali') iconList = state.fontIconList.ali;
@@ -150,55 +150,55 @@ const fontIconTabNameList = () => {
 	else if (state.fontIconTabActive === 'awe') iconList = state.fontIconList.awe;
 	return iconList;
 };
-// 处理 icon 双向绑定数值回显
+// deal with icon Bidirectional binding numerical echo
 const initModeValueEcho = () => {
 	if (props.modelValue === '') return ((<string | undefined>state.fontIconPlaceholder) = props.placeholder);
 	(<string | undefined>state.fontIconPlaceholder) = props.modelValue;
 	(<string | undefined>state.fontIconPrefix) = props.modelValue;
 };
-// 处理 icon 类型，用于回显时，tab 高亮与初始化数据
+// deal with icon type，Used for echo time，tab Highlight and initialize data
 const initFontIconName = () => {
 	let name = 'ali';
 	if (props.modelValue!.indexOf('iconfont') > -1) name = 'ali';
 	else if (props.modelValue!.indexOf('ele-') > -1) name = 'ele';
 	else if (props.modelValue!.indexOf('fa') > -1) name = 'awe';
-	// 初始化 tab 高亮回显
+	// initialization tab Highlight echo
 	state.fontIconTabActive = name;
 	return name;
 };
-// 初始化数据
+// Initialize data
 const initFontIconData = async (name: string) => {
 	if (name === 'ali') {
-		// 阿里字体图标使用 `iconfont xxx`
+		// Use Alibaba font icon `iconfont xxx`
 		if (state.fontIconList.ali.length > 0) return;
 		await initIconfont.ali().then((res: any) => {
 			state.fontIconList.ali = res.map((i: string) => `iconfont ${i}`);
 		});
 	} else if (name === 'ele') {
-		// element plus 图标
+		// element plus icon
 		if (state.fontIconList.ele.length > 0) return;
 		await initIconfont.ele().then((res: any) => {
 			state.fontIconList.ele = res;
 		});
 	} else if (name === 'awe') {
-		// fontawesome字体图标使用 `fa xxx`
+		// fontawesomeFont icon use `fa xxx`
 		if (state.fontIconList.awe.length > 0) return;
 		await initIconfont.awe().then((res: any) => {
 			state.fontIconList.awe = res.map((i: string) => `fa ${i}`);
 		});
 	}
-	// 初始化 input 的 placeholder
-	// 参考（单项数据流）：https://cn.vuejs.org/v2/guide/components-props.html?#%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81
+	// initialization input of placeholder
+	// reference（Single data flow）：https://cn.vuejs.org/v2/guide/components-props.html?#%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81
 	state.fontIconPlaceholder = props.placeholder;
-	// 初始化双向绑定回显
+	// Initialize bidirectional binding echo
 	initModeValueEcho();
 };
-// 图标点击切换
+// Click to switch icon
 const onIconClick = (pane: TabsPaneContext) => {
 	initFontIconData(pane.paneName as string);
 	inputWidthRef.value.focus();
 };
-// 获取当前点击的 icon 图标
+// Get the currently clicked icon icon
 const onColClick = (v: string) => {
 	state.fontIconPlaceholder = v;
 	state.fontIconPrefix = v;
@@ -206,31 +206,31 @@ const onColClick = (v: string) => {
 	emit('update:modelValue', state.fontIconPrefix);
 	inputWidthRef.value.focus();
 };
-// 清空当前点击的 icon 图标
+// Clear the currently clicked icon icon
 const onClearFontIcon = () => {
 	state.fontIconPrefix = '';
 	emit('clear', state.fontIconPrefix);
 	emit('update:modelValue', state.fontIconPrefix);
 };
-// 获取 input 的宽度
+// Get input Width of
 const getInputWidth = () => {
 	nextTick(() => {
 		state.fontIconWidth = inputWidthRef.value.$el.offsetWidth;
 	});
 };
-// 监听页面宽度改变
+// Listen to page width changes
 const initResize = () => {
 	window.addEventListener('resize', () => {
 		getInputWidth();
 	});
 };
-// 页面加载时
+// When the page loads
 onMounted(() => {
 	initFontIconData(initFontIconName());
 	initResize();
 	getInputWidth();
 });
-// 监听双向绑定 modelValue 的变化
+// Listening two-way binding modelValue Changes
 watch(
 	() => props.modelValue,
 	() => {

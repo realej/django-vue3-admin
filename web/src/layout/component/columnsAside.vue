@@ -53,7 +53,7 @@ import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import mittBus from '/@/utils/mitt';
 
-// 定义变量内容
+// Define variable content
 const columnsAsideOffsetTopRefs = ref<RefType>([]);
 const columnsAsideActiveRef = ref();
 const stores = useRoutesList();
@@ -72,19 +72,19 @@ const state = reactive<ColumnsAsideState>({
 	routeSplit: [],
 });
 
-// 设置菜单高亮位置移动
+// Settings menu highlight position move
 const setColumnsAsideMove = (k: number) => {
 	state.liIndex = k;
 	columnsAsideActiveRef.value.style.top = `${columnsAsideOffsetTopRefs.value[k].offsetTop + state.difference}px`;
 };
-// 菜单高亮点击事件
+// Menu highlight click event
 const onColumnsAsideMenuClick = (v: RouteItem, k: number) => {
 	setColumnsAsideMove(k);
 	let { path, redirect } = v;
 	if (redirect) router.push(redirect);
 	else router.push(path);
 };
-// 鼠标移入时，显示当前的子级菜单
+// When the mouse is moved in，Show the current child menu
 const onColumnsAsideMenuMouseenter = (v: RouteRecordRaw, k: number) => {
 	if (!themeConfig.value.isColumnsMenuHoverPreload) return false;
 	let { path } = v;
@@ -95,21 +95,21 @@ const onColumnsAsideMenuMouseenter = (v: RouteRecordRaw, k: number) => {
 	stores.setColumnsMenuHover(false);
 	stores.setColumnsNavHover(true);
 };
-// 鼠标移走时，显示原来的子级菜单
+// When the mouse is removed，Show original child menu
 const onColumnsAsideMenuMouseleave = async () => {
 	await stores.setColumnsNavHover(false);
-	// 添加延时器，防止拿到的 store.state.routesList 值不是最新的
+	// Add a delay，Prevent it from getting it store.state.routesList The value is not the latest
 	setTimeout(() => {
 		if (!isColumnsMenuHover && !isColumnsNavHover) mittBus.emit('restoreDefault');
 	}, 100);
 };
-// 设置高亮动态位置
+// Set the highlight dynamic position
 const onColumnsAsideDown = (k: number) => {
 	nextTick(() => {
 		setColumnsAsideMove(k);
 	});
 };
-// 设置/过滤路由（非静态路由/是否显示在菜单中）
+// set up/Filter routing（Non-static routing/Whether it is displayed in the menu）
 const setFilterRoutes = () => {
 	state.columnsAsideList = filterRoutesFun(routesList.value);
 	const resData: MittMenu = setSendChildren(route.path);
@@ -117,7 +117,7 @@ const setFilterRoutes = () => {
 	onColumnsAsideDown(resData.item?.k);
 	mittBus.emit('setSendColumnsChildren', resData);
 };
-// 传送当前子级数据到菜单中
+// Transfer current child data to the menu
 const setSendChildren = (path: string) => {
 	const currentPathSplit = path.split('/');
 	let currentData: MittMenu = { children: [] };
@@ -131,7 +131,7 @@ const setSendChildren = (path: string) => {
 	});
 	return currentData;
 };
-// 路由过滤递归函数
+// Routing filtering recursive functions
 const filterRoutesFun = <T extends RouteItem>(arr: T[]): T[] => {
 	return arr
 		.filter((item: T) => !item.meta?.isHide)
@@ -141,37 +141,37 @@ const filterRoutesFun = <T extends RouteItem>(arr: T[]): T[] => {
 			return item;
 		});
 };
-// tagsView 点击时，根据路由查找下标 columnsAsideList，实现左侧菜单高亮
+// tagsView When clicked，Find subscripts based on route columnsAsideList，Implement the left menu highlighting
 const setColumnsMenuHighlight = (path: string) => {
 	state.routeSplit = path.split('/');
 	state.routeSplit.shift();
 	const routeFirst = `/${state.routeSplit[0]}`;
 	const currentSplitRoute = state.columnsAsideList.find((v: RouteItem) => v.path === routeFirst);
 	if (!currentSplitRoute) return false;
-	// 延迟拿值，防止取不到
+	// Delayed value，Prevent it from being unable to obtain
 	setTimeout(() => {
 		onColumnsAsideDown(currentSplitRoute.k);
 	}, 0);
 };
-// 页面加载时
+// When the page loads
 onMounted(() => {
 	setFilterRoutes();
-	// 销毁变量，防止鼠标再次移入时，保留了上次的记录
+	// Destroy variables，Prevent the mouse from moving in again，Keep the last record
 	mittBus.on('restoreDefault', () => {
 		state.liOldIndex = null;
 		state.liOldPath = null;
 	});
 });
-// 页面卸载时
+// When the page is uninstalled
 onUnmounted(() => {
 	mittBus.off('restoreDefault', () => {});
 });
-// 路由更新时
+// When routing updates
 onBeforeRouteUpdate((to) => {
 	setColumnsMenuHighlight(to.path);
 	mittBus.emit('setSendColumnsChildren', setSendChildren(to.path));
 });
-// 监听布局配置信息的变化，动态增加菜单高亮位置移动像素
+// Listen to changes in layout configuration information，Dynamically increase the highlight position of the menu to move pixels
 watch(
 	pinia.state,
 	(val) => {

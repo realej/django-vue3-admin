@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
     """
-    项目初始化命令: python manage.py init
+    Project Initialization Command: python manage.py init
     """
 
     def add_arguments(self, parser):
@@ -43,7 +43,7 @@ Initialize(reset={reset},app="{app}").run()
                 """
                 )
             except ModuleNotFoundError:
-                # 兼容之前版本初始化
+                # Compatible with previous version initialization
                 try:
                     exec(
                         f"""
@@ -53,4 +53,4 @@ main(reset={reset})
                     )
                 except ModuleNotFoundError:
                     pass
-        print("初始化数据完成！")
+        print("Initialization data is completed！")

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { RoleDrawerType } from '../types';
 /**
- * 权限配置：抽屉
+ * Permission configuration：drawer
  */
 const initialState: RoleDrawerType = {
 	drawerVisible: false,
@@ -16,7 +16,7 @@ export const RoleDrawerStores = defineStore('RoleDrawerStores', {
 	}),
 	actions: {
 		/**
-		 * 打开权限修改抽屉
+		 * Open the permissions to modify the drawer
 		 */
 		handleDrawerOpen(row: any) {
 			this.drawerVisible = true;
@@ -28,7 +28,7 @@ export const RoleDrawerStores = defineStore('RoleDrawerStores', {
 			this.users = row.users;
 		},
 		/**
-		 * 关闭权限修改抽屉
+		 * Close permissions to modify the drawer
 		 */
 		handleDrawerClose() {
 			Object.assign(this.$state, initialState);

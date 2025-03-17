@@ -3,18 +3,18 @@ import { authDirective } from '/@/directive/authDirective';
 import { wavesDirective, dragDirective } from '/@/directive/customDirective';
 import {resizeObDirective} from '/@/directive/sizeDirective'
 /**
- * 导出指令方法：v-xxx
- * @methods authDirective 用户权限指令，用法：v-auth
- * @methods wavesDirective 按钮波浪指令，用法：v-waves
- * @methods dragDirective 自定义拖动指令，用法：v-drag
+ * Export command method：v-xxx
+ * @methods authDirective User permission command，usage：v-auth
+ * @methods wavesDirective Button Wave Command，usage：v-waves
+ * @methods dragDirective Custom drag commands，usage：v-drag
  */
 export function directive(app: App) {
-	// 用户权限指令
+	// User permission command
 	authDirective(app);
-	// 按钮波浪指令
+	// Button Wave Command
 	wavesDirective(app);
-	// 自定义拖动指令
+	// Custom drag commands
 	dragDirective(app);
-	//  监听窗口大小变化
+	//  Listen to window size changes
 	resizeObDirective(app)
 }

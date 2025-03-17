@@ -2,164 +2,164 @@
 
 [![img](https://img.shields.io/badge/license-MIT-blue.svg)](https://gitee.com/liqianglog/django-vue-admin/blob/master/LICENSE)  [![img](https://img.shields.io/badge/python-%3E=3.7.x-green.svg)](https://python.org/)  [![PyPI - Django Version badge](https://img.shields.io/badge/django%20versions-3.2-blue)](https://docs.djangoproject.com/zh-hans/3.2/) [![img](https://img.shields.io/badge/node-%3E%3D%2012.0.0-brightgreen)](https://nodejs.org/zh-cn/) [![img](https://gitee.com/liqianglog/django-vue-admin/badge/star.svg?theme=dark)](https://gitee.com/liqianglog/django-vue-admin)
 
-[预 览](https://demo.dvadmin.com) | [官网文档](https://www.django-vue-admin.com) | [群聊](https://qm.qq.com/cgi-bin/qm/qr?k=fOdnHhC8DJlRHGYSnyhoB8P5rgogA6Vs&jump_from=webapi) | [社区](https://bbs.django-vue-admin.com) | [插件市场](https://bbs.django-vue-admin.com/plugMarket.html) | [Github](https://github.com/liqianglog/django-vue-admin)
+[Pre- View](https://demo.dvadmin.com) | [Official website documentation](https://www.django-vue-admin.com) | [Group chat](https://qm.qq.com/cgi-bin/qm/qr?k=fOdnHhC8DJlRHGYSnyhoB8P5rgogA6Vs&jump_from=webapi) | [Community](https://bbs.django-vue-admin.com) | [Plug-in Market](https://bbs.django-vue-admin.com/plugMarket.html) | [Github](https://github.com/liqianglog/django-vue-admin)
 
 
 
-💡 **「关于」**
+💡 **「about」**
 
-我们是一群热爱代码的青年，在这个炙热的时代下，我们希望静下心来通过Code带来一点我们的色彩和颜色。
+We are a group of young people who love code，In this hot era，We hope to calm down and passCodeBring a little bit of our colors and colors。
 
-因为热爱，所以拥抱未来!
-
-
-## 平台简介
-
-💡 [django-vue3-admin](https://gitee.com/huge-dream/django-vue3-admin.git) 是一套全部开源的快速开发平台，毫无保留给个人及企业免费使用。
-    django-vue3-admin 基于 vue3 + CompositionAPI + typescript + vite + element plus, 是一款全栈，快速，开源的后台管理系统！
+Because of love，So embrace the future!
 
 
+## Platform Introduction
+
+💡 [django-vue3-admin](https://gitee.com/huge-dream/django-vue3-admin.git) It is a fast development platform with all open source，Free use for individuals and enterprises without reservation。
+    django-vue3-admin based on vue3 + CompositionAPI + typescript + vite + element plus, It's a full stack，fast，Open source backend management system！
 
 
-* 🧑‍🤝‍🧑前端采用 Vue3+TS+pinia+fastcrud(感谢[vue-next-admin](https://lyt-top.gitee.io/vue-next-admin-doc-preview/))
-* 👭后端采用 Python 语言 Django 框架以及强大的 [Django REST Framework](https://pypi.org/project/djangorestframework)。
-* 👫权限认证使用[Django REST Framework SimpleJWT](https://pypi.org/project/djangorestframework-simplejwt)，支持多终端认证系统。
-* 👬支持加载动态权限菜单，多方式轻松权限控制。
-* 💏特别鸣谢：[vue-next-admin](https://lyt-top.gitee.io/vue-next-admin-doc-preview/)。
-* 💡 特别感谢[jetbrains](https://www.jetbrains.com/) 为本开源项目提供免费的 IntelliJ IDEA 授权。
 
-#### 🏭 环境支持
+
+* 🧑‍🤝‍🧑Front-end adoption Vue3+TS+pinia+fastcrud(grateful[vue-next-admin](https://lyt-top.gitee.io/vue-next-admin-doc-preview/))
+* 👭Backend adoption Python language Django Framework and powerful [Django REST Framework](https://pypi.org/project/djangorestframework)。
+* 👫Permission authentication usage[Django REST Framework SimpleJWT](https://pypi.org/project/djangorestframework-simplejwt)，Supports multi-terminal authentication system。
+* 👬Support loading dynamic permission menu，Easy permission control in multiple ways。
+* 💏Special thanks：[vue-next-admin](https://lyt-top.gitee.io/vue-next-admin-doc-preview/)。
+* 💡 Special thanks[jetbrains](https://www.jetbrains.com/) Provide free open source projects IntelliJ IDEA Authorization。
+
+#### 🏭 Environmental support
 
 | Edge      | Firefox      | Chrome      | Safari      |
 | --------- | ------------ | ----------- | ----------- |
 | Edge ≥ 79 | Firefox ≥ 78 | Chrome ≥ 64 | Safari ≥ 12 |
 
-> 由于 Vue3 不再支持 IE11，故而 ElementPlus 也不支持 IE11 及之前版本。
+> because Vue3 No longer supported IE11，Therefore ElementPlus Nor supported IE11 and previous versions。
 
 
 
-## 在线体验
+## Online experience
 
-👩‍👧‍👦演示地址：[https://demo.dvadmin.com](https://demo.dvadmin.com)
+👩‍👧‍👦Demo address：[https://demo.dvadmin.com](https://demo.dvadmin.com)
 
-- 账号：superadmin
+- account：superadmin
 
-- 密码：admin123456
+- password：admin123456
 
-👩‍👦‍👦文档地址：[coding](https://dvadmin-private.coding.net/share/km/cec69f3d-30fe-47d5-bd97-e9e851f0b776/K-2)
+👩‍👦‍👦Document address：[coding](https://dvadmin-private.coding.net/share/km/cec69f3d-30fe-47d5-bd97-e9e851f0b776/K-2)
 
 
 
-## 交流
+## comminicate
 
-- 交流社区：[戳我](https://bbs.django-vue-admin.com)👩‍👦‍👦
+- Communication Community：[Poke me](https://bbs.django-vue-admin.com)👩‍👦‍👦
 
-- 插件市场：[戳我](https://bbs.django-vue-admin.com/plugMarket.html)👩‍👦‍👦
+- Plug-in Market：[Poke me](https://bbs.django-vue-admin.com/plugMarket.html)👩‍👦‍👦
 
--  django-vue-admin交流01群(已满)：812482043 [点击链接加入群聊](https://qm.qq.com/cgi-bin/qm/qr?k=aJVwjDvH-Es4MPJQuoO32N0SucK22TE5&jump_from=webapi)
--  django-vue-admin交流02群(已满)：687252418  [点击链接加入群聊](https://qm.qq.com/cgi-bin/qm/qr?k=4jJN4IjWGfxJ8YJXbb_gTsuWjR34WLdc&jump_from=webapi)
--  django-vue-admin交流03群：442108213  [点击链接加入群聊](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=wsm5oSz3K8dElBYUDtLTcQSEPhINFkl8&authKey=M6sbER0z59ZakgBr5erFeZyFZU15CI52bErNZa%2FxSvvGIuVAbY0N5866v89hm%2FK4&noverify=0&group_code=442108213)
+-  django-vue-admincomminicate01group(Full)：812482043 [Click the link to join the group chat](https://qm.qq.com/cgi-bin/qm/qr?k=aJVwjDvH-Es4MPJQuoO32N0SucK22TE5&jump_from=webapi)
+-  django-vue-admincomminicate02group(Full)：687252418  [Click the link to join the group chat](https://qm.qq.com/cgi-bin/qm/qr?k=4jJN4IjWGfxJ8YJXbb_gTsuWjR34WLdc&jump_from=webapi)
+-  django-vue-admincomminicate03group：442108213  [Click the link to join the group chat](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=wsm5oSz3K8dElBYUDtLTcQSEPhINFkl8&authKey=M6sbER0z59ZakgBr5erFeZyFZU15CI52bErNZa%2FxSvvGIuVAbY0N5866v89hm%2FK4&noverify=0&group_code=442108213)
 
-- 二维码
+- QR code
 
   <img src='https://images.gitee.com/uploads/images/2022/0530/233203_5fb11883_5074988.jpeg' width='200'>
 
-## 源码地址
+## Source code address
 
-gitee地址(主推)：[https://gitee.com/huge-dream/django-vue3-admin](https://gitee.com/huge-dream/django-vue3-admin)👩‍👦‍👦
+giteeaddress(Main recommendation)：[https://gitee.com/huge-dream/django-vue3-admin](https://gitee.com/huge-dream/django-vue3-admin)👩‍👦‍👦
 
-github地址：暂无
+githubaddress：None yet
 
 
-## 内置功能
+## Built-in functions
 
-1.  👨‍⚕️菜单管理：配置系统菜单，操作权限，按钮权限标识、后端接口权限等。
-2.  🧑‍⚕️部门管理：配置系统组织机构（公司、部门、角色）。
-3.  👩‍⚕️角色管理：角色菜单权限分配、数据权限分配、设置角色按部门进行数据范围权限划分。
-4.  🧑‍🎓按钮权限权限：授权角色的按钮权限和接口权限,可做到每一个接口都能授权数据范围。
-5.  🧑‍🎓字段权限权限：授权页面的字段显示权限。
-5.  👨‍🎓用户管理：用户是系统操作者，该功能主要完成系统用户配置。
-6.  👬接口白名单：配置不需要进行权限校验的接口。
-7.  🧑‍🔧字典管理：对系统中经常使用的一些较为固定的数据进行维护。
-8.  🧑‍🔧地区管理：对省市县区域进行管理。
-9.  📁附件管理：对平台上所有文件、图片等进行统一管理。
-10.  🗓️操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
-11.  🔌[插件市场 ](https://bbs.django-vue-admin.com/plugMarket.html)：基于Django-Vue-Admin框架开发的应用和插件。
+1.  👨‍⚕️Menu Management：Configure System Menu，Operation permissions，Button permission identification、Backend interface permissions, etc.。
+2.  🧑‍⚕️Department Management：Configure system organization（company、department、Role）。
+3.  👩‍⚕️Role Management：Role menu permission assignment、Data permission allocation、Set up roles to divide data scope permissions by department。
+4.  🧑‍🎓Button Permission Permission：Authorize the role button permissions and interface permissions,It can enable every interface to authorize the data range。
+5.  🧑‍🎓Field permissions：Authorization page field display permissions。
+5.  👨‍🎓User Management：The user is the system operator，This function mainly completes system user configuration。
+6.  👬Interface whitelist：Configure interfaces that do not require permission verification。
+7.  🧑‍🔧Dictionary Management：Maintain some relatively fixed data that is often used in the system。
+8.  🧑‍🔧Regional Management：Manage provinces, cities, counties and regions。
+9.  📁Attachment Management：For all files on the platform、Unified management of pictures, etc.。
+10.  🗓️Operation log：Normal system operation logging and query；System exception information logging and query。
+11.  🔌[Plug-in Market ](https://bbs.django-vue-admin.com/plugMarket.html)：based onDjango-Vue-AdminFramework development applications and plug-ins。
 
-##  插件市场 🔌
+##  Plug-in Market 🔌
 
-- Celery异步任务：[dvadmin-celery](https://gitee.com/huge-dream/dvadmin-celery)
-- 升级中心后端：[dvadmin-upgrade-center](https://gitee.com/huge-dream/dvadmin-upgrade-center)
-- 升级中心前端：[dvadmin-upgrade-center-web](https://gitee.com/huge-dream/dvadmin-upgrade-center-web)
+- CeleryAsynchronous tasks：[dvadmin-celery](https://gitee.com/huge-dream/dvadmin-celery)
+- Upgrade the center backend：[dvadmin-upgrade-center](https://gitee.com/huge-dream/dvadmin-upgrade-center)
+- Upgrade the center front end：[dvadmin-upgrade-center-web](https://gitee.com/huge-dream/dvadmin-upgrade-center-web)
 
-## 准备工作
+## Preparation
 ~~~
-Python >= 3.8.0 (推荐3.8+版本)
-nodejs >= 14.0 (推荐最新)
-Mysql >= 5.7.0 (可选，默认数据库sqlite3，推荐8.0版本)
-Redis(可选，最新版)
+Python >= 3.8.0 (recommend3.8+Version)
+nodejs >= 14.0 (Recommended latest)
+Mysql >= 5.7.0 (Optional，Default databasesqlite3，recommend8.0Version)
+Redis(Optional，Latest version)
 ~~~
 
-## 前端♝
+## front end♝
 
 ```bash
-# 克隆项目
+# Clone project
 git clone https://gitee.com/huge-dream/django-vue3-admin.git
 
-# 进入项目目录
+# Enter the project directory
 cd web
 
-# 安装依赖
+# Installation dependencies
 npm install --registry=https://registry.npm.taobao.org
 
-# 启动服务
+# Start the service
 npm run dev
-# 浏览器访问 http://localhost:8080
-# .env.development 文件中可配置启动端口等参数
-# 构建生产环境
+# Browser access http://localhost:8080
+# .env.development The startup port and other parameters can be configured in the file
+# Build a production environment
 # npm run build
 ```
 
 
 
-## 后端💈
+## rear end💈
 
 ~~~bash
-1. 进入项目目录 cd backend
-2. 在项目根目录中，复制 ./conf/env.example.py 文件为一份新的到 ./conf 文件夹下，并重命名为 env.py
-3. 在 env.py 中配置数据库信息
-	mysql数据库版本建议：8.0
-	mysql数据库字符集：utf8mb4
-4. 安装依赖环境
+1. Enter the project directory cd backend
+2. In the project root directory，copy ./conf/env.example.py Document for a new one ./conf Under the folder，and rename it to env.py
+3. exist env.py Configure database information
+	mysqlDatabase version recommendations：8.0
+	mysqlDatabase character set：utf8mb4
+4. Installation dependent environment
 	pip3 install -r requirements.txt
-5. 执行迁移命令：
+5. Execute the migration command：
 	python3 manage.py makemigrations
 	python3 manage.py migrate
-6. 初始化数据
+6. Initialize data
 	python3 manage.py init
-7. 初始化省市县数据:
+7. Initialize provincial, municipal and county data:
 	python3 manage.py init_area
-8. 启动项目
+8. Start the project
 	python3 manage.py runserver 0.0.0.0:8000
-或使用 daphne :
+Or use daphne :
   daphne -b 0.0.0.0 -p 8000 application.asgi:application
 ~~~
 
-### 访问项目
+### Visit the project
 
-- 访问地址：[http://localhost:8080](http://localhost:8080) (默认为此地址，如有修改请按照配置文件)
-- 账号：`superadmin` 密码：`admin123456`
-
-
+- Access address：[http://localhost:8080](http://localhost:8080) (This address is default，If there are any modifications, please follow the configuration file)
+- account：`superadmin` password：`admin123456`
 
 
 
-### docker-compose 运行
+
+
+### docker-compose run
 
 ~~~shell
-# 先安装docker-compose (自行百度安装),执行此命令等待安装，如有使用celery插件请打开docker-compose.yml中celery 部分注释
+# Install firstdocker-compose (Install on Baidu),Execute this command to wait for installation，If usedceleryPlease open the plugindocker-compose.ymlmiddlecelery Partial comments
 docker-compose up -d
-# 初始化后端数据(第一次执行即可)
+# Initialize backend data(Just execute it for the first time)
 docker exec -ti dvadmin-django bash
 python manage.py makemigrations 
 python manage.py migrate
@@ -167,22 +167,22 @@ python manage.py init_area
 python manage.py init
 exit
 
-前端地址：http://127.0.0.1:8080
-后端地址：http://127.0.0.1:8080/api
-# 在服务器上请把127.0.0.1 换成自己公网ip
-账号：superadmin 密码：admin123456
+Front-end address：http://127.0.0.1:8080
+Backend address：http://127.0.0.1:8080/api
+# Please put it on the server127.0.0.1 Change it to your own public networkip
+account：superadmin password：admin123456
 
-# docker-compose 停止
+# docker-compose stop
 docker-compose down
-#  docker-compose 重启
+#  docker-compose Restart
 docker-compose restart
-#  docker-compose 启动时重新进行 build
+#  docker-compose Restart on startup build
 docker-compose up -d --build
 ~~~
 
 
 
-## 演示图✅
+## Demo diagram✅
 
 ![image-01](https://images.gitee.com/uploads/images/2022/0530/234137_b58c8f98_5074988.png)
 

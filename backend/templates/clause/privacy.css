@@ -5,12 +5,12 @@ ul,li{list-style:none;padding:0;margin:0;}
 .bg{background-repeat:no-repeat;background-position:center center;background-size:100%;}
 .center{margin:0 auto;position:relative;}
 .abs_center{position:absolute;left: 50%;transform: translateX(-50%);-webkit-transform:translateX(-50%);}
-/*滚动条统一样式*/
+/*Scroll bar uniform style*/
 .scrollbar{overflow-x:hidden;scrollbar-track-color:none;}
-.scrollbar::-webkit-scrollbar{width:8px;background-color:transparent;} /*滚动条整体部分*/
-.scrollbar::-webkit-scrollbar-track{border-radius:4px;-webkit-box-shadow: inset 0 0 0 rgba(0,0,0,0);background-color:transparent;display:none;} /* 滚动条的轨道*/
-.scrollbar::-webkit-scrollbar-track-piece{background-color:transparent;display:none;}/* 滚动条的内层轨道*/
-.scrollbar::-webkit-scrollbar-thumb{border-radius:4px;background: #313131;}/*滚动条里面的小方块，能向上向下移动（或往左往右移动，取决于是垂直滚动条还是水平滚动条）*/
+.scrollbar::-webkit-scrollbar{width:8px;background-color:transparent;} /*Overall part of the scroll bar*/
+.scrollbar::-webkit-scrollbar-track{border-radius:4px;-webkit-box-shadow: inset 0 0 0 rgba(0,0,0,0);background-color:transparent;display:none;} /* The track of the scroll bar*/
+.scrollbar::-webkit-scrollbar-track-piece{background-color:transparent;display:none;}/* The inner track of the scroll bar*/
+.scrollbar::-webkit-scrollbar-thumb{border-radius:4px;background: #313131;}/*Small squares inside the scroll bar，Can move up and down（Or move left and right，Depends on whether it is a vertical scroll bar or a horizontal scroll bar）*/
 
 h3,h4,h5{ font-weight: bold;}
 h3{ font-size: .4rem; color:#000;}

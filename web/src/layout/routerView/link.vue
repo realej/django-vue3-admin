@@ -3,10 +3,10 @@
 		<div class="layout-padding-auto layout-padding-view">
 			<div class="layout-link-warp">
 				<i class="layout-link-icon iconfont icon-xingqiu"></i>
-				<div class="layout-link-msg">页面 "{{ $t(state.title) }}" 已在新窗口中打开</div>
+				<div class="layout-link-msg">page "{{ $t(state.title) }}" Opens in new window</div>
 				<el-button class="mt30" round size="default" @click="onGotoFullPage">
 					<i class="iconfont icon-lianjie"></i>
-					<span>立即前往体验</span>
+					<span>Go and experience now</span>
 				</el-button>
 			</div>
 		</div>
@@ -19,7 +19,7 @@ import { useRoute } from 'vue-router';
 import { verifyUrl } from '/@/utils/toolsValidate';
 import {cookie} from "xe-utils";
 
-// 定义变量内容
+// Define variable content
 const route = useRoute();
 const state = reactive<LinkViewState>({
 	title: '',
@@ -27,7 +27,7 @@ const state = reactive<LinkViewState>({
   query: null
 });
 
-// 立即前往
+// Go now
 const onGotoFullPage = () => {
 	const { origin, pathname } = window.location;
   if (state.isLink.includes("{{token}}")) {
@@ -43,7 +43,7 @@ const onGotoFullPage = () => {
     window.open(`${origin}${pathname}#${state.isLink}?${objectToUrlParams(state.query)}`)
   };
 };
-// 监听路由的变化，设置内容
+// Listen to changes in routes，Set content
 watch(
 	() => route.path,
 	() => {

@@ -4,7 +4,7 @@
       <el-col xs="24" :sm="8" :md="6" :lg="4" :xl="4" class="p-1">
         <el-card :body-style="{ height: '100%' }">
           <p class="font-mono font-black text-center text-xl pb-5">
-            部门列表
+            Department list
             <el-tooltip effect="dark" :content="content" placement="right">
               <el-icon>
                 <QuestionFilled/>
@@ -31,7 +31,7 @@
         <el-card :body-style="{ height: '100%' }">
           <fs-crud ref="crudRef" v-bind="crudBinding">
             <template #actionbar-right>
-              <importExcel api="api/system/user/" v-auth="'user:Import'">导入</importExcel>
+              <importExcel api="api/system/user/" v-auth="'user:Import'">Import</importExcel>
             </template>
             <template #cell_avatar="scope">
               <div v-if="scope.row.avatar" style="display: flex; justify-content: center; align-items: center;">
@@ -77,8 +77,8 @@ interface APIResponseData {
   msg?: string;
 }
 
-// 引入组件
-const placeholder = ref('请输入部门名称');
+// Introducing components
+const placeholder = ref('Please enter the department name');
 const filterText = ref('');
 const treeRef = ref<InstanceType<typeof ElTree>>();
 
@@ -100,7 +100,7 @@ const filterNode = (value: string, data: Tree) => {
 let data = ref([]);
 
 const content = `
-1.部门信息;
+1.Department Information;
 `;
 
 const getData = () => {
@@ -115,29 +115,29 @@ const getData = () => {
   });
 };
 
-//树形点击事件
+//Tree click event
 const onTreeNodeClick = (node: any) => {
   const {id} = node;
   crudExpose.doSearch({form: {dept: id}});
 };
 
-// 页面打开后获取列表数据
+// Get list data after the page is opened
 onMounted(() => {
   getData();
 });
 
-// crud组件的ref
+// crudComponentref
 const crudRef = ref();
-// crud 配置的ref
+// crud Configuredref
 const crudBinding = ref();
-// 暴露的方法
+// Methods of exposure
 const {crudExpose} = useExpose({crudRef, crudBinding});
-// 你的crud配置
+// yourcrudConfiguration
 const {crudOptions} = createCrudOptions({crudExpose});
-// 初始化crud配置
+// initializationcrudConfiguration
 const {resetCrudOptions} = useCrud({crudExpose, crudOptions});
 
-// 页面打开后获取列表数据
+// Get list data after the page is opened
 onMounted(() => {
   crudExpose.doRefresh();
 });

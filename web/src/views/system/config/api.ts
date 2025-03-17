@@ -42,7 +42,7 @@ export function DelObj(id: DelReq) {
 }
 
 /*
-获取所有的model及字段信息
+Get allmodeland field information
  */
 export function GetAssociationTable() {
 	return request({

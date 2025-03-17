@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: 猿小天
+@author: Yuan Xiaotian
 @contact: QQ:1638245306
 @Created on: 2021/6/3 003 0:30
-@Remark: 按钮权限管理
+@Remark: Button permission management
 """
 from dvadmin.system.models import LoginLog
 from dvadmin.utils.field_permission import FieldPermissionMixin
@@ -14,7 +14,7 @@ from dvadmin.utils.viewset import CustomModelViewSet
 
 class LoginLogSerializer(CustomModelSerializer):
     """
-    登录日志权限-序列化器
+    Login log permissions-Serializer
     """
 
     class Meta:
@@ -25,12 +25,12 @@ class LoginLogSerializer(CustomModelSerializer):
 
 class LoginLogViewSet(CustomModelViewSet, FieldPermissionMixin):
     """
-    登录日志接口
-    list:查询
-    create:新增
-    update:修改
-    retrieve:单例
-    destroy:删除
+    Login log interface
+    list:Query
+    create:New
+    update:Revise
+    retrieve:Single case
+    destroy:delete
     """
     queryset = LoginLog.objects.all()
     serializer_class = LoginLogSerializer

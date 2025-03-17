@@ -1,4 +1,4 @@
-// 定义内容
+// Define content
 export default {
     router: {
         home: 'home',

@@ -4,7 +4,7 @@ import {Local, Session} from '/@/utils/storage';
 import {ElNotification} from "element-plus";
 import fs from "fs";
 
-// 是否显示升级提示信息框
+// Whether to display the upgrade prompt message box
 const IS_SHOW_UPGRADE_SESSION_KEY = 'isShowUpgrade';
 const VERSION_KEY = 'DVADMIN3_VERSION'
 const VERSION_FILE_NAME = 'version-build'
@@ -14,32 +14,32 @@ export function showUpgrade  () {
     if (isShowUpgrade) {
         Session.remove(IS_SHOW_UPGRADE_SESSION_KEY)
         ElNotification({
-            title: '新版本升级',
-            message: "检测到系统新版本，正在更新中！不用担心，更新很快的哦！",
+            title: 'New version upgrade',
+            message: "New version of the system was detected，Updating！Don't worry，Updated very quickly！",
             type: 'success',
             duration: 5000,
         });
     }
 }
 
-// 生产环境前端版本校验，
+// Production environment front-end version verification，
 export async function checkVersion(){
     if (process.env.NODE_ENV === 'development') {
-        // 开发环境无需校验前端版本
+        // No need to verify the front-end version of the development environment
         return
     }
-    // 获取线上版本号 t为时间戳，防止缓存
+    // Get the online version number tFor timestamp，Prevent cache
     await axios.get(`${import.meta.env.VITE_PUBLIC_PATH}${VERSION_FILE_NAME}?t=${new Date().getTime()}`).then(res => {
         const {status, data} = res || {}
         if (status === 200) {
-            // 获取当前版本号
+            // Get the current version number
             const localVersion = Local.get(VERSION_KEY)
-            // 将当前版本号持久缓存至本地
+            // Persistent cache of current version number to local
             Local.set(VERSION_KEY, data)
-            // 当用户本地存在版本号并且和线上版本号不一致时，进行页面刷新操作
+            // When the user has a version number locally and does not match the online version number，Perform page refresh operation
             if (localVersion && localVersion !== data) {
-                // 本地缓存版本号和线上版本号不一致，弹出升级提示框
-                // 此处无法直接使用消息框进行提醒，因为 window.location.reload()会导致消息框消失,将在loading页面判断是否需要显示升级提示框
+                // The local cache version number is inconsistent with the online version number，The upgrade prompt box pops up
+                // This is not possible to use the message box to remind you directly，because window.location.reload()This will cause the message box to disappear,Will be inloadingPage to determine whether the upgrade prompt box needs to be displayed
                 Session.set(IS_SHOW_UPGRADE_SESSION_KEY, true)
                 window.location.reload()
 
@@ -49,7 +49,7 @@ export async function checkVersion(){
 }
 
 export function generateVersionFile (){
-    // 生成版本文件到public目录下version文件中
+    // Generate version file topublicIn the directoryversionIn the file
     const version = `${process.env.npm_package_version}.${new Date().getTime()}`;
     fs.writeFileSync(`public/${VERSION_FILE_NAME}`, version);
 }

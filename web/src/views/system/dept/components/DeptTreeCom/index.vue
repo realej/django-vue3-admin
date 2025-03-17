@@ -1,11 +1,11 @@
 <template>
-	<el-input v-model="filterVal" :prefix-icon="Search" placeholder="请输入部门名称" />
+	<el-input v-model="filterVal" :prefix-icon="Search" placeholder="Please enter the department name" />
 	<div class="dept-tree-com">
 		<div class="tc-head">
 			<el-icon size="16" color="#606266" class="tc-head-icon">
 				<HomeFilled />
 			</el-icon>
-			<span class="tc-head-txt">部门架构</span>
+			<span class="tc-head-txt">Departmental structure</span>
 			<el-icon size="16" color="#606266" @click="() => (showTotalNum = !showTotalNum)" class="tc-head-icon">
 				<View v-show="!showTotalNum" />
 				<Hide v-show="showTotalNum" />
@@ -27,7 +27,7 @@
 				<element-tree-line :node="node" :showLabelLine="false" :indent="32">
 					<span v-if="data.status" class="text-center font-black font-normal">
 						<SvgIcon name="iconfont icon-shouye" color="var(--el-color-primary)" />&nbsp;{{ node.label }}
-						<span v-show="showTotalNum">（{{ data.dept_user_count }}人）</span>
+						<span v-show="showTotalNum">（{{ data.dept_user_count }}people）</span>
 					</span>
 					<span v-else color="var(--el-color-primary)"> <SvgIcon name="iconfont icon-shouye" />&nbsp;{{ node.label }} </span>
 				</element-tree-line>
@@ -35,31 +35,31 @@
 		</el-tree>
 
 		<div class="tree-tags">
-			<el-tooltip effect="dark" content="新增">
+			<el-tooltip effect="dark" content="New">
 				<el-icon size="16" @click="handleUpdateMenu('create')" class="mlt-icon">
 					<Plus />
 				</el-icon>
 			</el-tooltip>
 
-			<el-tooltip effect="dark" content="编辑">
+			<el-tooltip effect="dark" content="edit">
 				<el-icon size="16" @click="handleUpdateMenu('update')" class="mlt-icon">
 					<Edit />
 				</el-icon>
 			</el-tooltip>
 
-			<el-tooltip effect="dark" content="上移">
+			<el-tooltip effect="dark" content="Move up">
 				<el-icon size="16" @click="handleSort('up')" class="mlt-icon">
 					<Top />
 				</el-icon>
 			</el-tooltip>
 
-			<el-tooltip effect="dark" content="下移">
+			<el-tooltip effect="dark" content="Move down">
 				<el-icon size="16" @click="handleSort('down')" class="mlt-icon">
 					<Bottom />
 				</el-icon>
 			</el-tooltip>
 
-			<el-tooltip effect="dark" content="删除">
+			<el-tooltip effect="dark" content="delete">
 				<el-icon size="16" @click="handleDeleteDept" class="mlt-icon">
 					<Delete />
 				</el-icon>
@@ -113,7 +113,7 @@ watch(filterVal, (val) => {
 });
 
 /**
- * 部门树的搜索事件
+ * Search events for department trees
  */
 const handleFilterTreeNode = (value: string, data: TreeItemType) => {
 	if (!value) return true;
@@ -121,7 +121,7 @@ const handleFilterTreeNode = (value: string, data: TreeItemType) => {
 };
 
 /**
- * 部门树的懒加载
+ * Lazy loading of department trees
  */
 const handleLoadNode = (node: Node, resolve: Function) => {
 	if (node.level !== 0) {
@@ -132,7 +132,7 @@ const handleLoadNode = (node: Node, resolve: Function) => {
 };
 
 /**
- * 部门的点击事件
+ * Department click events
  */
 const handleNodeClick = (record: TreeItemType, node: Node) => {
 	treeSelectDept.value = record;
@@ -141,12 +141,12 @@ const handleNodeClick = (record: TreeItemType, node: Node) => {
 };
 
 /**
- * 新增 or 编辑 操作
+ * New or edit operate
  */
 const handleUpdateMenu = (type: string) => {
 	if (type === 'update') {
 		if (!treeSelectDept.value.id) {
-			warningNotification('请选择菜单！');
+			warningNotification('Please select menu！');
 			return;
 		}
 		emit('updateDept', type, treeSelectDept.value);
@@ -156,11 +156,11 @@ const handleUpdateMenu = (type: string) => {
 };
 
 /**
- * 删除部门
+ * Delete the department
  */
 const handleDeleteDept = () => {
 	if (!treeSelectDept.value.id) {
-		warningNotification('请选择菜单！');
+		warningNotification('Please select menu！');
 		return;
 	}
 	emit('deleteDept', treeSelectDept.value.id, () => {
@@ -169,11 +169,11 @@ const handleDeleteDept = () => {
 };
 
 /**
- * 部门上下移动操作
+ * Department up and down movement operation
  */
 const handleSort = async (type: string) => {
 	if (!treeSelectDept.value.id) {
-		warningNotification('请选择菜单！');
+		warningNotification('Please select menu！');
 		return;
 	}
 	if (sortDisable.value) return;

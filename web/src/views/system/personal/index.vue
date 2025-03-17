@@ -1,9 +1,9 @@
 <template>
 	<div class="personal layout-pd">
 		<el-row>
-			<!-- 个人信息 -->
+			<!-- personal information -->
 			<el-col :xs="24" :sm="16">
-				<el-card shadow="hover" header="个人信息">
+				<el-card shadow="hover" header="personal information">
 					<div class="personal-user">
 						<div class="personal-user-left">
 							<avatarSelector v-model="selectImgVisible" @uploadImg="uploadImg" ref="avatarSelectorRef"></avatarSelector>
@@ -11,16 +11,16 @@
 						<div class="personal-user-right">
 							<el-row>
 								<el-col :span="24" class="personal-title mb18"
-									>{{ currentTime }}，{{ state.personalForm.username }}，生活变的再糟糕，也不妨碍我变得更好！
+									>{{ currentTime }}，{{ state.personalForm.username }}，Life is no matter how bad it is，It doesn't prevent me from becoming better！
 								</el-col>
 								<el-col :span="24">
 									<el-row>
 										<el-col :xs="24" :sm="8" class="personal-item mb6">
-											<div class="personal-item-label">昵称：</div>
+											<div class="personal-item-label">Nick name：</div>
 											<div class="personal-item-value">{{ state.personalForm.name }}</div>
 										</el-col>
 										<el-col :xs="24" :sm="16" class="personal-item mb6">
-											<div class="personal-item-label">部门：</div>
+											<div class="personal-item-label">department：</div>
 											<div class="personal-item-value">
 												<el-tag>{{ state.personalForm.dept_info.dept_name }}</el-tag>
 											</div>
@@ -30,7 +30,7 @@
 								<el-col :span="24">
 									<el-row>
 										<el-col :xs="24" :sm="24" class="personal-item mb6">
-											<div class="personal-item-label">角色：</div>
+											<div class="personal-item-label">Role：</div>
 											<div class="personal-item-value">
 												<el-tag v-for="(item, index) in state.personalForm.role_info" :key="index" style="margin-right: 5px;">{{ item.name }}</el-tag>
 											</div>
@@ -43,12 +43,12 @@
 				</el-card>
 			</el-col>
 
-			<!-- 消息通知 -->
+			<!-- Message notification -->
 			<el-col :xs="24" :sm="8" class="pl15 personal-info">
 				<el-card shadow="hover">
 					<template #header>
-						<span>消息通知</span>
-						<span class="personal-info-more" @click="msgMore">更多</span>
+						<span>Message notification</span>
+						<span class="personal-info-more" @click="msgMore">More</span>
 					</template>
 					<div class="personal-info-box">
 						<ul class="personal-info-ul">
@@ -60,33 +60,33 @@
 				</el-card>
 			</el-col>
 
-			<!-- 更新信息 -->
+			<!-- Update information -->
 			<el-col :span="24">
-				<el-card shadow="hover" class="mt15 personal-edit" header="更新信息">
-					<div class="personal-edit-title">基本信息</div>
+				<el-card shadow="hover" class="mt15 personal-edit" header="Update information">
+					<div class="personal-edit-title">Basic information</div>
 					<el-form :model="state.personalForm" ref="userInfoFormRef" :rules="rules" size="default" label-width="50px" class="mt35 mb35">
 						<el-row :gutter="35">
 							<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb20">
-								<el-form-item label="昵称" prop="name">
-									<el-input v-model="state.personalForm.name" placeholder="请输入昵称" clearable></el-input>
+								<el-form-item label="Nick name" prop="name">
+									<el-input v-model="state.personalForm.name" placeholder="Please enter a nickname" clearable></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb20">
-								<el-form-item label="邮箱">
-									<el-input v-model="state.personalForm.email" placeholder="请输入邮箱" clearable></el-input>
+								<el-form-item label="Mail">
+									<el-input v-model="state.personalForm.email" placeholder="Please enter your email address" clearable></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb20">
-								<el-form-item label="手机" prop="mobile">
-									<el-input v-model="state.personalForm.mobile" placeholder="请输入手机" clearable></el-input>
+								<el-form-item label="cell phone" prop="mobile">
+									<el-input v-model="state.personalForm.mobile" placeholder="Please enter your phone" clearable></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb20">
-								<el-form-item label="性别">
-									<el-select v-model="state.personalForm.gender" placeholder="请选择性别" clearable class="w100">
-<!--										<el-option label="男" :value="1"></el-option>-->
-<!--										<el-option label="女" :value="0"></el-option>-->
-<!--										<el-option label="保密" :value="2"></el-option>-->
+								<el-form-item label="gender">
+									<el-select v-model="state.personalForm.gender" placeholder="Please choose gender" clearable class="w100">
+<!--										<el-option label="male" :value="1"></el-option>-->
+<!--										<el-option label="female" :value="0"></el-option>-->
+<!--										<el-option label="Confidential" :value="2"></el-option>-->
                     <el-option v-for="(item,index) in genderList" :key="index" :label="item.label" :value="item.value"></el-option>
 									</el-select>
 								</el-form-item>
@@ -97,32 +97,32 @@
 										<el-icon>
 											<ele-Position />
 										</el-icon>
-										更新个人信息
+										Update personal information
 									</el-button>
 								</el-form-item>
 							</el-col>
 						</el-row>
 					</el-form>
-					<div class="personal-edit-title mb15">账号安全</div>
+					<div class="personal-edit-title mb15">Account security</div>
 					<div class="personal-edit-safe-box">
 						<div class="personal-edit-safe-item">
 							<div class="personal-edit-safe-item-left">
-								<div class="personal-edit-safe-item-left-label">账户密码</div>
-								<div class="personal-edit-safe-item-left-value">当前密码强度：强</div>
+								<div class="personal-edit-safe-item-left-label">Account Password</div>
+								<div class="personal-edit-safe-item-left-value">Current password strength：powerful</div>
 							</div>
 							<div class="personal-edit-safe-item-right">
-								<el-button text type="primary" @click="passwordFormShow = true">立即修改</el-button>
+								<el-button text type="primary" @click="passwordFormShow = true">Modify now</el-button>
 							</div>
 						</div>
 					</div>
 					<div class="personal-edit-safe-box">
 						<div class="personal-edit-safe-item">
 							<div class="personal-edit-safe-item-left">
-								<div class="personal-edit-safe-item-left-label">密保手机</div>
-								<div class="personal-edit-safe-item-left-value">已绑定手机：{{ state.personalForm.mobile }}</div>
+								<div class="personal-edit-safe-item-left-label">Secretly secured mobile phone</div>
+								<div class="personal-edit-safe-item-left-value">Binded phone：{{ state.personalForm.mobile }}</div>
 							</div>
 							<div class="personal-edit-safe-item-right">
-								<!--                <el-button text type="primary">立即修改</el-button>-->
+								<!--                <el-button text type="primary">Modify now</el-button>-->
 							</div>
 						</div>
 					</div>
@@ -130,19 +130,19 @@
 					<div class="personal-edit-safe-box">
 						<div class="personal-edit-safe-item">
 							<div class="personal-edit-safe-item-left">
-								<div class="personal-edit-safe-item-left-label">绑定邮箱</div>
-								<div class="personal-edit-safe-item-left-value">已绑定邮箱：{{ state.personalForm.email }}</div>
+								<div class="personal-edit-safe-item-left-label">Bind the email</div>
+								<div class="personal-edit-safe-item-left-value">Bound email：{{ state.personalForm.email }}</div>
 							</div>
 							<div class="personal-edit-safe-item-right">
-								<!--                <el-button text type="primary">立即设置</el-button>-->
+								<!--                <el-button text type="primary">Set it now</el-button>-->
 							</div>
 						</div>
 					</div>
 				</el-card>
 			</el-col>
 		</el-row>
-		<!--    密码修改-->
-		<el-dialog v-model="passwordFormShow" title="密码修改">
+		<!--    Password modification-->
+		<el-dialog v-model="passwordFormShow" title="Password modification">
 			<el-form
 				ref="userPasswordFormRef"
 				:model="userPasswordInfo"
@@ -152,19 +152,19 @@
 				:rules="passwordRules"
 				center
 			>
-				<el-form-item label="原密码" required prop="oldPassword">
-					<el-input type="password" v-model="userPasswordInfo.oldPassword" placeholder="请输入原始密码" show-password clearable></el-input>
+				<el-form-item label="Original password" required prop="oldPassword">
+					<el-input type="password" v-model="userPasswordInfo.oldPassword" placeholder="Please enter the original password" show-password clearable></el-input>
 				</el-form-item>
-				<el-form-item required prop="newPassword" label="新密码">
-					<el-input type="password" v-model="userPasswordInfo.newPassword" placeholder="请输入新密码" show-password clearable></el-input>
+				<el-form-item required prop="newPassword" label="New Password">
+					<el-input type="password" v-model="userPasswordInfo.newPassword" placeholder="Please enter a new password" show-password clearable></el-input>
 				</el-form-item>
-				<el-form-item required prop="newPassword2" label="确认密码">
-					<el-input type="password" v-model="userPasswordInfo.newPassword2" placeholder="请再次输入新密码" show-password clearable></el-input>
+				<el-form-item required prop="newPassword2" label="Confirm Password">
+					<el-input type="password" v-model="userPasswordInfo.newPassword2" placeholder="Please enter the new password again" show-password clearable></el-input>
 				</el-form-item>
 			</el-form>
 			<template #footer>
 				<span class="dialog-footer">
-					<el-button type="primary" @click="settingPassword"> <i class="fa fa-check"></i>提交 </el-button>
+					<el-button type="primary" @click="settingPassword"> <i class="fa fa-check"></i>submit </el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -185,17 +185,17 @@ import {dictionary} from "/@/utils/dictionary";
 import {Md5} from "ts-md5";
 const router = useRouter();
 
-// 头像裁剪组件
+// Avatar cropping component
 const avatarSelector = defineAsyncComponent(() => import('/@/components/avatarSelector/index.vue'));
 const avatarSelectorRef = ref(null);
-// 当前时间提示语
+// Current time prompt
 const currentTime = computed(() => {
 	return formatAxis(new Date());
 });
 const userInfoFormRef = ref();
 const rules = reactive({
-	name: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
-	mobile: [{ pattern: /^1[3-9]\d{9}$/, message: '请输入正确手机号' }],
+	name: [{ required: true, message: 'Please enter a nickname', trigger: 'blur' }],
+	mobile: [{ pattern: /^1[3-9]\d{9}$/, message: 'Please enter the correct mobile phone number' }],
 });
 
 let selectImgVisible = ref(false);
@@ -223,7 +223,7 @@ const state = reactive<PersonalState>({
 });
 
 /**
- * 跳转消息中心
+ * Jump Message Center
  */
 const route = useRouter();
 const msgMore = () => {
@@ -232,7 +232,7 @@ const msgMore = () => {
 
 const genderList = ref();
 /**
- * 获取用户个人信息
+ * Obtain user personal information
  */
 const getUserInfo = function () {
 	api.GetUserInfo({}).then((res: any) => {
@@ -250,7 +250,7 @@ const getUserInfo = function () {
 };
 
 /**
- * 更新用户信息
+ * Update user information
  * @param formEl
  */
 const submitForm = async () => {
@@ -258,17 +258,17 @@ const submitForm = async () => {
 	await userInfoFormRef.value.validate((valid, fields) => {
 		if (valid) {
 			api.updateUserInfo(state.personalForm).then((res: any) => {
-				ElMessage.success('更新成功');
+				ElMessage.success('Update successfully');
 				getUserInfo();
 			});
 		} else {
-			ElMessage.error('表单验证失败,请检查~');
+			ElMessage.error('Form verification failed,Check, please~');
 		}
 	});
 };
 
 /**
- * 获取消息通知
+ * Get message notification
  */
 const getMsg = () => {
 	api.GetSelfReceive({}).then((res: any) => {
@@ -281,7 +281,7 @@ onMounted(() => {
 	getMsg();
 });
 
-/**************************密码修改部分************************/
+/**************************Password modification part************************/
 const passwordFormShow = ref(false);
 const userPasswordFormRef = ref();
 const userPasswordInfo = reactive({
@@ -293,11 +293,11 @@ const userPasswordInfo = reactive({
 const validatePass = (rule, value, callback) => {
 	const pwdRegex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z]).{8,30}');
 	if (value === '') {
-		callback(new Error('请输入密码'));
+		callback(new Error('Please enter your password'));
 	} else if (value === userPasswordInfo.oldPassword) {
-		callback(new Error('原密码与新密码一致'));
+		callback(new Error('The original password is the same as the new password'));
 	} else if (!pwdRegex.test(value)) {
-		callback(new Error('您的密码复杂度太低(密码中必须包含字母、数字)'));
+		callback(new Error('Your password is too complex(The password must contain letters、number)'));
 	} else {
 		if (userPasswordInfo.newPassword2 !== '') {
 			userPasswordFormRef.value.validateField('newPassword2');
@@ -307,9 +307,9 @@ const validatePass = (rule, value, callback) => {
 };
 const validatePass2 = (rule, value, callback) => {
 	if (value === '') {
-		callback(new Error('请再次输入密码'));
+		callback(new Error('Please enter your password again'));
 	} else if (value !== userPasswordInfo.newPassword) {
-		callback(new Error('两次输入密码不一致!'));
+		callback(new Error('The password is inconsistent when entering the two times!'));
 	} else {
 		callback();
 	}
@@ -319,7 +319,7 @@ const passwordRules = reactive({
 	oldPassword: [
 		{
 			required: true,
-			message: '请输入原密码',
+			message: 'Please enter the original password',
 			trigger: 'blur',
 		},
 	],
@@ -328,22 +328,22 @@ const passwordRules = reactive({
 });
 
 /**
- * 重新设置密码
+ * Reset password
  */
 const settingPassword = () => {
 	userPasswordFormRef.value.validate((valid) => {
 		if (valid) {
 			api.UpdatePassword(userPasswordInfo).then((res: any) => {
-				ElMessage.success('密码修改成功');
+				ElMessage.success('Password modification was successful');
         setTimeout(() => {
           Session.remove('token');
           router.push('/login');
 			}, 1000);
 			});
 		} else {
-			// 校验失败
-			// 登录表单校验失败
-			ElMessage.error('表单校验失败，请检查');
+			// Verification failed
+			// Login form verification failed
+			ElMessage.error('Form verification failed，Check, please');
 		}
 	});
 };
@@ -357,7 +357,7 @@ const uploadImg = (data: any) => {
 			// state.personalForm.avatar = getBaseURL() + res.data.url;
 			state.personalForm.avatar = res.data.url;
 			api.updateUserInfo(state.personalForm).then((res: any) => {
-				successMessage('更新成功');
+				successMessage('Update successfully');
 				getUserInfo();
 				useUserInfo().updateUserInfos();
 				// @ts-ignore

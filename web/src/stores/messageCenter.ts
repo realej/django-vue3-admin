@@ -1,10 +1,10 @@
 import {defineStore} from "pinia";
 /**
- * 消息中心
+ * Message Center
  */
 export const messageCenterStore = defineStore('messageCenter', {
     state: () => ({
-        // 未读消息
+        // Unread message
         unread: 0
     }),
     actions: {

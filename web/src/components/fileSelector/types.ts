@@ -1,7 +1,7 @@
 export const SHOW = {
-	IMAGE: 0b1000, // 图片
-	VIDEO: 0b0100, // 视频
-	AUDIO: 0b0010, // 音频
-	OTHER: 0b0001, // 其他
-	ALL: 0b1111, // 全部
+	IMAGE: 0b1000, // picture
+	VIDEO: 0b0100, // video
+	AUDIO: 0b0010, // Audio
+	OTHER: 0b0001, // other
+	ALL: 0b1111, // all
 };

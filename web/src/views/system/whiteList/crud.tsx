@@ -46,7 +46,7 @@ export const createCrudOptions = function ({crudExpose}: CreateCrudOptionsProps)
                 }
             },
             rowHandle: {
-                //固定右侧
+                //Fix the right side
                 fixed: 'right',
                 width: 150,
                 buttons: {
@@ -75,16 +75,16 @@ export const createCrudOptions = function ({crudExpose}: CreateCrudOptionsProps)
             },
             columns: {
                 _index: {
-                    title: '序号',
+                    title: 'Serial number',
                     form: {show: false},
                     column: {
                         //type: 'index',
                         align: 'center',
                         width: '70px',
-                        columnSetDisabled: true, //禁止在列设置中选择
+                        columnSetDisabled: true, //Disable selection in column settings
                         //@ts-ignore
                         formatter: (context) => {
-                            //计算序号,你可以自定义计算规则，此处为翻页累加
+                            //Calculate the serial number,You can customize calculation rules，Here is the page recapture
                             let index = context.index ?? 1;
                             let pagination: any = crudExpose!.crudBinding.value.pagination;
                             return ((pagination.currentPage ?? 1) - 1) * pagination.pageSize + index + 1;
@@ -92,7 +92,7 @@ export const createCrudOptions = function ({crudExpose}: CreateCrudOptionsProps)
                     },
                 },
                 search: {
-                    title: '关键词',
+                    title: 'Keywords',
                     column: {
                         show: false,
                     },
@@ -102,7 +102,7 @@ export const createCrudOptions = function ({crudExpose}: CreateCrudOptionsProps)
                             props: {
                                 clearable: true,
                             },
-                            placeholder: '请输入关键词',
+                            placeholder: 'Please enter keywords',
                         },
                     },
                     form: {
@@ -115,7 +115,7 @@ export const createCrudOptions = function ({crudExpose}: CreateCrudOptionsProps)
                     },
                 },
                 method: {
-                    title: '请求方式',
+                    title: 'Request method',
                     sortable: 'custom',
                     search: {
                         disabled: false,
@@ -150,10 +150,10 @@ export const createCrudOptions = function ({crudExpose}: CreateCrudOptionsProps)
                     },
                     form: {
                         rules: [
-                            // 表单校验规则
+                            // Form verification rules
                             {
                                 required: true,
-                                message: '必填项',
+                                message: 'Required',
                             },
                         ],
                         component: {
@@ -165,7 +165,7 @@ export const createCrudOptions = function ({crudExpose}: CreateCrudOptionsProps)
                     },
                 },
                 url: {
-                    title: '接口地址',
+                    title: 'Interface address',
                     sortable: 'custom',
                     search: {
                         disabled: true,
@@ -191,10 +191,10 @@ export const createCrudOptions = function ({crudExpose}: CreateCrudOptionsProps)
                     },
                     form: {
                         rules: [
-                            // 表单校验规则
+                            // Form verification rules
                             {
                                 required: true,
-                                message: '必填项',
+                                message: 'Required',
                             },
                         ],
                         component: {
@@ -213,12 +213,12 @@ export const createCrudOptions = function ({crudExpose}: CreateCrudOptionsProps)
                             tooltip: {
                                 placement: 'top-start',
                             },
-                            text: '请正确填写，以免请求时被拦截。匹配单例使用正则,例如:/api/xx/.*?/',
+                            text: 'Please fill in correctly，To avoid being intercepted during request。Match singletons using regular,For example:/api/xx/.*?/',
                         },
                     },
                 },
                 enable_datasource: {
-                    title: '数据权限认证',
+                    title: 'Data permission authentication',
                     search: {
                         disabled: false,
                     },

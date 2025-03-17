@@ -1,14 +1,14 @@
 <template>
 	<div class="pccm-item" v-if="RoleMenuField.$state.length > 0">
 		<div class="menu-form-alert">
-			<el-button size="small" @click="handleSaveField">保存 </el-button>
-			配置数据列字段权限
+			<el-button size="small" @click="handleSaveField">keep </el-button>
+			Configure Data Column Field Permissions
 		</div>
 
 		<ul class="columns-list">
 			<li class="columns-head">
 				<div class="width-txt">
-					<span>字段</span>
+					<span>Fields</span>
 				</div>
 				<div v-for="(head, hIndex) in RoleMenuFieldHeader.$state" :key="hIndex" class="width-check">
 					<el-checkbox v-model="head.checked" @change="handleColumnChange($event, head.value, head.disabled)">
@@ -35,8 +35,8 @@ import { RoleMenuFieldStores, RoleMenuFieldHeaderStores } from '../stores/RoleMe
 import { setRoleMenuField } from './api';
 const RoleMenuField = RoleMenuFieldStores();
 const RoleMenuFieldHeader = RoleMenuFieldHeaderStores();
-const RoleDrawer = RoleDrawerStores(); // 角色-抽屉
-/** 全选 */
+const RoleDrawer = RoleDrawerStores(); // Role-drawer
+/** Select all */
 const handleColumnChange = (val: boolean, btnType: string, disabledType: string) => {
 	for (const iterator of RoleMenuField.$state) {
 		iterator[btnType] = iterator[disabledType] ? iterator[btnType] : val;
@@ -100,8 +100,8 @@ const handleSaveField = async () => {
 			}
 		}
 		.columns-content {
-			max-height: calc(100vh - 240px); /* 视口高度 */
-			overflow-y: auto; /* 当内容超出高度时显示垂直滚动条 */
+			max-height: calc(100vh - 240px); /* Viewport height */
+			overflow-y: auto; /* Display vertical scrollbar when content exceeds height */
 			.columns-item {
 				display: flex;
 				align-items: center;

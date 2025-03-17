@@ -1,7 +1,7 @@
 /**
- * @description 安全地解析 json 字符串
- * @param {String} jsonString 需要解析的 json 字符串
- * @param {String} defaultValue 默认值
+ * @description Safely analyze json String
+ * @param {String} jsonString Need to parse json String
+ * @param {String} defaultValue default value
  */
 import { uiContext } from '@fast-crud/fast-crud';
 
@@ -16,50 +16,50 @@ export function parse(jsonString = '{}', defaultValue = {}) {
 }
 
 /**
- * @description 接口请求返回
- * @param {Any} data 返回值
- * @param {String} msg 状态信息
- * @param {Number} code 状态码
+ * @description Interface request return
+ * @param {Any} data Return value
+ * @param {String} msg Status information
+ * @param {Number} code Status code
  */
 export function response(data = {}, msg = '', code = 0) {
 	return [200, { code, msg, data }];
 }
 
 /**
- * @description 接口请求返回 正确返回
- * @param {Any} data 返回值
- * @param {String} msg 状态信息
+ * @description Interface request return Return correctly
+ * @param {Any} data Return value
+ * @param {String} msg Status information
  */
-export function responseSuccess(data = {}, msg = '成功') {
+export function responseSuccess(data = {}, msg = 'success') {
 	return response(data, msg);
 }
 
 /**
- * @description 接口请求返回 错误返回
- * @param {Any} data 返回值
- * @param {String} msg 状态信息
- * @param {Number} code 状态码
+ * @description Interface request return Error return
+ * @param {Any} data Return value
+ * @param {String} msg Status information
+ * @param {Number} code Status code
  */
-export function responseError(data = {}, msg = '请求失败', code = 500) {
+export function responseError(data = {}, msg = 'Request failed', code = 500) {
 	return response(data, msg, code);
 }
 
 /**
- * @description 记录和显示错误
- * @param {Error} error 错误对象
+ * @description Record and display errors
+ * @param {Error} error Error object
  */
 export function errorLog(error: any, notification = true) {
-	// 打印到控制台
+	// Print to console
 	console.error(error);
-	// 显示提示
+	// Show prompt
 	if (notification) {
 		uiContext.get().notification.error({ message: error.message });
 	}
 }
 
 /**
- * @description 创建一个错误
- * @param {String} msg 错误信息
+ * @description Create an error
+ * @param {String} msg error message
  */
 export function errorCreate(msg: any, notification = true) {
 	const error = new Error(msg);
@@ -68,34 +68,34 @@ export function errorCreate(msg: any, notification = true) {
 }
 
 /**
- * @description base64转file
- * @param {String} base64 base64字符串
- * @param {String} fileName 文件名
+ * @description base64changefile
+ * @param {String} base64 base64String
+ * @param {String} fileName file name
  */
 export function base64ToFile(base64: any, fileName: string) {
-	// 将base64按照 , 进行分割 将前缀  与后续内容分隔开
+	// Willbase64according to , Perform splitting Prefix  Separate from subsequent content
 	let data = base64.split(',');
-	// 利用正则表达式 从前缀中获取图片的类型信息（image/png、image/jpeg、image/webp等）
+	// Utilize regular expressions Get type information of the image from the prefix（image/png、image/jpeg、image/webpwait）
 	let type = data[0].match(/:(.*?);/)[1];
-	// 从图片的类型信息中 获取具体的文件格式后缀（png、jpeg、webp）
+	// From the type of image Get the specific file format suffix（png、jpeg、webp）
 	let suffix = type.split('/')[1];
-	// 使用atob()对base64数据进行解码  结果是一个文件数据流 以字符串的格式输出
+	// useatob()rightbase64Decode the data  The result is a file data stream Output in string format
 	const bstr = window.atob(data[1]);
-	// 获取解码结果字符串的长度
+	// Get the length of the decoded result string
 	let n = bstr.length;
-	// 根据解码结果字符串的长度创建一个等长的整形数字数组
-	// 但在创建时 所有元素初始值都为 0
+	// Create an equal length shaped array of numbers based on the length of the decoded result string
+	// But when created All elements have initial values 0
 	const u8arr = new Uint8Array(n);
-	// 将整形数组的每个元素填充为解码结果字符串对应位置字符的UTF-16 编码单元
+	// Fill each element of the shaping array with the corresponding position character of the decoded result stringUTF-16 Coding unit
 	while (n--) {
-		// charCodeAt()：获取给定索引处字符对应的 UTF-16 代码单元
+		// charCodeAt()：Get the corresponding character at a given index UTF-16 Code Unit
 		u8arr[n] = bstr.charCodeAt(n);
 	}
-	// 利用构造函数创建File文件对象
+	// Create with constructorsFileFile Object
 	// new File(bits, name, options)
 	const file = new File([u8arr], `${fileName}.${suffix}`, {
 		type: type,
 	});
-	// 将File文件对象返回给方法的调用者
+	// WillFileThe file object is returned to the caller of the method
 	return file;
 }

@@ -1,4 +1,4 @@
-// 引入fast-crud
+// Introducedfast-crud
 import {FastCrud, useTypes} from '@fast-crud/fast-crud';
 
 const {getType} = useTypes();
@@ -8,22 +8,22 @@ import {getBaseURL} from '/@/utils/baseUrl';
 // element
 import ui from '@fast-crud/ui-element';
 import {request} from '/@/utils/service';
-//扩展包
+//Expansion Package
 import {FsExtendsEditor, FsExtendsUploader } from '@fast-crud/fast-extends';
 import '@fast-crud/fast-extends/dist/style.css';
 import {successNotification} from '/@/utils/message';
 import XEUtils from "xe-utils";
 export default {
     async install(app: any, options: any) {
-        // 先安装ui
+        // Install firstui
         app.use(ui);
-        // 然后安装FastCrud
+        // Then installFastCrud
         app.use(FastCrud, {
-            //i18n, //i18n配置，可选，默认使用中文，具体用法请看demo里的 src/i18n/index.js 文件
-            // 此处配置公共的dictRequest（字典请求）
+            //i18n, //i18nConfiguration，Optional，Use Chinese by default，Please see the specific usagedemoInside src/i18n/index.js document
+            // This is a public configurationdictRequest（Dictionary request）
             async dictRequest({dict,url}: any) {
                 const {isTree} = dict
-                //根据dict的url，异步返回一个字典数组
+                //according todictofurl，Return a dictionary array asynchronously
                 return await request({url: url, params: dict.params || {}}).then((res: any) => {
                     if (isTree) {
                         return XEUtils.toArrayTree(res.data, {parentKey: 'parent'})
@@ -31,29 +31,29 @@ export default {
                     return res.data
                 });
             },
-            //公共crud配置
+            //publiccrudConfiguration
             commonOptions() {
                 return {
                     request: {
-                        //接口请求配置
-                        //你项目后台接口大概率与fast-crud所需要的返回结构不一致，所以需要配置此项
-                        //请参考文档http://fast-crud.docmirror.cn/api/crud-options/request.html
+                        //Interface request configuration
+                        //Your project's backend interface is likely to befast-crudThe required return structure is inconsistent，So you need to configure this
+                        //Please refer to the documenthttp://fast-crud.docmirror.cn/api/crud-options/request.html
                         transformQuery: ({page, form, sort}: any) => {
                             if (sort.asc !== undefined) {
                                 form['ordering'] = `${sort.asc ? '' : '-'}${sort.prop}`;
                             }
-                            //转换为你pageRequest所需要的请求参数结构
+                            //Convert to youpageRequestRequired request parameter structure
                             return {page: page.currentPage, limit: page.pageSize, ...form};
                         },
                         transformRes: ({res}: any) => {
-                            //将pageRequest的返回数据，转换为fast-crud所需要的格式
+                            //WillpageRequestReturn data，Convert tofast-crudRequired format
                             //return {records,currentPage,pageSize,total};
                             return {records: res.data, currentPage: res.page, pageSize: res.limit, total: res.total};
                         },
                     },
                     form: {
                         afterSubmit(ctx: any) {
-                            // 增加crud提示
+                            // Increasecrudhint
                             if (ctx.res.code == 2000) {
                                 successNotification(ctx.res.msg);
                             }
@@ -77,13 +77,13 @@ export default {
             },
             logger: { off: { tableColumns: false } }
         });
-        //富文本
+        //Rich text
         app.use(FsExtendsEditor, {
             wangEditor: {
                 width: 300,
             },
         });
-        // 文件上传
+        // File upload
         app.use(FsExtendsUploader, {
             defaultType: "form",
             form: {
@@ -108,7 +108,7 @@ export default {
                     });
                 },
                 successHandle(ret: any) {
-                    // 上传完成后的结果处理， 此处应返回格式为{url:xxx,key:xxx}
+                    // Processing of results after uploading， Here the format should be returned as{url:xxx,key:xxx}
                     return {
                         url: getBaseURL(ret.data.url),
                         key: ret.data.id,
@@ -123,18 +123,18 @@ export default {
         })
 
         setLogger({level: 'error'});
-        // 设置自动染色
+        // Set up automatic staining
         const dictComponentList = ['dict-cascader', 'dict-checkbox', 'dict-radio', 'dict-select', 'dict-switch', 'dict-tree'];
         dictComponentList.forEach((val) => {
             getType(val).column.component.color = 'auto';
             getType(val).column.align = 'center';
         });
-        // 设置placeholder 的默认值
+        // set upplaceholder Default value
         const placeholderComponentList = [
-            {key: 'text', placeholder: "请输入"},
-            {key: 'textarea', placeholder: "请输入"},
-            {key: 'input', placeholder: "请输入"},
-            {key: 'password', placeholder: "请输入"}
+            {key: 'text', placeholder: "Please enter"},
+            {key: 'textarea', placeholder: "Please enter"},
+            {key: 'input', placeholder: "Please enter"},
+            {key: 'password', placeholder: "Please enter"}
         ]
         placeholderComponentList.forEach((val) => {
             if (getType(val.key)?.search?.component) {

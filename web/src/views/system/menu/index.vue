@@ -15,12 +15,12 @@
 
 			<el-col :span="18">
         <el-tabs type="border-card">
-          <el-tab-pane label="按钮权限配置" >
+          <el-tab-pane label="Button permission configuration" >
             <div style="height: 72vh">
               <MenuButtonCom ref="menuButtonRef" />
             </div>
           </el-tab-pane>
-          <el-tab-pane label="列权限配置">
+          <el-tab-pane label="Column permission configuration">
             <div style="height: 72vh">
               <MenuFieldCom ref="menuFieldRef"></MenuFieldCom>
             </div>
@@ -30,7 +30,7 @@
 			</el-col>
 		</el-row>
 
-		<el-drawer v-model="drawerVisible" title="菜单配置" direction="rtl" size="500px" :close-on-click-modal="false" :before-close="handleDrawerClose">
+		<el-drawer v-model="drawerVisible" title="Menu Configuration" direction="rtl" size="500px" :close-on-click-modal="false" :before-close="handleDrawerClose">
 			<MenuFormCom
 				v-if="drawerVisible"
 				:initFormData="drawerFormData"
@@ -74,7 +74,7 @@ const getData = () => {
 };
 
 /**
- * 菜单的点击事件
+ * Menu click event
  */
 const handleTreeClick = (record: MenuTreeItemType) => {
 	menuButtonRef.value?.handleRefreshTable(record);
@@ -82,7 +82,7 @@ const handleTreeClick = (record: MenuTreeItemType) => {
 };
 
 /**
- * 部门的 新增 or 编辑 事件
+ * Department of New or edit event
  */
 const handleUpdateMenu = (type: string, record?: MenuTreeItemType) => {
 	if (type === 'update' && record) {
@@ -101,12 +101,12 @@ const handleDrawerClose = (type?: string) => {
 };
 
 /**
- * 部门的删除事件
+ * Department deletion event
  */
 const handleDeleteMenu = (id: string, callback: Function) => {
-	ElMessageBox.confirm('您确认删除该菜单项吗?', '温馨提示', {
-		confirmButtonText: '确认',
-		cancelButtonText: '取消',
+	ElMessageBox.confirm('Have you confirmed that you deleted this menu item?', 'Kind tips', {
+		confirmButtonText: 'confirm',
+		cancelButtonText: 'Cancel',
 		type: 'warning',
 	}).then(async () => {
 		const res: APIResponseData = await DelObj(id);

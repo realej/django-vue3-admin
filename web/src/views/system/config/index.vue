@@ -4,24 +4,24 @@
 			<el-header>
 				<div class="yxt-flex-between">
 					<div>
-						<el-tag>系统配置:您可以对您的网站进行自定义配置</el-tag>
+						<el-tag>System configuration:You can customize your website</el-tag>
 					</div>
 					<div>
 						<el-button-group>
-							<el-button type="primary" size="small" :icon="FolderAdd" @click="tabsDrawer = true"> 添加分组 </el-button>
-							<el-button size="small" type="warning" :icon="Edit" @click="contentDrawer = true"> 添加内容 </el-button>
+							<el-button type="primary" size="small" :icon="FolderAdd" @click="tabsDrawer = true"> Add grouping </el-button>
+							<el-button size="small" type="warning" :icon="Edit" @click="contentDrawer = true"> Add content </el-button>
 						</el-button-group>
 					</div>
 				</div>
 			</el-header>
 		</div>
 		<div>
-			<el-drawer v-if="tabsDrawer" title="添加分组" v-model="tabsDrawer" direction="rtl" size="30%">
+			<el-drawer v-if="tabsDrawer" title="Add grouping" v-model="tabsDrawer" direction="rtl" size="30%">
 				<addTabs></addTabs>
 			</el-drawer>
 		</div>
 		<div>
-			<el-drawer v-if="contentDrawer" title="添加内容" v-model="contentDrawer" direction="rtl" size="30%">
+			<el-drawer v-if="contentDrawer" title="Add content" v-model="contentDrawer" direction="rtl" size="30%">
 				<addContent></addContent>
 			</el-drawer>
 		</div>
@@ -60,7 +60,7 @@ const getTabs = () => {
 		.then((res: any) => {
 			let data = res.data;
 			data.push({
-				title: '无',
+				title: 'none',
 				icon: 'el-icon-plus',
 				key: 'null',
 			});
@@ -74,7 +74,7 @@ onMounted(() => {
 </script>
 
 <style>
-/*用 flex  两边对齐*/
+/*use flex  Align both sides*/
 .yxt-flex-between {
 	display: flex;
 	justify-content: space-between;

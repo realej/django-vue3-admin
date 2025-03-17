@@ -17,7 +17,7 @@ from dvadmin.utils.serializers import CustomModelSerializer
 
 class UsersInitSerializer(CustomModelSerializer):
     """
-    初始化获取数信息(用于生成初始化json文件)
+    Initialize the number of obtaining information(Used to generate initializationjsondocument)
     """
 
     def save(self, **kwargs):
@@ -45,7 +45,7 @@ class UsersInitSerializer(CustomModelSerializer):
 
 class MenuButtonInitSerializer(CustomModelSerializer):
     """
-    初始化菜单按钮-序列化器
+    Initialize menu button-Serializer
     """
 
     class Meta:
@@ -56,7 +56,7 @@ class MenuButtonInitSerializer(CustomModelSerializer):
 
 class MenuFieldInitSerializer(CustomModelSerializer):
     """
-    初始化列权限-序列化器
+    Initialize column permissions-Serializer
     """
 
     class Meta:
@@ -67,7 +67,7 @@ class MenuFieldInitSerializer(CustomModelSerializer):
 
 class MenuInitSerializer(CustomModelSerializer):
     """
-    递归深度获取数信息(用于生成初始化json文件)
+    Recursive depth acquisition number information(Used to generate initializationjsondocument)
     """
     name = serializers.CharField(required=False)
     children = serializers.SerializerMethodField()
@@ -101,7 +101,7 @@ class MenuInitSerializer(CustomModelSerializer):
         children = self.initial_data.get('children')
         menu_button = self.initial_data.get('menu_button')
         menu_field = self.initial_data.get('menu_field')
-        # 菜单表
+        # Menu Table
         if children:
             for menu_data in children:
                 menu_data['parent'] = instance.id
@@ -117,7 +117,7 @@ class MenuInitSerializer(CustomModelSerializer):
                 serializer = MenuInitSerializer(instance_obj, data=menu_data, request=self.request)
                 serializer.is_valid(raise_exception=True)
                 serializer.save()
-        # 菜单按钮
+        # Menu Buttons
         if menu_button:
             for menu_button_data in menu_button:
                 menu_button_data['menu'] = instance.id
@@ -129,7 +129,7 @@ class MenuInitSerializer(CustomModelSerializer):
                 serializer = MenuButtonInitSerializer(instance_obj, data=menu_button_data, request=self.request)
                 serializer.is_valid(raise_exception=True)
                 serializer.save()
-        # 列权限
+        # Column permissions
         if menu_field:
             for field_data in menu_field:
                 field_data['menu'] = instance.id
@@ -157,7 +157,7 @@ class MenuInitSerializer(CustomModelSerializer):
 
 class RoleInitSerializer(CustomModelSerializer):
     """
-    初始化获取数信息(用于生成初始化json文件)
+    Initialize the number of obtaining information(Used to generate initializationjsondocument)
     """
 
     class Meta:
@@ -173,7 +173,7 @@ class RoleInitSerializer(CustomModelSerializer):
 
 class RoleMenuInitSerializer(CustomModelSerializer):
     """
-    初始化角色菜单(用于生成初始化json文件)
+    Initialize the role menu(Used to generate initializationjsondocument)
     """
     role__key = serializers.CharField(max_length=100, required=True)
     menu__web_path = serializers.CharField(max_length=100, required=True)
@@ -204,7 +204,7 @@ class RoleMenuInitSerializer(CustomModelSerializer):
 
 class RoleMenuButtonInitSerializer(CustomModelSerializer):
     """
-    初始化角色菜单按钮(用于生成初始化json文件)
+    Initialize the role menu button(Used to generate initializationjsondocument)
     """
     role__key = serializers.CharField(max_length=100, required=True)
     menu_button__value = serializers.CharField(max_length=100, required=True)
@@ -241,7 +241,7 @@ class RoleMenuButtonInitSerializer(CustomModelSerializer):
 
 class ApiWhiteListInitSerializer(CustomModelSerializer):
     """
-    初始化获取数信息(用于生成初始化json文件)
+    Initialize the number of obtaining information(Used to generate initializationjsondocument)
     """
 
     class Meta:
@@ -256,7 +256,7 @@ class ApiWhiteListInitSerializer(CustomModelSerializer):
 
 class DeptInitSerializer(CustomModelSerializer):
     """
-    递归深度获取数信息(用于生成初始化json文件)
+    Recursive depth acquisition number information(Used to generate initializationjsondocument)
     """
     children = serializers.SerializerMethodField()
 
@@ -301,7 +301,7 @@ class DeptInitSerializer(CustomModelSerializer):
 
 class DictionaryInitSerializer(CustomModelSerializer):
     """
-    初始化获取数信息(用于生成初始化json文件)
+    Initialize the number of obtaining information(Used to generate initializationjsondocument)
     """
     children = serializers.SerializerMethodField()
 
@@ -316,7 +316,7 @@ class DictionaryInitSerializer(CustomModelSerializer):
     def save(self, **kwargs):
         instance = super().save(**kwargs)
         children = self.initial_data.get('children')
-        # 菜单表
+        # Menu Table
         if children:
             for data in children:
                 data['parent'] = instance.id
@@ -345,7 +345,7 @@ class DictionaryInitSerializer(CustomModelSerializer):
 
 class SystemConfigInitSerializer(CustomModelSerializer):
     """
-    初始化获取数信息(用于生成初始化json文件)
+    Initialize the number of obtaining information(Used to generate initializationjsondocument)
     """
     children = serializers.SerializerMethodField()
 
@@ -360,7 +360,7 @@ class SystemConfigInitSerializer(CustomModelSerializer):
     def save(self, **kwargs):
         instance = super().save(**kwargs)
         children = self.initial_data.get('children')
-        # 菜单表
+        # Menu Table
         if children:
             for data in children:
                 data['parent'] = instance.id

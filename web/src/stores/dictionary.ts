@@ -8,11 +8,11 @@ export const BUTTON_VALUE_TO_COLOR_MAPPING: any = {
 	true: 'success',
 	0: 'danger',
 	false: 'danger',
-	Search: 'warning', // 查询
-	Update: 'primary', // 编辑
-	Create: 'success', // 新增
-	Retrieve: 'info', // 单例
-	Delete: 'danger', // 删除
+	Search: 'warning', // Query
+	Update: 'primary', // edit
+	Create: 'success', // New
+	Retrieve: 'info', // Single case
+	Delete: 'danger', // delete
 };
 
 export function getButtonSettings(objectSettings: any) {
@@ -24,8 +24,8 @@ export function getButtonSettings(objectSettings: any) {
 }
 
 /**
- * 字典管理数据
- * @methods getSystemDictionarys 获取系统字典数据
+ * Dictionary management data
+ * @methods getSystemDictionarys Get system dictionary data
  */
 export const DictionaryStore = defineStore('Dictionary', {
 	state: (): DictionaryStates => ({
@@ -37,7 +37,7 @@ export const DictionaryStore = defineStore('Dictionary', {
 				url: '/api/init/dictionary/?dictionary_key=all',
 				method: 'get',
 			}).then((ret: { data: [] }) => {
-				// 转换数据格式并保存到pinia
+				// Convert data format and save topinia
 				let dataList = ret.data;
 				dataList.forEach((item: any) => {
 					let childrens = item.children;

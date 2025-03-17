@@ -22,7 +22,7 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 	};
 
 	/**
-	 * 懒加载
+	 * Lazy loading
 	 * @param row
 	 * @returns {Promise<unknown>}
 	 */
@@ -48,7 +48,7 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 				},
 			},
 			rowHandle: {
-				//固定右侧
+				//Fix the right side
 				fixed: 'right',
 				width: 200,
 				buttons: {
@@ -78,17 +78,17 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 			},
 			columns: {
 				_index: {
-					title: '序号',
+					title: 'Serial number',
 					form: { show: false },
 					column: {
 						type: 'index',
 						align: 'center',
 						width: '70px',
-						columnSetDisabled: true, //禁止在列设置中选择
+						columnSetDisabled: true, //Disable selection in column settings
 					},
 				},
 				name: {
-					title: '名称',
+					title: 'name',
 					search: {
 						show: true,
 					},
@@ -99,16 +99,16 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					},
 					form: {
 						rules: [
-							// 表单校验规则
-							{ required: true, message: '名称必填项' },
+							// Form verification rules
+							{ required: true, message: 'Name required' },
 						],
 						component: {
-							placeholder: '请输入名称',
+							placeholder: 'Please enter a name',
 						},
 					},
 				},
 				pcode: {
-					title: '父级地区',
+					title: 'Parent Region',
 					search: {
 						disabled: true,
 					},
@@ -136,12 +136,12 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 								columns: [
 									{
 										prop: 'name',
-										label: '地区',
+										label: 'area',
 										width: 150,
 									},
 									{
 										prop: 'code',
-										label: '地区编码',
+										label: 'Regional code',
 									},
 								],
 							},
@@ -152,7 +152,7 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					},
 				},
 				code: {
-					title: '地区编码',
+					title: 'Regional code',
 					search: {
 						show: true,
 					},
@@ -162,16 +162,16 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					},
 					form: {
 						rules: [
-							// 表单校验规则
-							{ required: true, message: '地区编码必填项' },
+							// Form verification rules
+							{ required: true, message: 'Required area code' },
 						],
 						component: {
-							placeholder: '请输入地区编码',
+							placeholder: 'Please enter the region code',
 						},
 					},
 				},
 				enable: {
-					title: '是否启用',
+					title: 'Whether to enable',
 					search: {
 						show: true,
 					},

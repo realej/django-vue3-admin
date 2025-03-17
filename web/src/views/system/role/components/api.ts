@@ -1,7 +1,7 @@
 import { request } from '/@/utils/service';
 import XEUtils from 'xe-utils';
 /**
- * 获取 角色-菜单
+ * Get Role-menu
  * @param query
  */
 export function getRoleMenu(query: object) {
@@ -14,7 +14,7 @@ export function getRoleMenu(query: object) {
 	});
 }
 /**
- * 设置 角色-菜单
+ * set up Role-menu
  * @param data
  * @returns
  */
@@ -26,7 +26,7 @@ export function setRoleMenu(data: object) {
 	});
 }
 /**
- * 获取 角色-菜单-按钮-列字段
+ * Get Role-menu-Button-Column fields
  * @param query
  */
 export function getRoleMenuBtnField(query: object) {
@@ -38,7 +38,7 @@ export function getRoleMenuBtnField(query: object) {
 }
 
 /**
- * 设置 角色-菜单-按钮
+ * set up Role-menu-Button
  * @param data
  */
 export function setRoleMenuBtn(data: object) {
@@ -50,7 +50,7 @@ export function setRoleMenuBtn(data: object) {
 }
 
 /**
- * 设置 角色-菜单-列字段
+ * set up Role-menu-Column fields
  * @param data
  */
 export function setRoleMenuField(roleId: string | number | undefined, data: object) {
@@ -62,7 +62,7 @@ export function setRoleMenuField(roleId: string | number | undefined, data: obje
 }
 
 /**
- * 设置 角色-菜单-按钮-数据权限
+ * set up Role-menu-Button-Data permissions
  * @param query
  * @returns
  */
@@ -75,7 +75,7 @@ export function setRoleMenuBtnDataRange(data: object) {
 }
 
 /**
- * 获取当前用户角色下所能授权的部门
+ * Obtain the department that can be authorized under the current user role
  * @param query
  * @returns
  */
@@ -88,7 +88,7 @@ export function getRoleToDeptAll(query: object) {
 }
 
 /**
- * 获取所有用户
+ * Get all users
  * @param query
  * @returns
  */
@@ -108,7 +108,7 @@ export function getAllUsers() {
 }
 
 /**
- * 设置角色-用户
+ * Set up roles-user
  * @param query
  * @returns
  */

@@ -39,19 +39,19 @@ import { useThemeConfig } from '/@/stores/themeConfig';
 import other from '/@/utils/other';
 import mittBus from '/@/utils/mitt';
 
-// 引入组件
+// Introducing components
 const SubItem = defineAsyncComponent(() => import('/@/layout/navMenu/subItem.vue'));
 
-// 定义父组件传过来的值
+// Define the value passed by the parent component
 const props = defineProps({
-	// 菜单列表
+	// Menu List
 	menuList: {
 		type: Array<RouteRecordRaw>,
 		default: () => [],
 	},
 });
 
-// 定义变量内容
+// Define variable content
 const elMenuHorizontalScrollRef = ref();
 const stores = useRoutesList();
 const storesThemeConfig = useThemeConfig();
@@ -62,16 +62,16 @@ const state = reactive({
 	defaultActive: '' as string | undefined,
 });
 
-// 获取父级菜单数据
+// Get parent menu data
 const menuLists = computed(() => {
 	return <RouteItems>props.menuList;
 });
-// 设置横向滚动条可以鼠标滚轮滚动
+// Set the horizontal scroll bar to scroll the mouse wheel
 const onElMenuHorizontalScroll = (e: WheelEventType) => {
 	const eventDelta = e.wheelDelta || -e.deltaY * 40;
 	elMenuHorizontalScrollRef.value.$refs.wrapRef.scrollLeft = elMenuHorizontalScrollRef.value.$refs.wrapRef.scrollLeft + eventDelta / 4;
 };
-// 初始化数据，页面刷新时，滚动条滚动到对应位置
+// Initialize data，When page refreshes，Scroll bars to the corresponding position
 const initElMenuOffsetLeft = () => {
 	nextTick(() => {
 		let els = <HTMLElement>document.querySelector('.el-menu.el-menu--horizontal li.is-active');
@@ -79,7 +79,7 @@ const initElMenuOffsetLeft = () => {
 		elMenuHorizontalScrollRef.value.$refs.wrapRef.scrollLeft = els.offsetLeft;
 	});
 };
-// 路由过滤递归函数
+// Routing filtering recursive functions
 const filterRoutesFun = <T extends RouteItem>(arr: T[]): T[] => {
 	return arr
 		.filter((item: T) => !item.meta?.isHide)
@@ -89,7 +89,7 @@ const filterRoutesFun = <T extends RouteItem>(arr: T[]): T[] => {
 			return item;
 		});
 };
-// 传送当前子级数据到菜单中
+// Transfer current child data to the menu
 const setSendClassicChildren = (path: string) => {
 	const currentPathSplit = path.split('/');
 	let currentData: MittMenu = { children: [] };
@@ -103,7 +103,7 @@ const setSendClassicChildren = (path: string) => {
 	});
 	return currentData;
 };
-// 设置页面当前路由高亮
+// The current route of the setting page is highlighted
 const setCurrentRouterHighlight = (currentRoute: RouteToFrom) => {
 	const { path, meta } = currentRoute;
 	if (themeConfig.value.layout === 'classic') {
@@ -114,23 +114,23 @@ const setCurrentRouterHighlight = (currentRoute: RouteToFrom) => {
 		else state.defaultActive = path;
 	}
 };
-// 打开外部链接
+// Open an external link
 const onALinkClick = (val: RouteItem) => {
 	other.handleOpenLink(val);
 };
-// 页面加载前
+// Before the page loads
 onBeforeMount(() => {
 	setCurrentRouterHighlight(route);
 });
-// 页面加载时
+// When the page loads
 onMounted(() => {
 	initElMenuOffsetLeft();
 });
-// 路由更新时
+// When routing updates
 onBeforeRouteUpdate((to) => {
-	// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
+	// repair：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
 	setCurrentRouterHighlight(to);
-	// 修复经典布局开启切割菜单时，点击tagsView后左侧导航菜单数据不变的问题
+	// Fixed classic layout when opening the cutting menu，ClicktagsViewThe problem of the data of the navigation menu on the left side of the back remains unchanged
 	let { layout, isClassicSplitMenu } = themeConfig.value;
 	if (layout === 'classic' && isClassicSplitMenu) {
 		mittBus.emit('setSendClassicChildren', setSendClassicChildren(to.path));

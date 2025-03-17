@@ -50,7 +50,7 @@ export function BatchDelete(keys: any) {
 	});
 }
 /**
- * 获取所有model
+ * Get allmodel
  */
 export function getModelList() {
 	return request({
@@ -60,7 +60,7 @@ export function getModelList() {
 }
 
 /**
- * 自动匹配field
+ * Automatic matchingfield
  * @param data
  */
 export function automatchColumnsData(data: CurrentInfoType) {

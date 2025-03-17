@@ -45,10 +45,10 @@
 			</el-button>
 		</el-form-item>
 	</el-form>
-  <!--      申请试用-->
+  <!--      Apply for trial-->
   <div style="text-align: center" v-if="showApply()">
     <el-button class="login-content-apply" link type="primary" plain round @click="applyBtnClick">
-      <span>申请试用</span>
+      <span>Apply for trial</span>
     </el-button>
   </div>
 </template>
@@ -99,29 +99,29 @@ export default defineComponent({
 		});
 		const rules = reactive<FormRules>({
 			username: [
-				{ required: true, message: '请填写账号', trigger: 'blur' },
+				{ required: true, message: 'Please fill in your account number', trigger: 'blur' },
 			],
 			password: [
 				{
 					required: true,
-					message: '请填写密码',
+					message: 'Please fill in your password',
 					trigger: 'blur',
 				},
 			],
 			captcha: [
 				{
 					required: true,
-					message: '请填写验证码',
+					message: 'Please fill in the verification code',
 					trigger: 'blur',
 				},
 			],
 		})
 		const formRef = ref();
-		// 时间获取
+		// Time acquisition
 		const currentTime = computed(() => {
 			return formatAxis(new Date());
 		});
-		// 是否关闭验证码
+		// Whether to close the verification code
 		const isShowCaptcha = computed(() => {
 			return SystemConfigStore().systemConfig['base.captcha_state'];
 		});
@@ -156,23 +156,23 @@ export default defineComponent({
                 return router.push('/login');
               }
 							if (!themeConfig.value.isRequestRoutes) {
-								// 前端控制路由，2、请注意执行顺序
+								// Front-end control routing，2、Please note the order of execution
 								initFrontEndControlRoutes();
 								loginSuccess();
 							} else {
-								// 模拟后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-								// 添加完动态路由，再进行 router 跳转，否则可能报错 No match found for location with path "/"
+								// Simulate backend control routing，isRequestRoutes for true，Turn on the backend control routing
+								// Add dynamic routes，Go again router Jump，Otherwise, an error may be reported No match found for location with path "/"
 								initBackEndControlRoutes();
-								// 执行完 initBackEndControlRoutes，再执行 signInSuccess
+								// Completed execution initBackEndControlRoutes，Execute again signInSuccess
 								loginSuccess();
 							}
 						}
 					}).catch((err: any) => {
-						// 登录错误之后，刷新验证码
+						// After login error，Refresh the verification code
 						refreshCaptcha();
 					});
 				} else {
-					errorMessage("请填写登录信息")
+					errorMessage("Please fill in the login information")
 				}
 			})
 
@@ -180,16 +180,16 @@ export default defineComponent({
 
 
 
-		// 登录成功后的跳转
+		// Jump after successful login
 		const loginSuccess = () => {
-			//获取所有字典
+			//Get all dictionaries
 			DictionaryStore().getSystemDictionarys();
-			// 初始化登录成功时间问候语
+			// Initialization login success time greeting
 			let currentTimeInfo = currentTime.value;
-			// 登录成功，跳到转首页
+			// Login successfully，Jump to the home page
       const pwd_change_count = userInfos.value.pwd_change_count
       if(pwd_change_count>0){
-        // 如果是复制粘贴的路径，非首页/登录页，那么登录成功后重定向到对应的路径中
+        // If it is a copy-paste path，Non-Home/Login page，Then redirect to the corresponding path after logging in successfully
         if (route.query?.redirect) {
         	router.push({
         		path: <string>route.query?.redirect,
@@ -198,21 +198,21 @@ export default defineComponent({
         } else {
         	router.push('/');
         }
-        // 登录成功提示
-        // 关闭 loading
+        // Login success prompt
+        // closure loading
         state.loading.signIn = true;
         const signInText = t('message.signInText');
         ElMessage.success(`${currentTimeInfo}，${signInText}`);
       }
-			// 添加 loading，防止第一次进入界面时出现短暂空白
+			// Add to loading，Prevent short-term blanks when entering the interface for the first time
 			NextLoading.start();
 		};
 		onMounted(() => {
 			getCaptcha();
-			//获取系统配置
+			//Get system configuration
 			SystemConfigStore().getSystemConfigs();
 		});
-    // 是否显示申请试用按钮
+    // Whether to display the application trial button
     const showApply = () => {
       return window.location.href.indexOf('public') != -1
     }

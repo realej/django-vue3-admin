@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { RoleMenuTreeType } from '../types';
 /**
- * 权限抽屉：角色-菜单
+ * Permission drawer：Role-menu
  */
 
 export const RoleMenuTreeStores = defineStore('RoleMenuTreeStores', {
@@ -13,7 +13,7 @@ export const RoleMenuTreeStores = defineStore('RoleMenuTreeStores', {
 		is_catalog: false,
 	}),
 	actions: {
-		/** 赋值 */
+		/** Assignment */
 		setRoleMenuTree(data: RoleMenuTreeType) {
 			this.$state = data;
 		},

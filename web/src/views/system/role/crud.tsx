@@ -6,8 +6,8 @@ import { auth } from '/@/utils/authFunction';
 
 /**
  *
- * @param crudExpose：index传递过来的示例
- * @param context：index传递过来的自定义参数
+ * @param crudExpose：indexPassed example
+ * @param context：indexPassed custom parameters
  * @returns
  */
 export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOptionsProps): CreateCrudOptionsRet {
@@ -44,7 +44,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 				},
 			},
 			rowHandle: {
-				//固定右侧
+				//Fix the right side
 				fixed: 'right',
 				width: 320,
 				buttons: {
@@ -59,7 +59,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 					permission: {
 						type: 'primary',
-						text: '权限配置',
+						text: 'Permission configuration',
 						show: auth('role:Permission'),
 						click: (clickContext: any): void => {
 							const { row } = clickContext;
@@ -80,13 +80,13 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 			},
 			columns: {
 				_index: {
-					title: '序号',
+					title: 'Serial number',
 					form: { show: false },
 					column: {
 						type: 'index',
 						align: 'center',
 						width: '70px',
-						columnSetDisabled: true, //禁止在列设置中选择
+						columnSetDisabled: true, //Disable selection in column settings
 					},
 				},
 				id: {
@@ -96,21 +96,21 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					form: { show: false },
 				},
 				name: {
-					title: '角色名称',
+					title: 'Role name',
 					search: { show: true },
 					column: {
 						minWidth: 120,
 						sortable: 'custom',
 					},
 					form: {
-						rules: [{ required: true, message: '角色名称必填' }],
+						rules: [{ required: true, message: 'Role name required' }],
 						component: {
-							placeholder: '请输入角色名称',
+							placeholder: 'Please enter the role name',
 						},
 					},
 				},
 				key: {
-					title: '权限标识',
+					title: 'Permission ID',
 					search: { show: false },
 					column: {
 						minWidth: 120,
@@ -118,9 +118,9 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 						columnSetDisabled: true,
 					},
 					form: {
-						rules: [{ required: true, message: '权限标识必填' }],
+						rules: [{ required: true, message: 'Permission ID required' }],
 						component: {
-							placeholder: '输入权限标识',
+							placeholder: 'Enter permission ID',
 						},
 					},
 					valueBuilder(context) {
@@ -129,7 +129,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 				},
 				sort: {
-					title: '排序',
+					title: 'Sort',
 					search: { show: false },
 					type: 'number',
 					column: {
@@ -137,12 +137,12 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 						sortable: 'custom',
 					},
 					form: {
-						rules: [{ required: true, message: '排序必填' }],
+						rules: [{ required: true, message: 'Required to sort' }],
 						value: 1,
 					},
 				},
 				status: {
-					title: '状态',
+					title: 'state',
 					search: { show: true },
 					type: 'dict-radio',
 					column: {

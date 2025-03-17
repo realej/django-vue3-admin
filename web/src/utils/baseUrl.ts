@@ -1,20 +1,20 @@
 import { pluginsAll } from '/@/views/plugins/index';
 
 /**
- * @description 校验是否为租户模式。租户模式把域名替换成 域名 加端口
+ * @description Verify that it is tenant mode。Replace domain names with tenant mode domain name Add port
  */
 export const getBaseURL = function (url: null | string = null, isHost: null | boolean = null) {
 	let baseURL = import.meta.env.VITE_API_URL as any;
-	// 如果需要host返回，时，返回地址前缀加http地址
+	// If neededhostreturn，hour，Return address prefix plushttpaddress
 	if (isHost && !baseURL.startsWith('http')) {
 		baseURL = window.location.protocol + '//' + window.location.host + baseURL
 	}
 	let param = baseURL.split('/')[3] || '';
 	// @ts-ignore
 	if (pluginsAll && pluginsAll.indexOf('dvadmin3-tenants-web') !== -1 && (!param || baseURL.startsWith('/'))) {
-		// 1.把127.0.0.1 替换成和前端一样域名
-		// 2.把 ip 地址替换成和前端一样域名
-		// 3.把 /api 或其他类似的替换成和前端一样域名
+		// 1.Bundle127.0.0.1 Replace with the same domain name as the front end
+		// 2.Bundle ip Replace the address with the same domain name as the front end
+		// 3.Bundle /api Or other similar replacement with the same domain name as the front end
 		// document.domain
 
 		var host = baseURL.split('/')[2];
@@ -35,7 +35,7 @@ export const getBaseURL = function (url: null | string = null, isHost: null | bo
 		if (regex.test(url)) {
 			return url
 		} else {
-			// js判断是否是斜杠结尾
+			// jsDetermine whether it is the end of a slash
 			return baseURL.replace(/\/$/, '') + '/' + url.replace(/^\//, '');
 		}
 	}
@@ -50,9 +50,9 @@ export const getWsBaseURL = function () {
 	let param = baseURL.split('/')[3] || '';
 	// @ts-ignore
 	if (pluginsAll && pluginsAll.indexOf('dvadmin3-tenants-web') !== -1 && (!param || baseURL.startsWith('/'))) {
-		// 1.把127.0.0.1 替换成和前端一样域名
-		// 2.把 ip 地址替换成和前端一样域名
-		// 3.把 /api 或其他类似的替换成和前端一样域名
+		// 1.Bundle127.0.0.1 Replace with the same domain name as the front end
+		// 2.Bundle ip Replace the address with the same domain name as the front end
+		// 3.Bundle /api Or other similar replacement with the same domain name as the front end
 		// document.domain
 		var host = baseURL.split('/')[2];
 		if (host) {
@@ -73,7 +73,7 @@ export const getWsBaseURL = function () {
 		baseURL += '/';
 	}
 	if (baseURL.startsWith('http')) {
-		// https 也默认会被替换成 wss
+		// https It will also be replaced by wss
 		baseURL = baseURL.replace('http', 'ws');
 	}
 	return baseURL;

@@ -5,12 +5,12 @@
 		multiple
 		@remove-tag="removeTag"
 		v-model="data"
-		placeholder="请选择"
+		placeholder="Please select"
 		@visible-change="visibleChange"
 	>
 		<template #empty>
 			<div class="option">
-				<el-input style="margin-bottom: 10px" v-model="search" clearable placeholder="请输入关键词" @change="getDict" @clear="getDict">
+				<el-input style="margin-bottom: 10px" v-model="search" clearable placeholder="Please enter keywords" @change="getDict" @clear="getDict">
 					<template #append>
 						<el-button type="primary" icon="Search" />
 					</template>
@@ -64,30 +64,30 @@ const props = defineProps({
 	modelValue: {},
 	tableConfig: {
 		url: null,
-		label: null, //显示值
-		value: null, //数据值
+		label: null, //Display value
+		value: null, //Data value
 		isTree: false,
 		lazy: true,
 		load: () => {},
-		data: [], //默认数据
-		isMultiple: false, //是否多选
+		data: [], //Default data
+		isMultiple: false, //Whether to choose multiple choices
 		treeProps: { children: 'children', hasChildren: 'hasChildren' },
-		columns: [], //每一项对应的列表项
+		columns: [], //List items corresponding to each item
 	},
 	displayLabel: {},
 } as any);
 const emit = defineEmits(['update:modelValue']);
 // tableRef
 const tableRef = ref();
-// template上使用data
+// templateUse ondata
 const data = ref();
-// 多选值
+// Multiple selection values
 const multipleSelection = ref();
-// 搜索值
+// Search for value
 const search = ref(undefined);
-//表格数据
+//Tabular data
 const tableData = ref();
-// 分页的配置
+// Pagination configuration
 const pageConfig = reactive({
 	page: 1,
 	limit: 10,
@@ -95,7 +95,7 @@ const pageConfig = reactive({
 });
 
 /**
- * 表格多选
+ * Multiple selection of forms
  * @param val:Array
  */
 const handleSelectionChange = (val: any) => {
@@ -111,7 +111,7 @@ const handleSelectionChange = (val: any) => {
 	emit('update:modelValue', result);
 };
 /**
- * 表格单选
+ * Single selection of tables
  * @param val:Object
  */
 const handleCurrentChange = (val: any) => {
@@ -123,7 +123,7 @@ const handleCurrentChange = (val: any) => {
 };
 
 /**
- * 获取字典值
+ * Get dictionary value
  */
 const getDict = async () => {
 	const url = props.tableConfig.url;
@@ -151,7 +151,7 @@ const getDict = async () => {
 };
 
 /**
- * 下拉框展开/关闭
+ * Pull down box expand/closure
  * @param bool
  */
 const visibleChange = (bool: any) => {
@@ -161,7 +161,7 @@ const visibleChange = (bool: any) => {
 };
 
 /**
- * 分页
+ * Pagination
  * @param page
  */
 const handlePageChange = (page: any) => {
@@ -169,7 +169,7 @@ const handlePageChange = (page: any) => {
 	getDict();
 };
 
-// 监听displayLabel的变化，更新数据
+// monitordisplayLabelChanges，Update data
 watch(
 	() => {
 		return props.displayLabel;

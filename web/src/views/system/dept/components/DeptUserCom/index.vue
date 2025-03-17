@@ -3,24 +3,24 @@
 		<div class="di-left">
 			<h3>{{ deptInfo.dept_name || '' }}</h3>
 			<div class="di-cell">
-				<p>部门负责人：</p>
-				<p class="content">{{ deptInfo.owner || '无' }}</p>
+				<p>Department Head：</p>
+				<p class="content">{{ deptInfo.owner || 'none' }}</p>
 			</div>
 			<div class="di-cell">
-				<p>部门人数：</p>
-				<p class="content">{{ deptInfo.dept_user || 0 }}人</p>
+				<p>Number of employees in the department：</p>
+				<p class="content">{{ deptInfo.dept_user || 0 }}people</p>
 			</div>
 			<div class="di-cell">
-				<p>部门简介：</p>
-				<p class="content">{{ deptInfo.description || '无' }}</p>
+				<p>Department Profile：</p>
+				<p class="content">{{ deptInfo.description || 'none' }}</p>
 			</div>
 			<div class="di-cell">
-				<p>显示子级：</p>
+				<p>Show child level：</p>
 				<el-switch
 					v-model="isShowChildFlag"
 					inline-prompt
-					active-text="是"
-					inactive-text="否"
+					active-text="yes"
+					inactive-text="no"
 					:disabled="!currentDeptId"
 					@change="handleSwitchChange"
 					style="--el-switch-on-color: var(--el-color-primary)"
@@ -40,7 +40,7 @@
 			<el-button :icon="!showCount ? 'Hide' : 'View'" circle @click="showCount = !showCount"></el-button>
 		</template>
 		<template #actionbar-right>
-			<importExcel api="api/system/user/" v-auth="'user:Import'">导入 </importExcel>
+			<importExcel api="api/system/user/" v-auth="'user:Import'">Import </importExcel>
 		</template>
 		<template #cell_avatar="scope">
               <div v-if="scope.row.avatar" style="display: flex; justify-content: center; align-items: center;">
@@ -53,15 +53,15 @@
             </template>
 	</fs-crud>
 
-	<el-dialog v-model="resetPwdVisible" title="重设密码" width="400px" draggable :before-close="handleResetPwdClose">
+	<el-dialog v-model="resetPwdVisible" title="Reset password" width="400px" draggable :before-close="handleResetPwdClose">
 		<div>
-			<el-input v-model="resetPwdFormState.newPassword" type="password" placeholder="请输入密码" show-password style="margin-bottom: 20px" />
-			<el-input v-model="resetPwdFormState.newPassword2" type="password" placeholder="请再次输入密码" show-password />
+			<el-input v-model="resetPwdFormState.newPassword" type="password" placeholder="Please enter your password" show-password style="margin-bottom: 20px" />
+			<el-input v-model="resetPwdFormState.newPassword2" type="password" placeholder="Please enter your password again" show-password />
 		</div>
 		<template #footer>
 			<span class="dialog-footer">
-				<el-button @click="handleResetPwdClose">取消</el-button>
-				<el-button type="primary" @click="handleResetPwdSubmit"> 保存 </el-button>
+				<el-button @click="handleResetPwdClose">Cancel</el-button>
+				<el-button type="primary" @click="handleResetPwdSubmit"> keep </el-button>
 			</span>
 		</template>
 	</el-dialog>
@@ -83,11 +83,11 @@ import {getBaseURL} from '/@/utils/baseUrl';
 let deptCountChart: ECharts;
 let deptSexChart: ECharts;
 
-// crud组件的ref
+// crudComponentref
 const crudRef = ref();
-// crud 配置的ref
+// crud Configuredref
 const crudBinding = ref();
-// 暴露的方法
+// Methods of exposure
 const { crudExpose } = useExpose({ crudRef, crudBinding });
 
 let currentDeptId = ref('');
@@ -105,7 +105,7 @@ let resetPwdFormState = reactive({
 });
 
 /**
- * 初始化顶部部门折线图
+ * Initialize the top department line chart
  */
 const initDeptCountBarChart = () => {
 	const xAxisData = deptInfo.value.sub_dept_map?.map((item) => item.name) || [];
@@ -160,7 +160,7 @@ const initDeptCountBarChart = () => {
 };
 
 /**
- * 初始化顶部性别统计
+ * Initialize top gender statistics
  */
 const initDeptSexPieChart = () => {
 	const option: EChartsOption = {
@@ -186,9 +186,9 @@ const initDeptSexPieChart = () => {
 				},
 				color: ['#188df0', '#f56c6c', '#dcdfe6'],
 				data: [
-					{ value: deptInfo.value.gender?.male || 0, name: '男' },
-					{ value: deptInfo.value.gender?.female || 0, name: '女' },
-					{ value: deptInfo.value.gender?.unknown || 0, name: '未知' },
+					{ value: deptInfo.value.gender?.male || 0, name: 'male' },
+					{ value: deptInfo.value.gender?.female || 0, name: 'female' },
+					{ value: deptInfo.value.gender?.unknown || 0, name: 'unknown' },
 				],
 			},
 		],
@@ -197,7 +197,7 @@ const initDeptSexPieChart = () => {
 };
 
 /**
- * 获取顶部部门信息
+ * Get top department information
  */
 const getDeptInfo = async () => {
 	const res = await getDeptInfoById(currentDeptId.value, isShowChildFlag.value ? '1' : '0');
@@ -209,7 +209,7 @@ const getDeptInfo = async () => {
 };
 
 /**
- * 部门切换刷新用户列表
+ * Department switch to refresh user list
  */
 const handleDoRefreshUser = (id: string) => {
 	currentDeptId.value = id;
@@ -233,20 +233,20 @@ const handleResetPwdClose = () => {
 };
 const handleResetPwdSubmit = async () => {
 	if (!resetPwdFormState.id) {
-		warningNotification('请选择用户！');
+		warningNotification('Please select a user！');
 		return;
 	}
 	if (!resetPwdFormState.newPassword || !resetPwdFormState.newPassword2) {
-		warningNotification('请输入密码！');
+		warningNotification('Please enter your password！');
 		return;
 	}
 	if (resetPwdFormState.newPassword !== resetPwdFormState.newPassword2) {
-		warningNotification('两次输入密码不一致');
+		warningNotification('The password is inconsistent when entering the two times');
 		return;
 	}
 	const pwdRegex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z]).{8,30}');
 	if (!pwdRegex.test(resetPwdFormState.newPassword) || !pwdRegex.test(resetPwdFormState.newPassword2)) {
-		warningNotification('您的密码复杂度太低(密码中必须包含字母、数字)');
+		warningNotification('Your password is too complex(The password must contain letters、number)');
 		return;
 	}
 	const res = await resetPwd(resetPwdFormState.id, {
@@ -255,7 +255,7 @@ const handleResetPwdSubmit = async () => {
 	});
 
 	if (res?.code === 2000) {
-		successNotification(res.msg || '修改成功！');
+		successNotification(res.msg || 'Modification was successful！');
 		handleResetPwdClose();
 	}
 };
@@ -271,10 +271,10 @@ defineExpose({
 	handleDoRefreshUser,
 });
 
-// 你的crud配置
+// yourcrudConfiguration
 const { crudOptions } = createCrudOptions({ crudExpose, context: { getDeptInfo, isShowChildFlag, handleResetPwdOpen } });
 
-// 初始化crud配置
+// initializationcrudConfiguration
 const { resetCrudOptions } = useCrud({
 	crudExpose,
 	crudOptions,

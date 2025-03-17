@@ -1,4 +1,4 @@
-# 初始化基类
+# Initialize base class
 import json
 import os
 
@@ -11,7 +11,7 @@ from dvadmin.system.models import Users
 
 class CoreInitialize:
     """
-    使用方法：继承此类，重写 run方法，在 run 中调用 save 进行数据初始化
+    How to use：Inherit this type，Rewrite runmethod，exist run Called in save Initialize data
     """
     creator_id = None
     reset = False
@@ -20,8 +20,8 @@ class CoreInitialize:
 
     def __init__(self, reset=False, creator_id=None, app=None):
         """
-        reset: 是否重置初始化数据
-        creator_id: 创建人id
+        reset: Whether to reset the initialization data
+        creator_id: Founderid
         """
         self.reset = reset or self.reset
         self.creator_id = creator_id or self.creator_id
@@ -33,12 +33,12 @@ class CoreInitialize:
         path_file = os.path.join(apps.get_app_config(self.app.split('.')[-1]).path, 'fixtures',
                                  f'init_{Serializer.Meta.model._meta.model_name}.json')
         if not os.path.isfile(path_file):
-            print("文件不存在，跳过初始化")
+            print("The file does not exist，Skip initialization")
             return
         with open(path_file,encoding="utf-8") as f:
             for data in json.load(f):
                 filter_data = {}
-                # 配置过滤条件,如果有唯一标识字段则使用唯一标识字段，否则使用全部字段
+                # Configure filtering conditions,If there is a unique identification field, use a unique identification field，Otherwise use all fields
                 if unique_fields:
                     for field in unique_fields:
                         if field in data:
@@ -53,11 +53,11 @@ class CoreInitialize:
                 serializer = Serializer(instance, data=data, request=self.request)
                 serializer.is_valid(raise_exception=True)
                 serializer.save()
-        print(f"[{self.app}][{model._meta.model_name}]初始化完成")
+        print(f"[{self.app}][{model._meta.model_name}]Initialization is completed")
 
     def save(self, obj, data: list, name=None, no_reset=False):
         name = name or obj._meta.verbose_name
-        print(f"正在初始化[{obj._meta.label} => {name}]")
+        print(f"Initializing[{obj._meta.label} => {name}]")
         if not no_reset and self.reset and obj not in settings.INITIALIZE_RESET_LIST:
             try:
                 obj.objects.all().delete()
@@ -68,7 +68,7 @@ class CoreInitialize:
             m2m_dict = {}
             new_data = {}
             for key, value in ele.items():
-                # 判断传的 value 为 list 的多对多进行抽离，使用set 进行更新
+                # Judgment of the transmission value for list Many-to-many extraction，useset Make updates
                 if isinstance(value, list) and value and isinstance(value[0], int):
                     m2m_dict[key] = value
                 else:
@@ -83,7 +83,7 @@ if object.{key}:
     values_list = list(set(list(values_list) + {m2m}))
     object.{key}.set(values_list)
 """)
-        print(f"初始化完成[{obj._meta.label} => {name}]")
+        print(f"Initialization is completed[{obj._meta.label} => {name}]")
 
     def run(self):
         raise NotImplementedError('.run() must be overridden')

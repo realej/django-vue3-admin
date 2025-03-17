@@ -43,7 +43,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
         delRequest,
       },
       rowHandle: {
-        //固定右侧
+        //Fix the right side
         fixed: 'right',
         width: 200,
         buttons: {
@@ -62,15 +62,15 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
       },
       columns: {
         _index: {
-          title: '序号',
+          title: 'Serial number',
           form: { show: false },
           column: {
             //type: 'index',
             align: 'center',
             width: '70px',
-            columnSetDisabled: true, //禁止在列设置中选择
+            columnSetDisabled: true, //Disable selection in column settings
             formatter: (context) => {
-              //计算序号,你可以自定义计算规则，此处为翻页累加
+              //Calculate the serial number,You can customize calculation rules，Here is the page recapture
               let index = context.index ?? 1;
               let pagination = crudExpose!.crudBinding.value.pagination;
               // @ts-ignore
@@ -79,7 +79,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
           },
         },
         label: {
-          title: '名称',
+          title: 'name',
           search: {
             show: true,
             component: {
@@ -91,19 +91,19 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
           type: 'input',
           form: {
             rules: [
-              // 表单校验规则
-              { required: true, message: '名称必填项' },
+              // Form verification rules
+              { required: true, message: 'Name required' },
             ],
             component: {
               props: {
                 clearable: true,
               },
-              placeholder: '请输入名称',
+              placeholder: 'Please enter a name',
             },
           },
         },
         type: {
-          title: '数据值类型',
+          title: 'Data value type',
           type: 'dict-select',
           search: {
             disabled: true,
@@ -128,19 +128,19 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
           }),
           form: {
             rules: [
-              // 表单校验规则
-              { required: true, message: '数据值类型必填项' },
+              // Form verification rules
+              { required: true, message: 'Required data value type' },
             ],
             value: 0,
             component: {
               props: {
                 clearable: true,
               },
-              placeholder: '请选择数据值类型',
+              placeholder: 'Please select the data value type',
             },
             /* valueChange(key, value, form, { getColumn, mode, component, immediate, getComponent }) {
                 const template = vm.getEditFormTemplate('value')
-                // 选择框重新选择后，情况value值
+                // After reselecting the selection box，Conditionvaluevalue
                 if (!immediate) {
                     form.value = undefined
                 }
@@ -177,8 +177,8 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
                     template.component.props = {
                         dict: {
                             data: [
-                                { label: '是', value: 'true' },
-                                { label: '否', value: 'false' }
+                                { label: 'yes', value: 'true' },
+                                { label: 'no', value: 'false' }
                             ]
                         }
                     }
@@ -190,7 +190,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
           },
         },
         value: {
-          title: '数据值',
+          title: 'Data value',
           search: {
             show: true,
             component: {
@@ -202,7 +202,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
           view: {
             component: { props: { height: 100, width: 100 } },
           },
-          /* // 提交时,处理数据
+          /* // When submitting,Processing data
           valueResolve(row: any, col: any) {
               const value = row[col.key]
               const type = row.type
@@ -222,7 +222,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
                   row[col.key] = value
               }
           },
-          // 接收时,处理数据
+          // When receiving,Processing data
           valueBuilder(row: any, col: any) {
               const value = row[col.key]
               const type = row.type
@@ -237,19 +237,19 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
           type: 'input',
           form: {
             rules: [
-              // 表单校验规则
-              { required: true, message: '数据值必填项' },
+              // Form verification rules
+              { required: true, message: 'Required data value' },
             ],
             component: {
               props: {
                 clearable: true,
               },
-              placeholder: '请输入数据值',
+              placeholder: 'Please enter data value',
             },
           },
         },
         status: {
-          title: '状态',
+          title: 'state',
           width: 80,
           search: {
             show: true
@@ -261,26 +261,26 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
           form: {
             value: true,
             rules: [
-              // 表单校验规则
-              { required: true, message: '状态必填项' },
+              // Form verification rules
+              { required: true, message: 'Status required' },
             ],
           },
         },
         sort: {
-          title: '排序',
+          title: 'Sort',
           width: 70,
           type: 'number',
           form: {
             value: 1,
             component: {},
             rules: [
-              // 表单校验规则
-              { required: true, message: '排序必填项' },
+              // Form verification rules
+              { required: true, message: 'Required orders' },
             ],
           },
         },
         color: {
-          title: '标签颜色',
+          title: 'Label color',
           width: 90,
           search: {
             disabled: true,
@@ -304,7 +304,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
           },
         },
         is_value: {
-          title: '是否值',
+          title: 'Is it worth it',
           column: {
             show: false
           },

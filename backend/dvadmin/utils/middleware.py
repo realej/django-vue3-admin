@@ -1,5 +1,5 @@
 """
-日志 django中间件
+log djangomiddleware
 """
 import json
 import logging
@@ -16,7 +16,7 @@ from dvadmin.utils.request_util import get_request_user, get_request_ip, get_req
 
 class ApiLoggingMiddleware(MiddlewareMixin):
     """
-    用于记录API访问日志中间件
+    Used for recordingAPIAccess log middleware
     """
 
     def __init__(self, get_response=None):
@@ -33,16 +33,16 @@ class ApiLoggingMiddleware(MiddlewareMixin):
 
     def __handle_response(self, request, response):
 
-        # 判断有无log_id属性，使用All记录时，会出现此情况
+        # Judge whether there is or notlog_idproperty，useAllWhen recording，This situation will occur
         if request.request_data.get('log_id', None) is None:
             return
         
-        # 移除log_id，不记录此ID
+        # Removelog_id，Don't record thisID
         log_id = request.request_data.pop('log_id')
 
-        # request_data,request_ip由PermissionInterfaceMiddleware中间件中添加的属性
+        # request_data,request_ipDepend onPermissionInterfaceMiddlewareProperties added in middleware
         body = getattr(request, 'request_data', {})
-        # 请求含有password则用*替换掉(暂时先用于所有接口的password请求参数)
+        # Request containspasswordUse*Replace(For now, it is used for all interfacespasswordRequest parameters)
         if isinstance(body, dict) and body.get('password', ''):
             body['password'] = '*' * len(body['password'])
         if not hasattr(response, 'data') or not isinstance(response.data, dict):
@@ -89,7 +89,7 @@ class ApiLoggingMiddleware(MiddlewareMixin):
 
     def process_response(self, request, response):
         """
-        主要请求处理完之后记录
+        Record after the main request is processed
         :param request:
         :param response:
         :return:
@@ -102,7 +102,7 @@ class ApiLoggingMiddleware(MiddlewareMixin):
 logger = logging.getLogger("healthz")
 class HealthCheckMiddleware(object):
     """
-    存活检查中间件
+    Viability examination middleware
     """
     def __init__(self, get_response):
         self.get_response = get_response

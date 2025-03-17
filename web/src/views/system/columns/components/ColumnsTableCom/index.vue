@@ -1,19 +1,19 @@
 <template>
 	<div class="columns-table-com">
-		<p class="ctc-title">字段权限</p>
+		<p class="ctc-title">Field permissions</p>
 
 		<div class="ctc-head">
-			<el-button type="primary" @click="handleUpdateColumn('create')">新增</el-button>
-			<el-button type="primary" @click="handleAutomatch">自动匹配</el-button>
+			<el-button type="primary" @click="handleUpdateColumn('create')">New</el-button>
+			<el-button type="primary" @click="handleAutomatch">Automatic matching</el-button>
 		</div>
 
 		<el-table :data="state.data" border v-loading="state.loading" class="ctc-table">
-			<el-table-column prop="field_name" label="字段名" />
-			<el-table-column prop="title" label="列名" />
-			<el-table-column label="操作" width="180" align="center">
+			<el-table-column prop="field_name" label="Field name" />
+			<el-table-column prop="title" label="List name" />
+			<el-table-column label="operate" width="180" align="center">
 				<template #default="scope">
-					<el-button type="primary" @click="handleUpdateColumn('update', scope.row)">编辑</el-button>
-					<el-button type="danger" @click="handleDelete(scope.row)">删除</el-button>
+					<el-button type="primary" @click="handleUpdateColumn('update', scope.row)">edit</el-button>
+					<el-button type="danger" @click="handleDelete(scope.row)">delete</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -31,7 +31,7 @@
 			/>
 		</div>
 
-		<el-drawer v-model="drawerVisible" title="字段权限" direction="rtl" size="500px" :close-on-click-modal="false" :before-close="handleDrawerClose">
+		<el-drawer v-model="drawerVisible" title="Field permissions" direction="rtl" size="500px" :close-on-click-modal="false" :before-close="handleDrawerClose">
 			<ColumnsFormCom v-if="drawerVisible" :currentInfo="props.currentInfo" :initFormData="drawerFormData" @drawerClose="handleDrawerClose" />
 		</el-drawer>
 	</div>
@@ -79,22 +79,22 @@ const fetchData = async (query: CurrentInfoType = props.currentInfo) => {
 };
 
 /**
- * 自动匹配列
+ * Automatically match columns
  */
 const handleAutomatch = async () => {
 	if (props.currentInfo?.role && props.currentInfo?.model && props.currentInfo?.app) {
 		const res = await automatchColumnsData(props.currentInfo);
 		if (res?.code === 2000) {
-			successNotification('匹配成功');
+			successNotification('Match successfully');
 			fetchData();
 		}
 		return;
 	}
-	warningNotification('请选择角色和模型表！');
+	warningNotification('Please select the role and model table！');
 };
 
 /**
- * 新增 or 编辑
+ * New or edit
  */
 const handleUpdateColumn = (type: string, record?: ColumnsFormDataType) => {
 	if (props.currentInfo?.role && props.currentInfo?.model && props.currentInfo?.app) {
@@ -104,7 +104,7 @@ const handleUpdateColumn = (type: string, record?: ColumnsFormDataType) => {
 		drawerVisible.value = true;
 		return;
 	}
-	warningNotification('请选择角色和模型表！');
+	warningNotification('Please select the role and model table！');
 };
 const handleDrawerClose = (type?: string) => {
 	if (type === 'submit') {
@@ -115,18 +115,18 @@ const handleDrawerClose = (type?: string) => {
 };
 
 /**
- * 删除 deleteColumnsData
+ * delete deleteColumnsData
  */
 const handleDelete = ({ id }: { id: number }) => {
-	ElMessageBox.confirm('确定删除该字段吗？', '提示', {
+	ElMessageBox.confirm('Are you sure you delete this field?？', 'hint', {
 		type: 'error',
-		confirmButtonText: '确定',
-		cancelButtonText: '取消',
+		confirmButtonText: 'Sure',
+		cancelButtonText: 'Cancel',
 	})
 		.then(async () => {
 			const res = await deleteColumnsData(id);
 			if (res?.code === 2000) {
-				successNotification('删除成功');
+				successNotification('Delete successfully');
 				fetchData();
 			}
 		})
@@ -135,12 +135,12 @@ const handleDelete = ({ id }: { id: number }) => {
 
 const handleChange = (record: AddColumnsDataType) => {
 	updateColumnsData(record).then((res: APIResponseData) => {
-		successNotification(res.msg || '更新成功');
+		successNotification(res.msg || 'Update successfully');
 	});
 };
 
 /**
- * 分页
+ * Pagination
  */
 const handleSizeChange = (limit: number) => {
 	searchParams.limit = limit;

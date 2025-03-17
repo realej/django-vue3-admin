@@ -1,8 +1,8 @@
 /**
- * pinia 类型定义
+ * pinia Type definition
  */
 
-// 用户信息
+// User Information
 declare interface UserInfosState<T = any> {
 	userInfos: {
 		authBtnList: string[];
@@ -14,31 +14,31 @@ declare interface UserInfosState<T = any> {
 	};
 }
 
-// 路由缓存列表
+// Routing cache list
 declare interface KeepAliveNamesState {
 	keepAliveNames: string[];
 	cachedViews: string[];
 }
 
-// 后端返回原始路由(未处理时)
+// Backend returns to the original route(When unprocessed)
 declare interface RequestOldRoutesState {
 	requestOldRoutes: string[];
 }
 
-// TagsView 路由列表
+// TagsView Routing list
 declare interface TagsViewRoutesState<T = any> {
 	tagsViewRoutes: T[];
 	isTagsViewCurrenFull: Boolean;
 }
 
-// 路由列表
+// Routing list
 declare interface RoutesListState<T = any> {
 	routesList: T[];
 	isColumnsMenuHover: Boolean;
 	isColumnsNavHover: Boolean;
 }
 
-// 布局配置
+// Layout configuration
 declare interface ThemeConfigState {
 	themeConfig: {
 		isDrawer: boolean;

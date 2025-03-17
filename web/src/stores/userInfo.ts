@@ -6,8 +6,8 @@ import { getBaseURL } from '../utils/baseUrl';
 import headerImage from '/@/assets/img/headerImage.png';
 
 /**
- * 用户信息
- * @methods setUserInfos 设置用户信息
+ * User Information
+ * @methods setUserInfos Set user information
  */
 export const useUserInfo = defineStore('userInfo', {
 	state: (): UserInfosStates => ({
@@ -49,7 +49,7 @@ export const useUserInfo = defineStore('userInfo', {
 			Session.set('userInfo', this.userInfos);
 		},
 		async setUserInfos() {
-			// 存储用户信息到浏览器缓存
+			// Store user information in browser cache
 			if (Session.get('userInfo')) {
 				this.userInfos = Session.get('userInfo');
 			} else {

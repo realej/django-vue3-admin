@@ -1,31 +1,31 @@
-// 定义内容
+// Define content
 export default {
 	label: {
-		one1: '账号密码登录',
-		two2: '手机号登录',
-		changePwd: '密码修改',
+		one1: 'Account password login',
+		two2: 'Mobile phone number login',
+		changePwd: 'Password modification',
 	},
 	link: {
-		one3: '第三方登录',
-		two4: '友情链接',
+		one3: 'Third-party login',
+		two4: 'Friendly links',
 	},
 	account: {
-		accountPlaceholder1: '请输入登录账号/邮箱/手机号',
-		accountPlaceholder2: '请输入登录密码',
-		accountPlaceholder3: '请输入验证码',
-		accountPlaceholder4:'请输入新密码',
-		accountPlaceholder5:'请再次输入新密码',
-		accountBtnText: '登 录',
+		accountPlaceholder1: 'Please enter your login account/Mail/Phone number',
+		accountPlaceholder2: 'Please enter your login password',
+		accountPlaceholder3: 'Please enter the verification code',
+		accountPlaceholder4:'Please enter a new password',
+		accountPlaceholder5:'Please enter the new password again',
+		accountBtnText: 'Login record',
 	},
 	mobile: {
-		placeholder1: '请输入手机号',
-		placeholder2: '请输入验证码',
-		codeText: '获取验证码',
-		btnText: '登 录',
-		msgText: '* 温馨提示：建议使用谷歌、Microsoft Edge，版本 79.0.1072.62 及以上浏览器，360浏览器请使用极速模式',
+		placeholder1: 'Please enter your mobile phone number',
+		placeholder2: 'Please enter the verification code',
+		codeText: 'Get the verification code',
+		btnText: 'Login record',
+		msgText: '* Kind tips：It is recommended to use Google、Microsoft Edge，Version 79.0.1072.62 Browsers above，360Please use the fast mode for your browser',
 	},
 	scan: {
-		text: '打开手机扫一扫，快速登录/注册',
+		text: 'Open your phone and scan it，Quick login/register',
 	},
-	signInText: '欢迎回来！',
+	signInText: 'Welcome back！',
 };

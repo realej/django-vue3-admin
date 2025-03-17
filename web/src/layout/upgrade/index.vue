@@ -38,7 +38,7 @@ import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { Local,Session } from '/@/utils/storage';
 
-// 定义变量内容
+// Define variable content
 const { t } = useI18n();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
@@ -50,16 +50,16 @@ const state = reactive({
 	btnTxt: '',
 });
 
-// 获取布局配置信息
+// Get layout configuration information
 const getThemeConfig = computed(() => {
 	return themeConfig.value;
 });
-// 残忍拒绝
+// Cruel Refusal
 const onCancel = () => {
 	state.isUpgrade = false;
   Session.set('isUpgrade', false)
 };
-// 马上更新
+// Update now
 const onUpgrade = () => {
 	state.isLoading = true;
 	state.btnTxt = t('message.upgrade.btnTwoLoading');
@@ -70,7 +70,7 @@ const onUpgrade = () => {
     Session.set('isUpgrade', false)
 	}, 2000);
 };
-// 延迟显示，防止刷新时界面显示太快
+// Delay display，Prevent the interface from displaying too fast when refreshing
 const delayShow = () => {
   const isUpgrade = Session.get('isUpgrade')===false?Session.get('isUpgrade'):true
   if(isUpgrade){
@@ -79,7 +79,7 @@ const delayShow = () => {
     }, 2000);
   }
 };
-// 页面加载时
+// When the page loads
 onMounted(() => {
 	delayShow();
 	setTimeout(() => {

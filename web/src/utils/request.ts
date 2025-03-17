@@ -3,7 +3,7 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import { Session } from '/@/utils/storage';
 import qs from 'qs';
 
-// 配置新建一个 axios 实例
+// Configure a new one axios Example
 const service: AxiosInstance = axios.create({
 	baseURL: import.meta.env.VITE_API_URL,
 	timeout: 50000,
@@ -15,32 +15,32 @@ const service: AxiosInstance = axios.create({
 	},
 });
 
-// 添加请求拦截器
+// Add a request interceptor
 service.interceptors.request.use(
 	(config: AxiosRequestConfig) => {
-		// 在发送请求之前做些什么 token
+		// What to do before sending a request token
 		if (Session.get('token')) {
 			config.headers!['Authorization'] = `${Session.get('token')}`;
 		}
 		return config;
 	},
 	(error) => {
-		// 对请求错误做些什么
+		// What to do with the request error
 		return Promise.reject(error);
 	}
 );
 
-// 添加响应拦截器
+// Add a response interceptor
 service.interceptors.response.use(
 	(response) => {
-		// 对响应数据做点什么
+		// What to do with the response data
 		const res = response.data;
 		if (res.code && res.code !== 0) {
-			// `token` 过期或者账号已在别处登录
+			// `token` Expired or the account has been logged in elsewhere
 			if (res.code === 401 || res.code === 4001) {
-				Session.clear(); // 清除浏览器全部临时缓存
-				window.location.href = '/'; // 去登录页
-				ElMessageBox.alert('你已被登出，请重新登录', '提示', {})
+				Session.clear(); // Clear all temporary caches from the browser
+				window.location.href = '/'; // Go to the login page
+				ElMessageBox.alert('You have been logged out，Please log in again', 'hint', {})
 					.then(() => {})
 					.catch(() => {});
 			}
@@ -50,18 +50,18 @@ service.interceptors.response.use(
 		}
 	},
 	(error) => {
-		// 对响应错误做点什么
+		// What to do to respond to errors
 		if (error.message.indexOf('timeout') != -1) {
-			ElMessage.error('网络超时');
+			ElMessage.error('Network timeout');
 		} else if (error.message == 'Network Error') {
-			ElMessage.error('网络连接错误');
+			ElMessage.error('Network connection error');
 		} else {
 			if (error.response.data) ElMessage.error(error.response.statusText);
-			else ElMessage.error('接口路径找不到');
+			else ElMessage.error('The interface path cannot be found');
 		}
 		return Promise.reject(error);
 	}
 );
 
-// 导出 axios 实例
+// Export axios Example
 export default service;

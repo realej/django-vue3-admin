@@ -48,15 +48,15 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 			},
 			columns: {
 				_index: {
-					title: '序号',
+					title: 'Serial number',
 					form: { show: false },
 					column: {
 						//type: 'index',
 						align: 'center',
 						width: '70px',
-						columnSetDisabled: true, //禁止在列设置中选择
+						columnSetDisabled: true, //Disable selection in column settings
 						formatter: (context) => {
-							//计算序号,你可以自定义计算规则，此处为翻页累加
+							//Calculate the serial number,You can customize calculation rules，Here is the page recapture
 							let index = context.index ?? 1;
 							let pagination = crudExpose!.crudBinding.value.pagination;
 							return ((pagination!.currentPage ?? 1) - 1) * pagination!.pageSize + index + 1;
@@ -64,7 +64,7 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					},
 				},
 				search: {
-					title: '关键词',
+					title: 'Keywords',
 					column: {
 						show: false,
 					},
@@ -74,7 +74,7 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 							props: {
 								clearable: true,
 							},
-							placeholder: '请输入关键词',
+							placeholder: 'Please enter keywords',
 						},
 					},
 					form: {
@@ -87,7 +87,7 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					},
 				},
 				username: {
-					title: '登录用户名',
+					title: 'Login username',
 					search: {
 						disabled: false,
 					},
@@ -98,12 +98,12 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					form: {
 						disabled: true,
 						component: {
-							placeholder: '请输入登录用户名',
+							placeholder: 'Please enter the login username',
 						},
 					},
 				},
 				ip: {
-					title: '登录ip',
+					title: 'Log inip',
 					search: {
 						disabled: false,
 					},
@@ -114,12 +114,12 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					form: {
 						disabled: true,
 						component: {
-							placeholder: '请输入登录ip',
+							placeholder: 'Please enter loginip',
 						},
 					},
 				},
 				isp: {
-					title: '运营商',
+					title: 'Operator',
 					search: {
 						disabled: true,
 					},
@@ -130,12 +130,12 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					},
 					form: {
 						component: {
-							placeholder: '请输入运营商',
+							placeholder: 'Please enter the operator',
 						},
 					},
 				},
 				continent: {
-					title: '大州',
+					title: 'Dazhou',
 					type: 'input',
 					column:{
 						minWidth: 90,
@@ -143,52 +143,52 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					form: {
 						disabled: true,
 						component: {
-							placeholder: '请输入大州',
+							placeholder: 'Please enter Dazhou',
 						},
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				country: {
-					title: '国家',
+					title: 'nation',
 					type: 'input',
 					column:{
 						minWidth: 90,
 					},
 					form: {
 						component: {
-							placeholder: '请输入国家',
+							placeholder: 'Please enter the country',
 						},
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				province: {
-					title: '省份',
+					title: 'province',
 					type: 'input',
 					column:{
 						minWidth: 80,
 					},
 					form: {
 						component: {
-							placeholder: '请输入省份',
+							placeholder: 'Please enter the province',
 						},
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				city: {
-					title: '城市',
+					title: 'City',
 					type: 'input',
 					column:{
 						minWidth: 80,
 					},
 					form: {
 						component: {
-							placeholder: '请输入城市',
+							placeholder: 'Please enter the city',
 						},
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				district: {
-					title: '县区',
+					title: 'County',
 					key: '',
 					type: 'input',
 					column:{
@@ -196,52 +196,52 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					},
 					form: {
 						component: {
-							placeholder: '请输入县区',
+							placeholder: 'Please enter the county',
 						},
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				area_code: {
-					title: '区域代码',
+					title: 'Area Code',
 					type: 'input',
 					column:{
 						minWidth: 90,
 					},
 					form: {
 						component: {
-							placeholder: '请输入区域代码',
+							placeholder: 'Please enter the area code',
 						},
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				country_english: {
-					title: '英文全称',
+					title: 'Full English name',
 					type: 'input',
 					column:{
 						minWidth: 120,
 					},
 					form: {
 						component: {
-							placeholder: '请输入英文全称',
+							placeholder: 'Please enter the full English name',
 						},
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				country_code: {
-					title: '简称',
+					title: 'Abbreviation',
 					type: 'input',
 					column:{
 						minWidth: 100,
 					},
 					form: {
 						component: {
-							placeholder: '请输入简称',
+							placeholder: 'Please enter abbreviation',
 						},
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				longitude: {
-					title: '经度',
+					title: 'longitude',
 					type: 'input',
 					disabled: true,
 					column:{
@@ -249,13 +249,13 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					},
 					form: {
 						component: {
-							placeholder: '请输入经度',
+							placeholder: 'Please enter longitude',
 						},
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				latitude: {
-					title: '纬度',
+					title: 'latitude',
 					type: 'input',
 					disabled: true,
 					column:{
@@ -263,21 +263,21 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					},
 					form: {
 						component: {
-							placeholder: '请输入纬度',
+							placeholder: 'Please enter latitude',
 						},
 					},
-					component: { props: { color: 'auto' } }, // 自动染色
+					component: { props: { color: 'auto' } }, // Automatic staining
 				},
 				login_type: {
-					title: '登录类型',
+					title: 'Login Type',
 					type: 'dict-select',
 					search: {
 						disabled: false,
 					},
 					dict: dict({
 						data: [
-							{ label: '普通登录', value: 1 },
-							{ label: '微信扫码登录', value: 2 },
+							{ label: 'Normal login', value: 1 },
+							{ label: 'Scan the QR code to log in on WeChat', value: 2 },
 						],
 					}),
 					column:{
@@ -285,36 +285,36 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					},
 					form: {
 						component: {
-							placeholder: '请选择登录类型',
+							placeholder: 'Please select the login type',
 						},
 					},
 				},
 				os: {
-					title: '操作系统',
+					title: 'operating system',
 					type: 'input',
 					column:{
 						minWidth: 120,
 					},
 					form: {
 						component: {
-							placeholder: '请输入操作系统',
+							placeholder: 'Please enter the operating system',
 						},
 					},
 				},
 				browser: {
-					title: '浏览器名',
+					title: 'Browser name',
 					type: 'input',
 					column:{
 						minWidth: 120,
 					},
 					form: {
 						component: {
-							placeholder: '请输入浏览器名',
+							placeholder: 'Please enter your browser name',
 						},
 					},
 				},
 				agent: {
-					title: 'agent信息',
+					title: 'agentinformation',
 					disabled: true,
 					type: 'input',
 					column:{
@@ -322,7 +322,7 @@ export const createCrudOptions = function ({ crudExpose }: CreateCrudOptionsProp
 					},
 					form: {
 						component: {
-							placeholder: '请输入agent信息',
+							placeholder: 'Please enteragentinformation',
 						},
 					},
 				},

@@ -1,15 +1,15 @@
 <template>
-	<el-input v-model="filterVal" :prefix-icon="Search" placeholder="请输入菜单名称" />
+	<el-input v-model="filterVal" :prefix-icon="Search" placeholder="Please enter the menu name" />
 	<div class="menu-tree-com">
 		<div class="mtc-head">
 			<el-icon size="16" color="#606266" class="mtc-head-icon">
 				<Menu />
 			</el-icon>
-			菜单列表
+			Menu List
 			<el-tooltip
 				effect="dark"
 				placement="right"
-				content="1.红色菜单代表状态禁用; 2.添加菜单，如果是目录，组件地址为空即可; 3.添加根节点菜单，父级ID为空即可; 4.支持拖拽菜单;"
+				content="1.The red menu means status disabled; 2.Add menu，If it's a directory，The component address is empty; 3.Add root node menu，ParentIDJust be empty; 4.Support drag and drop menu;"
 			>
 				<el-icon size="16" color="var(--el-color-primary)" class="mtc-tooltip">
 					<QuestionFilled />
@@ -40,31 +40,31 @@
 		</el-tree>
 
 		<div class="mtc-tags">
-			<el-tooltip effect="dark" content="新增">
+			<el-tooltip effect="dark" content="New">
 				<el-icon size="16" v-auth="'menu:Create'" @click="handleUpdateMenu('create')" class="mtc-tags-icon">
 					<Plus />
 				</el-icon>
 			</el-tooltip>
 
-			<el-tooltip effect="dark" content="编辑">
+			<el-tooltip effect="dark" content="edit">
 				<el-icon size="16" v-auth="'menu:Update'" @click="handleUpdateMenu('update')" class="mtc-tags-icon">
 					<Edit />
 				</el-icon>
 			</el-tooltip>
 
-			<el-tooltip effect="dark" content="上移">
+			<el-tooltip effect="dark" content="Move up">
 				<el-icon size="16" v-auth="'menu:MoveUp'" @click="handleSort('up')" class="mtc-tags-icon">
 					<Top />
 				</el-icon>
 			</el-tooltip>
 
-			<el-tooltip effect="dark" content="下移">
+			<el-tooltip effect="dark" content="Move down">
 				<el-icon size="16" v-auth="'menu:MoveDown'" @click="handleSort('down')" class="mtc-tags-icon">
 					<Bottom />
 				</el-icon>
 			</el-tooltip>
 
-			<el-tooltip effect="dark" content="删除">
+			<el-tooltip effect="dark" content="delete">
 				<el-icon size="16" v-auth="'menu:Delete'" @click="handleDeleteMenu()" class="mtc-tags-icon">
 					<Delete />
 				</el-icon>
@@ -120,7 +120,7 @@ watch(filterVal, (val) => {
 });
 
 /**
- * 树的搜索事件
+ * Search events for trees
  */
 const filterNode = (value: string, data: any) => {
 	if (!value) return true;
@@ -128,7 +128,7 @@ const filterNode = (value: string, data: any) => {
 };
 
 /**
- * 树的懒加载
+ * Lazy loading of the tree
  */
 const handleTreeLoad = (node: Node, resolve: Function) => {
 	if (node.level !== 0) {
@@ -139,7 +139,7 @@ const handleTreeLoad = (node: Node, resolve: Function) => {
 };
 
 /**
- * 树的点击事件
+ * Tree click event
  */
 const handleNodeClick = (record: MenuTreeItemType, node: Node) => {
 	treeSelectMenu.value = record;
@@ -148,12 +148,12 @@ const handleNodeClick = (record: MenuTreeItemType, node: Node) => {
 };
 
 /**
- * 点击左侧编辑按钮
+ * Click the edit button on the left
  */
 const handleUpdateMenu = (type: string) => {
 	if (type === 'update') {
 		if (!treeSelectMenu.value.id) {
-			warningNotification('请选择菜单！');
+			warningNotification('Please select menu！');
 			return;
 		}
 		emit('updateDept', type, treeSelectMenu.value);
@@ -163,11 +163,11 @@ const handleUpdateMenu = (type: string) => {
 };
 
 /**
- * 删除菜单
+ * Delete menu
  */
 const handleDeleteMenu = () => {
 	if (!treeSelectMenu.value.id) {
-		warningNotification('请选择菜单！');
+		warningNotification('Please select menu！');
 		return;
 	}
 	emit('deleteDept', treeSelectMenu.value.id, () => {
@@ -176,11 +176,11 @@ const handleDeleteMenu = () => {
 };
 
 /**
- * 移动操作
+ * Mobile operation
  */
 const handleSort = async (type: string) => {
 	if (!treeSelectMenu.value.id) {
-		warningNotification('请选择菜单！');
+		warningNotification('Please select menu！');
 		return;
 	}
 	if (sortDisable.value) return;

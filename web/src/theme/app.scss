@@ -1,4 +1,4 @@
-/* 初始化样式
+/* Initialize styles
 ------------------------------- */
 * {
 	margin: 0;
@@ -41,7 +41,7 @@ body,
 	position: relative;
 }
 
-/* 主布局样式
+/* Main layout style
 ------------------------------- */
 .layout-container {
 	width: 100%;
@@ -78,7 +78,7 @@ body,
 		background-color: var(--next-bg-main-color);
 		display: flex;
 		flex-direction: column;
-		// 内层 el-scrollbar样式，用于界面高度自适应（main.vue）
+		// Inner layer el-scrollbarstyle，For interface height adaptability（main.vue）
 		.layout-main-scroll {
 			@extend .layout-flex;
 			.layout-parent {
@@ -87,7 +87,7 @@ body,
 			}
 		}
 	}
-	// 用于界面高度自适应
+	// For interface height adaptability
 	.layout-padding {
 		@extend .layout-pd;
 		position: absolute;
@@ -109,7 +109,7 @@ body,
 			overflow: hidden;
 		}
 	}
-	// 用于界面高度自适应，主视图区 main 的内边距，用于 iframe
+	// For interface height adaptability，Main view area main Inner margin，For iframe
 	.layout-padding-unset {
 		padding: 0 !important;
 		&-view {
@@ -117,7 +117,7 @@ body,
 			border: none !important;
 		}
 	}
-	// 用于设置 iframe loading 时的高度（loading 垂直居中显示）
+	// For setting up iframe loading The height of the time（loading Vertical centered display）
 	.layout-iframe {
 		.el-loading-parent--relative {
 			height: 100%;
@@ -129,7 +129,7 @@ body,
 	.layout-el-aside-br-color {
 		border-right: 1px solid var(--el-border-color-light, #ebeef5);
 	}
-	// pc端左侧导航样式
+	// pcThe left side navigation style
 	.layout-aside-pc-220 {
 		width: 220px !important;
 		transition: width 0.3s ease;
@@ -142,7 +142,7 @@ body,
 		width: 1px !important;
 		transition: width 0.3s ease;
 	}
-	// 手机端左侧导航样式
+	// Mobile phone left navigation style
 	.layout-aside-mobile {
 		position: fixed;
 		top: 0;
@@ -182,7 +182,7 @@ body,
 	}
 }
 
-/* element plus 全局样式
+/* element plus Global Style
 ------------------------------- */
 .layout-breadcrumb-seting {
 	.el-divider {
@@ -190,7 +190,7 @@ body,
 	}
 }
 
-/* nprogress 进度条跟随主题颜色
+/* nprogress Progress bar follows theme color
 ------------------------------- */
 #nprogress {
 	.bar {
@@ -199,7 +199,7 @@ body,
 	}
 }
 
-/* flex 弹性布局
+/* flex Elastic layout
 ------------------------------- */
 .flex {
 	display: flex;
@@ -231,26 +231,26 @@ body,
 	}
 }
 
-/* cursor 鼠标形状
+/* cursor Mouse shape
 ------------------------------- */
-// 默认
+// default
 .cursor-default {
 	cursor: default !important;
 }
-// 帮助
+// help
 .cursor-help {
 	cursor: help !important;
 }
-// 手指
+// finger
 .cursor-pointer {
 	cursor: pointer !important;
 }
-// 移动
+// move
 .cursor-move {
 	cursor: move !important;
 }
 
-/* 宽高 100%
+/* Width and height 100%
 ------------------------------- */
 .w100 {
 	width: 100% !important;
@@ -268,7 +268,7 @@ body,
 	min-height: 100vh !important;
 }
 
-/* 颜色值
+/* Color value
 ------------------------------- */
 .color-primary {
 	color: var(--el-color-primary);
@@ -286,7 +286,7 @@ body,
 	color: var(--el-color-info);
 }
 
-/* 字体大小全局样式
+/* Font size global style
 ------------------------------- */
 @for $i from 10 through 32 {
 	.font#{$i} {
@@ -294,7 +294,7 @@ body,
 	}
 }
 
-/* 外边距、内边距全局样式
+/* Outer margin、Global style of margins
 ------------------------------- */
 @for $i from 1 through 35 {
 	.mt#{$i} {

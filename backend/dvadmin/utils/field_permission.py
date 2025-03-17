@@ -9,7 +9,7 @@ from dvadmin.utils.json_response import DetailResponse
 
 def merge_permission(data):
     """
-    合并权限
+    Merge permissions
     """
     result = {}
     for item in data:
@@ -26,11 +26,11 @@ class FieldPermissionMixin:
     @action(methods=['get'], detail=False, permission_classes=[IsAuthenticated])
     def field_permission(self, request):
         """
-        获取字段权限
+        Get field permissions
         """
         model = self.serializer_class.Meta.model.__name__
         user = request.user
-        # 创建一个默认字典来存储最终的结果
+        # Create a default dictionary to store the final result
         if user.is_superuser == 1:
             data = MenuField.objects.filter(model=model).values('field_name')
             result = {item['field_name']: {"is_create": True, "is_query": True, "is_update": True} for item in data}

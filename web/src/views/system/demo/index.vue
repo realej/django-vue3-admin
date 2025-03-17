@@ -19,23 +19,23 @@ const myEcharts = echarts
 
 function initChart() {
   let chart = myEcharts.init(document.getElementById("myEcharts"), "purple-passion");
-  // 在这里请求API,例如:
+  // Request hereAPI,For example:
   /***
    *   request({url:'xxxx'}).then(res=>{
-   *     // 把chart.setOption写在这里面
+   *     // Bundlechart.setOptionWrite here
    *
    *   })
    *
    */
   chart.setOption({
     title: {
-      text: "2021年各月份销售量（单位：件）",
+      text: "2021Sales volume in each month of the year（unit：Parts）",
       left: "center",
     },
     xAxis: {
       type: "category",
       data: [
-        "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"
+        "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
       ]
     },
     tooltip: {
@@ -72,7 +72,7 @@ function handleResize(size) {
   console.log(size)
 }
 
-// 页面打开后获取列表数据
+// Get list data after the page is opened
 onMounted(() => {
 	crudExpose.doRefresh();
   initChart()

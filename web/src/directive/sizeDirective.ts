@@ -14,10 +14,10 @@ export function resizeObDirective(app: App){
     app.directive('resizeOb', {
         mounted(el,binding) {
             map.set(el,binding.value);
-            ob.observe(el); // 监听目标元素
+            ob.observe(el); // Listen to the target element
         },
         unmounted(el) {
-            ob.unobserve(el); // 停止监听
+            ob.unobserve(el); // Stop listening
         },
     })
 }

@@ -38,7 +38,7 @@ export default defineComponent({
 		const onGoHome = () => {
 			router.push('/');
 		};
-		// 设置主内容的高度
+		// Set the height of the main content
 		const initTagViewHeight = computed(() => {
 			let { isTagsview } = themeConfig.value;
 			if (isTagsViewCurrenFull.value) {

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: 猿小天
+@author: Yuan Xiaotian
 @contact: QQ:1638245306
 @Created on: 2021/6/1 001 22:57
-@Remark: 自定义视图集
+@Remark: Custom view set
 """
 from django.db import transaction
 from django_filters import DateTimeFromToRangeFilter
@@ -25,13 +25,13 @@ from django_restql.mixins import QueryArgumentsMixin
 
 class CustomModelViewSet(ModelViewSet, ImportSerializerMixin, ExportSerializerMixin, QueryArgumentsMixin):
     """
-    自定义的ModelViewSet:
-    统一标准的返回格式;新增,查询,修改可使用不同序列化器
-    (1)ORM性能优化, 尽可能使用values_queryset形式
-    (2)xxx_serializer_class 某个方法下使用的序列化器(xxx=create|update|list|retrieve|destroy)
-    (3)filter_fields = '__all__' 默认支持全部model中的字段查询(除json字段外)
-    (4)import_field_dict={} 导入时的字段字典 {model值: model的label}
-    (5)export_field_label = [] 导出时的字段
+    CustomModelViewSet:
+    Unified standard return format;New,Query,Different serializers can be used for modification
+    (1)ORMPerformance optimization, Use as much as possiblevalues_querysetform
+    (2)xxx_serializer_class Serializer used under a certain method(xxx=create|update|list|retrieve|destroy)
+    (3)filter_fields = '__all__' All supported by defaultmodelField query in(removejsonOutside the field)
+    (4)import_field_dict={} Field dictionary when importing {modelvalue: modeloflabel}
+    (5)export_field_label = [] Fields at export
     """
     values_queryset = None
     ordering_fields = '__all__'
@@ -61,19 +61,19 @@ class CustomModelViewSet(ModelViewSet, ImportSerializerMixin, ExportSerializerMi
             return action_serializer_class
         return super().get_serializer_class()
 
-    # 通过many=True直接改造原有的API，使其可以批量创建
+    # passmany=TrueDirectly transform the originalAPI，Make it batch-created
     def get_serializer(self, *args, **kwargs):
         serializer_class = self.get_serializer_class()
         kwargs.setdefault('context', self.get_serializer_context())
-        # 全部以可见字段为准
+        # All are subject to visible fields
         can_see = self.get_menu_field(serializer_class)
-        # 排除掉序列化器级的字段
+        # Exclude serializer-level fields
         # sub_set = set(serializer_class._declared_fields.keys()) - set(can_see)
         # for field in sub_set:
         #     serializer_class._declared_fields.pop(field)
         # if not self.request.user.is_superuser:
         #     serializer_class.Meta.fields = can_see
-        # 在分页器中使用
+        # Use in the pager
         self.request.permission_fields = can_see
         if isinstance(self.request.data, list):
             with transaction.atomic():
@@ -82,7 +82,7 @@ class CustomModelViewSet(ModelViewSet, ImportSerializerMixin, ExportSerializerMi
             return serializer_class(*args, **kwargs)
 
     def get_menu_field(self, serializer_class):
-        """获取字段权限"""
+        """Get field permissions"""
         finded = False
         for model in get_custom_app_models():
             if model['object'] is serializer_class.Meta.model:
@@ -97,7 +97,7 @@ class CustomModelViewSet(ModelViewSet, ImportSerializerMixin, ExportSerializerMi
         serializer = self.get_serializer(data=request.data, request=request)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
-        return DetailResponse(data=serializer.data, msg="新增成功")
+        return DetailResponse(data=serializer.data, msg="New addition successful")
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -106,12 +106,12 @@ class CustomModelViewSet(ModelViewSet, ImportSerializerMixin, ExportSerializerMi
             serializer = self.get_serializer(page, many=True, request=request)
             return self.get_paginated_response(serializer.data)
         serializer = self.get_serializer(queryset, many=True, request=request)
-        return SuccessResponse(data=serializer.data, msg="获取成功")
+        return SuccessResponse(data=serializer.data, msg="Get successful")
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
-        return DetailResponse(data=serializer.data, msg="获取成功")
+        return DetailResponse(data=serializer.data, msg="Get successful")
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
@@ -124,26 +124,26 @@ class CustomModelViewSet(ModelViewSet, ImportSerializerMixin, ExportSerializerMi
             # If 'prefetch_related' has been applied to a queryset, we need to
             # forcibly invalidate the prefetch cache on the instance.
             instance._prefetched_objects_cache = {}
-        return DetailResponse(data=serializer.data, msg="更新成功")
+        return DetailResponse(data=serializer.data, msg="Update successfully")
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         instance.delete()
-        return DetailResponse(data=[], msg="删除成功")
+        return DetailResponse(data=[], msg="Delete successfully")
 
-    keys = openapi.Schema(description='主键列表', type=openapi.TYPE_ARRAY, items=openapi.TYPE_STRING)
+    keys = openapi.Schema(description='Primary key list', type=openapi.TYPE_ARRAY, items=openapi.TYPE_STRING)
 
     @swagger_auto_schema(request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT,
         required=['keys'],
         properties={'keys': keys}
-    ), operation_summary='批量删除')
+    ), operation_summary='Batch Delete')
     @action(methods=['delete'], detail=False)
     def multiple_delete(self, request, *args, **kwargs):
         request_data = request.data
         keys = request_data.get('keys', None)
         if keys:
             self.get_queryset().filter(id__in=keys).delete()
-            return SuccessResponse(data=[], msg="删除成功")
+            return SuccessResponse(data=[], msg="Delete successfully")
         else:
-            return ErrorResponse(msg="未获取到keys字段")
+            return ErrorResponse(msg="Not obtainedkeysFields")

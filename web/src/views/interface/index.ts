@@ -1,6 +1,6 @@
 /*
  *
- * 后端API接口响应数据
+ * rear endAPIInterface response data
  */
 interface APIResponseData {
 	code?: number;

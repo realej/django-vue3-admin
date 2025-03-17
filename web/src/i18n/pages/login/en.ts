@@ -1,4 +1,4 @@
-// 定义内容
+// Define content
 export default {
 	label: {
 		one1: 'User name login',

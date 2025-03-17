@@ -4,14 +4,14 @@ import { showUpgrade } from "/@/utils/upgrade";
 
 
 /**
- * 页面全局 Loading
- * @method start 创建 loading
- * @method done 移除 loading
+ * Page global Loading
+ * @method start create loading
+ * @method done Remove loading
  */
 export const NextLoading = {
-	// 创建 loading
+	// create loading
 	start: () => {
-		// 显示升级提示
+		// Show upgrade prompts
 		showUpgrade()
 		const bodys: Element = document.body;
 		const div = <HTMLElement>document.createElement('div');
@@ -35,7 +35,7 @@ export const NextLoading = {
 		bodys.insertBefore(div, bodys.childNodes[0]);
 		window.nextLoading = true;
 	},
-	// 移除 loading
+	// Remove loading
 	done: (time: number = 0) => {
 		nextTick(() => {
 			setTimeout(() => {

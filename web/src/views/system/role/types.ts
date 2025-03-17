@@ -1,4 +1,4 @@
-/**角色列表数据类型 */
+/**Role List Data Type */
 export interface RoleItemType {
 	id: string | number;
 	modifier_name: string;
@@ -26,74 +26,74 @@ export interface RoleUsersType {
 }
 
 /**
- * 权限配置 抽屉组件参数数据类型
+ * Permission configuration Drawer component parameter data type
  */
 export interface RoleDrawerType {
-	/** 是否显示抽屉*/
+	/** Whether to display the drawer*/
 	drawerVisible: boolean;
-	/** 角色id*/
+	/** Roleid*/
 	roleId: string | number | undefined;
-	/** 角色名称*/
+	/** Role name*/
 	roleName: string | undefined;
-	/** 用户*/
+	/** user*/
 	users: UsersType[];
 }
 
 /**
- * 菜单数据类型
+ * Menu Data Type
  */
 export interface RoleMenuTreeType {
 	id: number | string | undefined;
-	/** 父级id */
+	/** Parentid */
 	parent: number | string | undefined;
 	name: string;
-	/** 是否选中 */
+	/** Whether to select */
 	isCheck: boolean;
-	/** 是否是目录 */
+	/** Is it a directory or not */
 	is_catalog: boolean;
 }
 /**
- * 菜单-按钮数据类型
+ * menu-Button data type
  */
 export interface RoleMenuBtnType {
 	id: string | number;
 	menu_btn_pre_id: string | number;
-	/** 是否选中 */
+	/** Whether to select */
 	isCheck: boolean;
-	/** 按钮名称 */
+	/** Button name */
 	name: string;
-	/** 数据权限范围 */
+	/** Data permission range */
 	data_range: number | null;
-	/** 自定义部门 */
+	/** Custom Department */
 	dept: number[];
 }
 
 /**
- * 菜单-列字段数据类型
+ * menu-Column field data type
  */
 export interface RoleMenuFieldType {
 	id: string | number | boolean;
-	/** 模型表字段名 */
+	/** Model table field name */
 	field_name: string;
-	/** 字段显示名	*/
+	/** Field display name	*/
 	title: string;
-	/** 是否可查询 */
+	/** Is it possible to query */
 	is_query: boolean;
-	/** 是否可创建 */
+	/** Is it possible to create */
 	is_create: boolean;
-	/** 是否可更新 */
+	/** Is it updating possible */
 	is_update: boolean;
 	[key: string]: string | number | boolean;
 }
 /**
- * 菜单-列字段-标题数据类型
+ * menu-Column fields-Title data type
  */
 export interface RoleMenuFieldHeaderType {
 	value: string;
-	/** 模型表字段名 */
+	/** Model table field name */
 	label: string;
-	/** 字段显示名	*/
+	/** Field display name	*/
 	disabled: string;
-	/** 是否可查询 */
+	/** Is it possible to query */
 	checked: boolean;
 }

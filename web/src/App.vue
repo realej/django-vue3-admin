@@ -21,13 +21,13 @@ import { Local, Session } from '/@/utils/storage';
 import mittBus from '/@/utils/mitt';
 import setIntroduction from '/@/utils/setIconfont';
 
-// 引入组件
+// Introducing components
 const LockScreen = defineAsyncComponent(() => import('/@/layout/lockScreen/index.vue'));
 const Setings = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/setings.vue'));
 const CloseFull = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/closeFull.vue'));
 const Upgrade = defineAsyncComponent(() => import('/@/layout/upgrade/index.vue'));
 
-// 定义变量内容
+// Define variable content
 const { messages, locale } = useI18n();
 const setingsRef = ref();
 const route = useRoute();
@@ -36,7 +36,7 @@ const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 import websocket from '/@/utils/websocket';
 import { ElNotification } from 'element-plus';
-// 获取版本号
+// Get the version number
 const getVersion = computed(() => {
 	let isVersion = false;
 	if (route.path !== '/login') {
@@ -45,55 +45,55 @@ const getVersion = computed(() => {
 	}
 	return isVersion;
 });
-// 获取全局组件大小
+// Get global component size
 const getGlobalComponentSize = computed(() => {
 	return other.globalComponentSize();
 });
-// 获取全局 i18n
+// Get the global i18n
 const getGlobalI18n = computed(() => {
 	return messages.value[locale.value];
 });
-// 设置初始化，防止刷新时恢复默认
+// Set initialization，Prevent the default recovery during refresh
 onBeforeMount(() => {
-	// 设置批量第三方 icon 图标
+	// Set up batch third parties icon icon
 	setIntroduction.cssCdn();
-	// 设置批量第三方 js
+	// Set up batch third parties js
 	setIntroduction.jsCdn();
 });
-// 页面加载时
+// When the page loads
 onMounted(() => {
 	nextTick(() => {
-		// 监听布局配'置弹窗点击打开
+		// Monitor layout'Click to open the pop-up window
 		mittBus.on('openSetingsDrawer', () => {
 			setingsRef.value.openDrawer();
 		});
-		// 获取缓存中的布局配置
+		// Get the layout configuration in the cache
 		if (Local.get('themeConfig')) {
 			storesThemeConfig.setThemeConfig({ themeConfig: Local.get('themeConfig') });
 			document.documentElement.style.cssText = Local.get('themeConfigStyle');
 		}
-		// 获取缓存中的全屏配置
+		// Get full screen configuration in cache
 		if (Session.get('isTagsViewCurrenFull')) {
 			stores.setCurrenFullscreen(Session.get('isTagsViewCurrenFull'));
 		}
 	});
 });
-// 页面销毁时，关闭监听布局配置/i18n监听
+// When the page is destroyed，Turn off the monitoring layout configuration/i18nmonitor
 onUnmounted(() => {
 	mittBus.off('openSetingsDrawer', () => {});
 });
-// 监听路由的变化，设置网站标题
+// Listen to changes in routes，Set the website title
 watch(
 	() => route.path,
 	() => {
 		other.useTitle();
     other.useFavicon();
     if (!websocket.websocket) {
-      //websockt 模块
+      //websockt Module
       try {
         websocket.init(wsReceive)
       } catch (e) {
-        console.log('websocket错误');
+        console.log('websocketmistake');
       }
     }
 	},
@@ -102,7 +102,7 @@ watch(
 	}
 );
 
-// websocket相关代码
+// websocketRelated Codes
 import { messageCenterStore } from '/@/stores/messageCenter';
 const wsReceive = (message: any) => {
 	const data = JSON.parse(message.data);
@@ -111,7 +111,7 @@ const wsReceive = (message: any) => {
 	messageCenter.setUnread(unread);
 	if (data.contentType === 'SYSTEM') {
 		ElNotification({
-			title: '系统消息',
+			title: 'System Message',
 			message: data.content,
 			type: 'success',
 			position: 'bottom-right',
@@ -120,7 +120,7 @@ const wsReceive = (message: any) => {
 	}
 };
 onBeforeUnmount(() => {
-	// 关闭连接
+	// Close the connection
 	websocket.close();
 });
 </script>

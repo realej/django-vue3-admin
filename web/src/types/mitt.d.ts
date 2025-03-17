@@ -1,16 +1,16 @@
 /**
- * mitt 事件类型定义
+ * mitt Event type definition
  *
- * @method openSetingsDrawer 打开布局设置弹窗
- * @method restoreDefault 分栏布局，鼠标移入、移出数据显示
- * @method setSendColumnsChildren 分栏布局，鼠标移入、移出菜单数据传入到 navMenu 下的菜单中
- * @method setSendClassicChildren 经典布局，开启切割菜单时，菜单数据传入到 navMenu 下的菜单中
- * @method getBreadcrumbIndexSetFilterRoutes 布局设置弹窗，开启切割菜单时，菜单数据传入到 navMenu 下的菜单中
- * @method layoutMobileResize 浏览器窗口改变时，用于适配移动端界面显示
- * @method openOrCloseSortable 布局设置弹窗，开启 TagsView 拖拽
- * @method openShareTagsView 布局设置弹窗，开启 TagsView 共用
- * @method onTagsViewRefreshRouterView tagsview 刷新界面
- * @method onCurrentContextmenuClick tagsview 右键菜单每项点击时
+ * @method openSetingsDrawer Open the layout settings pop-up window
+ * @method restoreDefault Column layout，Move in、Move out data display
+ * @method setSendColumnsChildren Column layout，Move in、Move out menu data into navMenu In the menu below
+ * @method setSendClassicChildren Classic layout，Error 500 (Server Error)!!1500.That’s an error.There was an error. Please try again later.That’s all we know.，Menu data is passed to navMenu In the menu below
+ * @method getBreadcrumbIndexSetFilterRoutes Error 500 (Server Error)!!1500.That’s an error.There was an error. Please try again later.That’s all we know.，When the cutting menu is turned on，Menu data is passed to navMenu In the menu below
+ * @method layoutMobileResize When the browser window changes，Used to adapt to mobile interface display
+ * @method openOrCloseSortable Layout settings pop-up window，Open TagsView Drag and drag
+ * @method openShareTagsView Layout settings pop-up window，Open TagsView Shared
+ * @method onTagsViewRefreshRouterView tagsview Refresh the interface
+ * @method onCurrentContextmenuClick tagsview Whenever the right-click menu is clicked
  */
 declare type MittType<T = any> = {
 	openSetingsDrawer?: string;
@@ -25,13 +25,13 @@ declare type MittType<T = any> = {
 	onCurrentContextmenuClick?: T;
 };
 
-// mitt 参数类型定义
+// mitt Parameter type definition
 declare type LayoutMobileResize = {
 	layout: string;
 	clientWidth: number;
 };
 
-// mitt 参数菜单类型
+// mitt Parameter menu type
 declare type MittMenu = {
 	children: RouteRecordRaw[];
 	item?: RouteItem;

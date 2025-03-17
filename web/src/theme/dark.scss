@@ -1,7 +1,7 @@
-/* 深色模式样式
+/* Dark mode style
 ------------------------------- */
 [data-theme='dark'] {
-	// 变量(自定义时，只需修改这里的值)
+	// variable(When customizing，Just modify the value here)
 	--next-bg-main: #1f1f1f;
 	--next-color-white: #ffffff;
 	--next-color-disabled: #191919;
@@ -169,7 +169,7 @@
 	.el-pagination.is-background .el-pager li {
 		background-color: var(--next-bg-color);
 	}
-	/*深色模式时分页高亮问题*/
+	/*Issues for highlighting pages in dark mode*/
 	.el-pagination.is-background .btn-next.is-active,
 	.el-pagination.is-background .btn-prev.is-active,
 	.el-pagination.is-background .el-pager li.is-active {

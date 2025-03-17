@@ -1,13 +1,13 @@
 @import './index.scss';
 
-/* 页面宽度小于576px
+/* Page width is less than576px
 ------------------------------- */
 @media screen and (max-width: $xs) {
 	.el-pager,
 	.el-pagination__jump {
 		display: none !important;
 	}
-	// 默认居中对齐
+	// Centered by default
 	.el-pagination,
 	.table-footer {
 		justify-content: center !important;

@@ -30,10 +30,10 @@ class CaptchaView(APIView):
     permission_classes = []
 
     @swagger_auto_schema(
-        responses={"200": openapi.Response("获取成功")},
+        responses={"200": openapi.Response("Get successful")},
         security=[],
         operation_id="captcha-get",
-        operation_description="验证码获取",
+        operation_description="Verification code acquisition",
     )
     def get(self, request):
         data = {}
@@ -41,7 +41,7 @@ class CaptchaView(APIView):
             hashkey = CaptchaStore.generate_key()
             id = CaptchaStore.objects.filter(hashkey=hashkey).first().id
             imgage = captcha_image(request, hashkey)
-            # 将图片转换为base64
+            # Convert the image tobase64
             image_base = base64.b64encode(imgage.content)
             data = {
                 "key": id,
@@ -52,8 +52,8 @@ class CaptchaView(APIView):
 
 class LoginSerializer(TokenObtainPairSerializer):
     """
-    登录的序列化器:
-    重写djangorestframework-simplejwt的序列化器
+    Login serializer:
+    Rewritedjangorestframework-simplejwtSerializer
     """
     captcha = serializers.CharField(
         max_length=6, required=False, allow_null=True, allow_blank=True
@@ -64,20 +64,20 @@ class LoginSerializer(TokenObtainPairSerializer):
         fields = "__all__"
         read_only_fields = ["id"]
 
-    default_error_messages = {"no_active_account": _("账号/密码错误")}
+    default_error_messages = {"no_active_account": _("account/Error password")}
 
     def validate(self, attrs):
         captcha = self.initial_data.get("captcha", None)
         if dispatch.get_system_config_values("base.captcha_state"):
             if captcha is None:
-                raise CustomValidationError("验证码不能为空")
+                raise CustomValidationError("The verification code cannot be empty")
             self.image_code = CaptchaStore.objects.filter(
                 id=self.initial_data["captchaKey"]
             ).first()
             five_minute_ago = datetime.now() - timedelta(hours=0, minutes=5, seconds=0)
             if self.image_code and five_minute_ago > self.image_code.expiration:
                 self.image_code and self.image_code.delete()
-                raise CustomValidationError("验证码过期")
+                raise CustomValidationError("Verification code expires")
             else:
                 if self.image_code and (
                     self.image_code.response == captcha
@@ -86,18 +86,18 @@ class LoginSerializer(TokenObtainPairSerializer):
                     self.image_code and self.image_code.delete()
                 else:
                     self.image_code and self.image_code.delete()
-                    raise CustomValidationError("图片验证码错误")
+                    raise CustomValidationError("Image verification code error")
         try:
             user = Users.objects.get(
                 Q(username=attrs['username']) | Q(email=attrs['username']) | Q(mobile=attrs['username']))
         except Users.DoesNotExist:
-            raise CustomValidationError("您登录的账号不存在")
+            raise CustomValidationError("The account you are logged in does not exist")
         except Users.MultipleObjectsReturned:
-            raise CustomValidationError("您登录的账号存在多个,请联系管理员检查登录账号唯一性")
+            raise CustomValidationError("There are multiple accounts you logged in,Please contact the administrator to check the uniqueness of the login account")
         if not user.is_active:
-            raise CustomValidationError("账号已被锁定,联系管理员解锁")
+            raise CustomValidationError("Account has been locked,Contact the administrator to unlock")
         try:
-            # 必须重置用户名为username,否则使用邮箱手机号登录会提示密码错误
+            # The username must be reset tousername,Otherwise, if you use your email address to log in, you will prompt an error in your password.
             attrs['username'] = user.username
             data = super().validate(attrs)
             data["username"] = self.user.username
@@ -117,53 +117,53 @@ class LoginSerializer(TokenObtainPairSerializer):
                 data['role_info'] = role.values('id', 'name', 'key')
             request = self.context.get("request")
             request.user = self.user
-            # 记录登录日志
+            # Log in log
             save_login_log(request=request)
             user.login_error_count = 0
             user.save()
-            return {"code": 2000, "msg": "请求成功", "data": data}
+            return {"code": 2000, "msg": "Request succeeded", "data": data}
         except Exception as e:
             user.login_error_count += 1
             if user.login_error_count >= 5:
                 user.is_active = False
                 user.save()
-                raise CustomValidationError("账号已被锁定,联系管理员解锁")
+                raise CustomValidationError("Account has been locked,Contact the administrator to unlock")
             user.save()
             count = 5 - user.login_error_count
-            raise CustomValidationError(f"账号/密码错误;重试{count}次后将被锁定~")
+            raise CustomValidationError(f"account/Error password;Try again{count}Will be locked after the time~")
 
 
 class LoginView(TokenObtainPairView):
     """
-    登录接口
+    Login interface
     """
     serializer_class = LoginSerializer
     permission_classes = []
 
     # def post(self, request, *args, **kwargs):
-    #     # username可能携带的不止是用户名，可能还是用户的其它唯一标识 手机号 邮箱
+    #     # usernameIt is possible that it is not just the username，It may be another unique identifier for the user Phone number Mail
     #     username = request.data.get('username',None)
     #     if username is None:
-    #         return ErrorResponse(msg="参数错误")
+    #         return ErrorResponse(msg="Error parameters")
     #     password = request.data.get('password',None)
     #     if password is None:
-    #         return ErrorResponse(msg="参数错误")
+    #         return ErrorResponse(msg="Error parameters")
     #     captcha = request.data.get('captcha',None)
     #     if captcha is None:
-    #         return ErrorResponse(msg="参数错误")
+    #         return ErrorResponse(msg="Error parameters")
     #     captchaKey = request.data.get('captchaKey',None)
     #     if captchaKey is None:
-    #         return ErrorResponse(msg="参数错误")
+    #         return ErrorResponse(msg="Error parameters")
     #     if dispatch.get_system_config_values("base.captcha_state"):
     #         if captcha is None:
-    #             raise CustomValidationError("验证码不能为空")
+    #             raise CustomValidationError("The verification code cannot be empty")
     #         self.image_code = CaptchaStore.objects.filter(
     #             id=captchaKey
     #         ).first()
     #         five_minute_ago = datetime.now() - timedelta(hours=0, minutes=5, seconds=0)
     #         if self.image_code and five_minute_ago > self.image_code.expiration:
     #             self.image_code and self.image_code.delete()
-    #             raise CustomValidationError("验证码过期")
+    #             raise CustomValidationError("Verification code expires")
     #         else:
     #             if self.image_code and (
     #                     self.image_code.response == captcha
@@ -172,16 +172,16 @@ class LoginView(TokenObtainPairView):
     #                 self.image_code and self.image_code.delete()
     #             else:
     #                 self.image_code and self.image_code.delete()
-    #                 raise CustomValidationError("图片验证码错误")
+    #                 raise CustomValidationError("Image verification code error")
     #     try:
-    #         # 手动通过 user 签发 jwt-token
+    #         # Manually pass user Issued jwt-token
     #         user = Users.objects.get(username=username)
     #     except:
-    #         return DetailResponse(msg='该账号未注册')
-    #     # 获得用户后，校验密码并签发token
+    #         return DetailResponse(msg='This account is not registered')
+    #     # After acquiring the user，Verify password and issuetoken
     #     print(make_password(password),user.password)
     #     if check_password(make_password(password),user.password):
-    #         return DetailResponse(msg='密码错误')
+    #         return DetailResponse(msg='Error password')
     #     result = {
     #        "name":user.name,
     #         "userId":user.id,
@@ -200,15 +200,15 @@ class LoginView(TokenObtainPairView):
     #     refresh = LoginSerializer.get_token(user)
     #     result["refresh"] = str(refresh)
     #     result["access"] = str(refresh.access_token)
-    #     # 记录登录日志
+    #     # Log in log
     #     request.user = user
     #     save_login_log(request=request)
-    #     return DetailResponse(data=result,msg="获取成功")
+    #     return DetailResponse(data=result,msg="Get successful")
 
 
 class LoginTokenSerializer(TokenObtainPairSerializer):
     """
-    登录的序列化器:
+    Login serializer:
     """
 
     class Meta:
@@ -216,20 +216,20 @@ class LoginTokenSerializer(TokenObtainPairSerializer):
         fields = "__all__"
         read_only_fields = ["id"]
 
-    default_error_messages = {"no_active_account": _("账号/密码不正确")}
+    default_error_messages = {"no_active_account": _("account/Incorrect password")}
 
     def validate(self, attrs):
         if not getattr(settings, "LOGIN_NO_CAPTCHA_AUTH", False):
-            return {"code": 4000, "msg": "该接口暂未开通!", "data": None}
+            return {"code": 4000, "msg": "This interface is not yet enabled!", "data": None}
         data = super().validate(attrs)
         data["name"] = self.user.name
         data["userId"] = self.user.id
-        return {"code": 2000, "msg": "请求成功", "data": data}
+        return {"code": 2000, "msg": "Request succeeded", "data": data}
 
 
 class LoginTokenView(TokenObtainPairView):
     """
-    登录获取token接口
+    Log in to gettokeninterface
     """
 
     serializer_class = LoginTokenSerializer
@@ -238,11 +238,11 @@ class LoginTokenView(TokenObtainPairView):
 
 class LogoutView(APIView):
     def post(self, request):
-        return DetailResponse(msg="注销成功")
+        return DetailResponse(msg="Logout successfully")
 
 
 class ApiLoginSerializer(CustomModelSerializer):
-    """接口文档登录-序列化器"""
+    """Interface document login-Serializer"""
 
     username = serializers.CharField()
     password = serializers.CharField()
@@ -253,7 +253,7 @@ class ApiLoginSerializer(CustomModelSerializer):
 
 
 class ApiLogin(APIView):
-    """接口文档的登录接口"""
+    """Login interface for interface document"""
 
     serializer_class = ApiLoginSerializer
     authentication_classes = []
@@ -271,4 +271,4 @@ class ApiLogin(APIView):
             login(request, user_obj)
             return redirect("/")
         else:
-            return ErrorResponse(msg="账号/密码错误")
+            return ErrorResponse(msg="account/Error password")

@@ -1,7 +1,7 @@
 [
     {
         "parent": null,
-        "title": "基础配置",
+        "title": "Basic configuration",
         "key": "base",
         "value": null,
         "sort": 0,
@@ -14,7 +14,7 @@
         "children": [
             {
                 "parent": 10,
-                "title": "网页标题",
+                "title": "Web page title",
                 "key": "web_title",
                 "value": "DVAdmin",
                 "sort": 1,
@@ -22,13 +22,13 @@
                 "data_options": null,
                 "form_item_type": 0,
                 "rule": [],
-                "placeholder": "请输入网站标题",
+                "placeholder": "Please enter the website title",
                 "setting": null,
                 "children": []
             },
         {
                 "parent": 10,
-                "title": "网站小图标",
+                "title": "Small website icon",
                 "key": "web_favicon",
                 "value": "",
                 "sort": 1,
@@ -36,13 +36,13 @@
                 "data_options": null,
                 "form_item_type": 0,
                 "rule": [],
-                "placeholder": "请输入网站小图标",
+                "placeholder": "Please enter the website icon",
                 "setting": null,
                 "children": []
             },
             {
                 "parent": 10,
-                "title": "开启验证码",
+                "title": "Turn on the verification code",
                 "key": "captcha_state",
                 "value": true,
                 "sort": 1,
@@ -51,17 +51,17 @@
                 "form_item_type": 9,
                 "rule": [
                     {
-                        "message": "必填项不能为空",
+                        "message": "Required fields cannot be empty",
                         "required": true
                     }
                 ],
-                "placeholder": "请选择",
+                "placeholder": "Please select",
                 "setting": null,
                 "children": []
             },
             {
                 "parent": 10,
-                "title": "创建用户默认密码",
+                "title": "Create a user's default password",
                 "key": "default_password",
                 "value": "admin123456",
                 "sort": 2,
@@ -70,11 +70,11 @@
                 "form_item_type": 0,
                 "rule": [
                     {
-                        "message": "必填项不能为空",
+                        "message": "Required fields cannot be empty",
                         "required": true
                     }
                 ],
-                "placeholder": "请输入默认密码",
+                "placeholder": "Please enter the default password",
                 "setting": null,
                 "children": []
             }
@@ -82,7 +82,7 @@
     },
     {
         "parent": null,
-        "title": "登录页配置",
+        "title": "Login page configuration",
         "key": "login",
         "value": null,
         "sort": 1,
@@ -95,7 +95,7 @@
         "children": [
             {
                 "parent": 1,
-                "title": "网站标题",
+                "title": "Website title",
                 "key": "site_title",
                 "value": "Dvadmin",
                 "sort": 1,
@@ -103,32 +103,32 @@
                 "data_options": null,
                 "form_item_type": 0,
                 "rule": [],
-                "placeholder": "请输入网站标题",
+                "placeholder": "Please enter the website title",
                 "setting": null,
                 "children": []
             },
             {
                 "parent": 1,
-                "title": "网站名称",
+                "title": "Website name",
                 "key": "site_name",
-                "value": "企业级后台管理系统",
+                "value": "Enterprise-level backend management system",
                 "sort": 1,
                 "status": true,
                 "data_options": null,
                 "form_item_type": 0,
                 "rule": [
                     {
-                        "message": "必填项不能为空",
+                        "message": "Required fields cannot be empty",
                         "required": true
                     }
                 ],
-                "placeholder": "请输入网站名称",
+                "placeholder": "Please enter the website name",
                 "setting": null,
                 "children": []
             },
             {
                 "parent": 1,
-                "title": "登录网站logo",
+                "title": "Log in to the websitelogo",
                 "key": "site_logo",
                 "value": null,
                 "sort": 2,
@@ -136,13 +136,13 @@
                 "data_options": null,
                 "form_item_type": 7,
                 "rule": [],
-                "placeholder": "请上传网站logo",
+                "placeholder": "Please upload the websitelogo",
                 "setting": null,
                 "children": []
             },
             {
                 "parent": 1,
-                "title": "登录页背景图",
+                "title": "Login page background image",
                 "key": "login_background",
                 "value": null,
                 "sort": 3,
@@ -150,51 +150,51 @@
                 "data_options": null,
                 "form_item_type": 7,
                 "rule": [],
-                "placeholder": "请上传登录背景页",
+                "placeholder": "Please upload the login background page",
                 "setting": null,
                 "children": []
             },
             {
                 "parent": 1,
-                "title": "版权信息",
+                "title": "Copyright information",
                 "key": "copyright",
-                "value": "2021-2024 django-vue-admin.com 版权所有",
+                "value": "2021-2024 django-vue-admin.com all rights reserved",
                 "sort": 4,
                 "status": true,
                 "data_options": null,
                 "form_item_type": 0,
                 "rule": [
                     {
-                        "message": "必填项不能为空",
+                        "message": "Required fields cannot be empty",
                         "required": true
                     }
                 ],
-                "placeholder": "请输入版权信息",
+                "placeholder": "Please enter copyright information",
                 "setting": null,
                 "children": []
             },
             {
                 "parent": 1,
-                "title": "备案信息",
+                "title": "Registration information",
                 "key": "keep_record",
-                "value": "晋ICP备18005113号-3",
+                "value": "JinICPPrepare18005113Number-3",
                 "sort": 5,
                 "status": true,
                 "data_options": null,
                 "form_item_type": 0,
                 "rule": [
                     {
-                        "message": "必填项不能为空",
+                        "message": "Required fields cannot be empty",
                         "required": true
                     }
                 ],
-                "placeholder": "请输入备案信息",
+                "placeholder": "Please enter the registration information",
                 "setting": null,
                 "children": []
             },
             {
                 "parent": 1,
-                "title": "帮助链接",
+                "title": "Help link",
                 "key": "help_url",
                 "value": "https://django-vue-admin.com",
                 "sort": 6,
@@ -202,13 +202,13 @@
                 "data_options": null,
                 "form_item_type": 0,
                 "rule": "",
-                "placeholder": "请输入帮助信息",
+                "placeholder": "Please enter help information",
                 "setting": null,
                 "children": []
             },
             {
                 "parent": 1,
-                "title": "隐私链接",
+                "title": "Privacy Links",
                 "key": "privacy_url",
                 "value": "/api/system/clause/privacy.html",
                 "sort": 7,
@@ -216,13 +216,13 @@
                 "data_options": null,
                 "form_item_type": 0,
                 "rule": [],
-                "placeholder": "请填写隐私链接",
+                "placeholder": "Please fill in the privacy link",
                 "setting": null,
                 "children": []
             },
             {
                 "parent": 1,
-                "title": "条款链接",
+                "title": "Terms Link",
                 "key": "clause_url",
                 "value": "/api/system/clause/terms_service.html",
                 "sort": 8,
@@ -230,7 +230,7 @@
                 "data_options": null,
                 "form_item_type": 0,
                 "rule": [],
-                "placeholder": "请输入条款链接",
+                "placeholder": "Please enter the terms link",
                 "setting": null,
                 "children": []
             }

@@ -1,9 +1,9 @@
 import { judementSameArr } from '/@/utils/arrayOperation';
 import {BtnPermissionStore} from "/@/stores/btnPermission";
 /**
- * 单个权限验证
- * @param value 权限值
- * @returns 有权限，返回 `true`，反之则反
+ * Single permission verification
+ * @param value Permission value
+ * @returns Have permissions，return `true`，Otherwise, it is reversed
  */
 export function auth(value: string): boolean {
 	const stores = BtnPermissionStore();
@@ -11,9 +11,9 @@ export function auth(value: string): boolean {
 }
 
 /**
- * 多个权限验证，满足一个则为 true
- * @param value 权限值
- * @returns 有权限，返回 `true`，反之则反
+ * Multiple permission verification，Satisfies one is true
+ * @param value Permission value
+ * @returns Have permissions，return `true`，Otherwise, it is reversed
  */
 export function auths(value: Array<string>): boolean {
 	let flag = false;
@@ -27,9 +27,9 @@ export function auths(value: Array<string>): boolean {
 }
 
 /**
- * 多个权限验证，全部满足则为 true
- * @param value 权限值
- * @returns 有权限，返回 `true`，反之则反
+ * Multiple permission verification，All satisfied are true
+ * @param value Permission value
+ * @returns Have permissions，return `true`，Otherwise, it is reversed
  */
 export function authAll(value: Array<string>): boolean {
 	const stores = BtnPermissionStore();

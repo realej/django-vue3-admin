@@ -13,13 +13,13 @@ import { handleColumnPermission } from '/@/utils/columnPermission';
 
 const { crudBinding, crudRef, crudExpose, crudOptions, resetCrudOptions } = useFs({ createCrudOptions });
 
-// 页面打开后获取列表数据
+// Get list data after the page is opened
 onMounted(async () => {
-	// 设置列权限
+	// Set column permissions
 	const newOptions = await handleColumnPermission(GetPermission, crudOptions);
-	//重置crudBinding
+	//ResetcrudBinding
 	resetCrudOptions(newOptions);
-	// 刷新
+	// refresh
 	crudExpose.doRefresh();
 });
 </script>

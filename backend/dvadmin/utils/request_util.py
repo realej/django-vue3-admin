@@ -1,5 +1,5 @@
 """
-Request工具类
+RequestTools
 """
 import json
 
@@ -16,8 +16,8 @@ from dvadmin.system.models import LoginLog
 
 def get_request_user(request):
     """
-    获取请求user
-    (1)如果request里的user没有认证,那么则手动认证一次
+    Get requestuser
+    (1)ifrequestInsideuserNo certification,Then manually authenticate
     :param request:
     :return:
     """
@@ -33,7 +33,7 @@ def get_request_user(request):
 
 def get_request_ip(request):
     """
-    获取请求IP
+    Get requestIP
     :param request:
     :return:
     """
@@ -47,7 +47,7 @@ def get_request_ip(request):
 
 def get_request_data(request):
     """
-    获取请求参数
+    Get request parameters
     :param request:
     :return:
     """
@@ -69,7 +69,7 @@ def get_request_data(request):
 
 def get_request_path(request, *args, **kwargs):
     """
-    获取请求路径
+    Get the request path
     :param request:
     :param args:
     :param kwargs:
@@ -98,7 +98,7 @@ def get_request_path(request, *args, **kwargs):
 
 def get_request_canonical_path(request, ):
     """
-    获取请求路径
+    Get the request path
     :param request:
     :param args:
     :param kwargs:
@@ -122,7 +122,7 @@ def get_request_canonical_path(request, ):
 
 def get_browser(request, ):
     """
-    获取浏览器名
+    Get the browser name
     :param request:
     :param args:
     :param kwargs:
@@ -135,7 +135,7 @@ def get_browser(request, ):
 
 def get_os(request, ):
     """
-    获取操作系统
+    Get the operating system
     :param request:
     :param args:
     :param kwargs:
@@ -148,7 +148,7 @@ def get_os(request, ):
 
 def get_verbose_name(queryset=None, view=None, model=None):
     """
-    获取 verbose_name
+    Get verbose_name
     :param request:
     :param view:
     :return:
@@ -171,8 +171,8 @@ def get_verbose_name(queryset=None, view=None, model=None):
 
 def get_ip_analysis(ip):
     """
-    获取ip详细概略
-    :param ip: ip地址
+    GetipDetailed overview
+    :param ip: ipaddress
     :return:
     """
     data = {
@@ -204,7 +204,7 @@ def get_ip_analysis(ip):
 
 def save_login_log(request):
     """
-    保存登录日志
+    Save login log
     :return:
     """
     ip = get_request_ip(request=request)

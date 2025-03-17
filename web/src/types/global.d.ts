@@ -1,4 +1,4 @@
-// 申明外部 npm 插件模块
+// Declare external npm Plug-in module
 declare module 'vue-grid-layout';
 declare module 'qrcodejs2-fixes';
 declare module 'splitpanes';
@@ -7,7 +7,7 @@ declare module '@wangeditor/editor-for-vue';
 declare module 'js-table2excel';
 declare module 'qs';
 
-// 声明一个模块，防止引入文件时报错
+// Declare a module，Prevent errors from being reported when introducing files
 declare module '*.json';
 declare module '*.png';
 declare module '*.jpg';
@@ -15,20 +15,20 @@ declare module '*.scss';
 declare module '*.ts';
 declare module '*.js';
 
-// 声明文件，*.vue 后缀的文件交给 vue 模块来处理
+// Declaration file，*.vue Suffix file to vue Module to handle
 declare module '*.vue' {
 	import type { DefineComponent } from 'vue';
 	const component: DefineComponent<{}, {}, any>;
 	export default component;
 }
 
-// 声明文件，定义全局变量
+// Declaration file，Define global variables
 /* eslint-disable */
 declare interface Window {
 	nextLoading: boolean;
 }
 
-// 声明路由当前项类型
+// Declare the current item type of route
 declare type RouteItem<T = any> = {
 	path: string;
 	name?: string | symbol | undefined | null;
@@ -60,46 +60,46 @@ declare type RouteItem<T = any> = {
 	id?: string | number;
 };
 
-// 声明路由 to from
+// Declare the route to from
 declare interface RouteToFrom<T = any> extends RouteItem {
 	path?: string;
 	children?: T[];
 }
 
-// 声明路由当前项类型集合
+// Declare the routing of the current item type collection
 declare type RouteItems<T extends RouteItem = any> = T[];
 
-// 声明 ref
+// statement ref
 declare type RefType<T = any> = T | null;
 
-// 声明 HTMLElement
+// statement HTMLElement
 declare type HtmlType = HTMLElement | string | undefined | null;
 
-// 申明 children 可选
+// Statement children Optional
 declare type ChilType<T = any> = {
 	children?: T[];
 };
 
-// 申明 数组
+// Statement Array
 declare type EmptyArrayType<T = any> = T[];
 
-// 申明 对象
+// Statement Object
 declare type EmptyObjectType<T = any> = {
 	[key: string]: T;
 };
 
-// 申明 select option
+// Statement select option
 declare type SelectOptionType = {
 	value: string | number;
 	label: string | number;
 };
 
-// 鼠标滚轮滚动类型
+// Mouse wheel scroll type
 declare interface WheelEventType extends WheelEvent {
 	wheelDelta: number;
 }
 
-// table 数据格式公共类型
+// table Data format public type
 declare interface TableType<T = any> {
 	total: number;
 	loading: boolean;

@@ -1,6 +1,6 @@
 <template>
 	<el-form ref="formRef" :rules="rules" :model="deptFormData" label-width="100px" label-position="right" class="dept-form-com">
-		<el-form-item label="父级部门" prop="parent">
+		<el-form-item label="Parent department" prop="parent">
 			<el-tree-select
 				v-model="deptFormData.parent"
 				:props="defaultTreeProps"
@@ -12,23 +12,23 @@
 				style="width: 100%"
 			/>
 		</el-form-item>
-		<el-form-item required label="部门名称" prop="name">
+		<el-form-item required label="Department name" prop="name">
 			<el-input v-model="deptFormData.name" />
 		</el-form-item>
-		<el-form-item required label="部门标识" prop="key">
+		<el-form-item required label="Department logo" prop="key">
 			<el-input v-model="deptFormData.key" />
 		</el-form-item>
-		<el-form-item label="负责人">
-			<el-input v-model="deptFormData.owner" placeholder="请输入" />
+		<el-form-item label="Person in charge">
+			<el-input v-model="deptFormData.owner" placeholder="Please enter" />
 		</el-form-item>
-		<el-form-item label="备注">
+		<el-form-item label="Remark">
 			<el-input v-model="deptFormData.description" maxlength="200" show-word-limit type="textarea" />
 		</el-form-item>
 		<el-form-item>
 			<el-button @click="handleUpdateMenu" type="primary" :loading="deptBtnLoading">
-				{{ deptFormData.id ? '保存' : '新增' }}
+				{{ deptFormData.id ? 'keep' : 'New' }}
 			</el-button>
-			<el-button @click="handleClose">取消 </el-button>
+			<el-button @click="handleClose">Cancel </el-button>
 		</el-form-item>
 	</el-form>
 </template>
@@ -62,8 +62,8 @@ const defaultTreeProps: any = {
 
 const formRef = ref<InstanceType<typeof ElForm>>();
 const rules = reactive<FormRules>({
-	name: [{ required: true, message: '部门名称必填', trigger: 'blur' }],
-	key: [{ required: true, message: '部门标识必填', trigger: 'blur' }],
+	name: [{ required: true, message: 'Department name required', trigger: 'blur' }],
+	key: [{ required: true, message: 'Department logo required', trigger: 'blur' }],
 });
 
 const props = withDefaults(defineProps<IProps>(), {

@@ -11,7 +11,7 @@ import {createCrudOptions} from './crud';
 
 const {crudBinding, crudRef, crudExpose} = useFs({createCrudOptions});
 
-// 页面打开后获取列表数据
+// Get list data after the page is opened
 onMounted(() => {
     crudExpose.doRefresh();
 });

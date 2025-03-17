@@ -6,7 +6,7 @@ import { successNotification } from '/@/utils/message';
 import { ElMessage } from 'element-plus';
 import { nextTick, ref } from 'vue';
 import XEUtils from 'xe-utils';
-//此处为crudOptions配置
+//Here iscrudOptionsConfiguration
 export const createCrudOptions = function ({crudExpose, context}: CreateCrudOptionsProps): CreateCrudOptionsRet {
     const pageRequest = async () => {
         if (context!.selectOptions.value.id) {
@@ -24,26 +24,26 @@ export const createCrudOptions = function ({crudExpose, context}: CreateCrudOpti
     const addRequest = async ({form}: AddReq) => {
         return await api.AddObj({...form, ...{menu: context!.selectOptions.value.id}});
     };
-    // 记录选中的行
+    // Record the selected row
 	const selectedRows = ref<any>([]);
 
 	const onSelectionChange = (changed: any) => {
 		const tableData = crudExpose.getTableData();
 		const unChanged = tableData.filter((row: any) => !changed.includes(row));
-		// 添加已选择的行
+		// Add selected rows
 		XEUtils.arrayEach(changed, (item: any) => {
 			const ids = XEUtils.pluck(selectedRows.value, 'id');
 			if (!ids.includes(item.id)) {
 				selectedRows.value = XEUtils.union(selectedRows.value, [item]);
 			}
 		});
-		// 剔除未选择的行
+		// Exclude unselected rows
 		XEUtils.arrayEach(unChanged, (unItem: any) => {
 			selectedRows.value = XEUtils.remove(selectedRows.value, (item: any) => item.id !== unItem.id);
 		});
 	};
 	const toggleRowSelection = () => {
-		// 多选后，回显默认勾选
+		// After multiple choices，Echo the default check
 		const tableRef = crudExpose.getBaseTableRef();
 		const tableData = crudExpose.getTableData();
 		const selected = XEUtils.filter(tableData, (item: any) => {
@@ -67,7 +67,7 @@ export const createCrudOptions = function ({crudExpose, context}: CreateCrudOpti
             search: {
                 container: {
                     action: {
-                        //按钮栏配置
+                        //Button bar configuration
                         col: {
                             span: 8,
                         },
@@ -82,10 +82,10 @@ export const createCrudOptions = function ({crudExpose, context}: CreateCrudOpti
                     batchAdd: {
 						show: true,
 						type: 'primary',
-						text: '批量生成',
+						text: 'Bulk generation',
 						click: async () => {
 							if (context!.selectOptions.value.id == undefined) {
-								ElMessage.error('请选择菜单');
+								ElMessage.error('Please select menu');
 								return;
 							}
 							const result = await api.BatchAdd({ menu: context!.selectOptions.value.id });
@@ -98,7 +98,7 @@ export const createCrudOptions = function ({crudExpose, context}: CreateCrudOpti
                 },
             },
             rowHandle: {
-                //固定右侧
+                //Fix the right side
                 fixed: 'right',
                 width: 200,
                 buttons: {
@@ -122,7 +122,7 @@ export const createCrudOptions = function ({crudExpose, context}: CreateCrudOpti
                 delRequest,
             },
             table: {
-				rowKey: 'id', //设置你的主键id， 默认rowKey=id
+				rowKey: 'id', //Set your primary keyid， defaultrowKey=id
 				onSelectionChange,
 				onRefreshed: () => toggleRowSelection(),
 			},
@@ -136,34 +136,34 @@ export const createCrudOptions = function ({crudExpose, context}: CreateCrudOpti
             },
             columns: {
                 $checked: {
-					title: '选择',
+					title: 'choose',
 					form: { show: false },
 					column: {
 						type: 'selection',
 						align: 'center',
 						width: '70px',
-						columnSetDisabled: true, //禁止在列设置中选择
+						columnSetDisabled: true, //Disable selection in column settings
 					},
 				},
                 _index: {
-                    title: '序号',
+                    title: 'Serial number',
                     form: {show: false},
                     column: {
                         type: 'index',
                         align: 'center',
                         width: '70px',
-                        columnSetDisabled: true, //禁止在列设置中选择
+                        columnSetDisabled: true, //Disable selection in column settings
                     },
                 },
                 search: {
-                    title: '关键词',
+                    title: 'Keywords',
                     column: {show: false},
                     type: 'text',
                     search: {show: true},
                     form: {
                         show: false,
                         component: {
-                            placeholder: '输入关键词搜索',
+                            placeholder: 'Enter keyword search',
                         },
                     },
                 },
@@ -175,7 +175,7 @@ export const createCrudOptions = function ({crudExpose, context}: CreateCrudOpti
                     form: {show: false},
                 },
                 name: {
-                    title: '权限名称',
+                    title: 'Permission Name',
                     type: 'text',
                     search: {show: true},
                     column: {
@@ -183,9 +183,9 @@ export const createCrudOptions = function ({crudExpose, context}: CreateCrudOpti
                         sortable: true,
                     },
                     form: {
-                        rules: [{required: true, message: '权限名称必填'}],
+                        rules: [{required: true, message: 'Permission name required'}],
                         component: {
-                            placeholder: '输入权限名称搜索',
+                            placeholder: 'Enter permission name to search',
                             props: {
                                 clearable: true,
                                 allowCreate: true,
@@ -194,14 +194,14 @@ export const createCrudOptions = function ({crudExpose, context}: CreateCrudOpti
                         },
                         helper: {
                             render() {
-                                return <el-alert title="手动输入" type="warning"
-                                                 description="页面中按钮的名称或者自定义一个名称"/>;
+                                return <el-alert title="Manual input" type="warning"
+                                                 description="The name of the button in the page or a custom name"/>;
                             },
                         },
                     },
                 },
                 value: {
-                    title: '权限值',
+                    title: 'Permission value',
                     type: 'text',
                     search: {show: false},
                     column: {
@@ -209,18 +209,18 @@ export const createCrudOptions = function ({crudExpose, context}: CreateCrudOpti
                         sortable: true,
                     },
                     form: {
-                        rules: [{required: true, message: '权限标识必填'}],
-                        placeholder: '输入权限标识',
+                        rules: [{required: true, message: 'Permission ID required'}],
+                        placeholder: 'Enter permission ID',
                         helper: {
                             render() {
-                                return <el-alert title="唯一值" type="warning"
-                                                 description="用于判断前端按钮权限或接口权限"/>;
+                                return <el-alert title="Unique value" type="warning"
+                                                 description="Used to determine the front-end button permissions or interface permissions"/>;
                             },
                         },
                     },
                 },
                 method: {
-                    title: '请求方式',
+                    title: 'Request method',
                     search: {show: false},
                     type: 'dict-select',
                     column: {
@@ -236,11 +236,11 @@ export const createCrudOptions = function ({crudExpose, context}: CreateCrudOpti
                         ],
                     }),
                     form: {
-                        rules: [{required: true, message: '必填项'}],
+                        rules: [{required: true, message: 'Required'}],
                     },
                 },
                 api: {
-                    title: '接口地址',
+                    title: 'Interface address',
                     search: {show: false},
                     type: 'dict-select',
                     dict: dict({
@@ -263,7 +263,7 @@ export const createCrudOptions = function ({crudExpose, context}: CreateCrudOpti
                         sortable: true,
                     },
                     form: {
-                        rules: [{required: true, message: '必填项'}],
+                        rules: [{required: true, message: 'Required'}],
                         component: {
                             props: {
                                 allowCreate: true,
@@ -273,7 +273,7 @@ export const createCrudOptions = function ({crudExpose, context}: CreateCrudOpti
                         },
                         helper: {
                             render() {
-                                return <el-alert title="请正确填写，以免请求时被拦截。匹配单例使用正则,例如:/api/xx/.*?/"
+                                return <el-alert title="Please fill in correctly，To avoid being intercepted during request。Match singletons using regular,For example:/api/xx/.*?/"
                                                  type="warning"/>;
                             },
                         },

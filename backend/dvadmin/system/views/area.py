@@ -12,7 +12,7 @@ from dvadmin.utils.viewset import CustomModelViewSet
 
 class AreaSerializer(CustomModelSerializer):
     """
-    地区-序列化器
+    area-Serializer
     """
     pcode_count = serializers.SerializerMethodField(read_only=True)
     hasChild = serializers.SerializerMethodField()
@@ -39,7 +39,7 @@ class AreaSerializer(CustomModelSerializer):
 
 class AreaCreateUpdateSerializer(CustomModelSerializer):
     """
-    地区管理 创建/更新时的列化器
+    Regional Management create/The serializer at update time
     """
 
     def to_internal_value(self, data):
@@ -61,12 +61,12 @@ class AreaCreateUpdateSerializer(CustomModelSerializer):
 
 class AreaViewSet(CustomModelViewSet, FieldPermissionMixin):
     """
-    地区管理接口
-    list:查询
-    create:新增
-    update:修改
-    retrieve:单例
-    destroy:删除
+    Regional Management Interface
+    list:Query
+    create:New
+    update:Revise
+    retrieve:Single case
+    destroy:delete
     """
     queryset = Area.objects.all()
     serializer_class = AreaSerializer
@@ -78,7 +78,7 @@ class AreaViewSet(CustomModelViewSet, FieldPermissionMixin):
         self.request.query_params._mutable = True
         params = self.request.query_params
         known_params = {'page', 'limit', 'pcode'}
-        # 使用集合操作检查是否有未知参数
+        # Use collection operations to check if there are unknown parameters
         other_params_exist = any(param not in known_params for param in params)
         if other_params_exist:
             queryset = self.queryset.filter(enable=True)
@@ -94,4 +94,4 @@ class AreaViewSet(CustomModelViewSet, FieldPermissionMixin):
             serializer = self.get_serializer(page, many=True, request=request)
             return self.get_paginated_response(serializer.data)
         serializer = self.get_serializer(queryset, many=True, request=request)
-        return SuccessResponse(data=serializer.data, msg="获取成功")
+        return SuccessResponse(data=serializer.data, msg="Get successful")

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: 猿小天
+@author: Yuan Xiaotian
 @contact: QQ:1638245306
 @Created on: 2021/6/3 003 0:30
-@Remark: 菜单按钮管理
+@Remark: Menu Button Management
 """
 from rest_framework import serializers
 from rest_framework.decorators import action
@@ -19,7 +19,7 @@ from dvadmin.utils.viewset import CustomModelViewSet
 
 class RoleMenuButtonPermissionSerializer(CustomModelSerializer):
     """
-    角色-菜单-按钮-权限 查询序列化
+    Role-menu-Button-Permissions Query serialization
     """
 
     class Meta:
@@ -30,7 +30,7 @@ class RoleMenuButtonPermissionSerializer(CustomModelSerializer):
 
 class RoleMenuButtonPermissionCreateUpdateSerializer(CustomModelSerializer):
     """
-    角色-菜单-按钮-权限 创建/修改序列化
+    Role-menu-Button-Permissions create/Modify serialization
     """
     menu_button__name = serializers.CharField(source='menu_button.name', read_only=True)
     menu_button__value = serializers.CharField(source='menu_button.value', read_only=True)
@@ -43,7 +43,7 @@ class RoleMenuButtonPermissionCreateUpdateSerializer(CustomModelSerializer):
 
 class RoleMenuSerializer(CustomModelSerializer):
     """
-    角色-菜单 序列化
+    Role-menu Serialization
     """
     isCheck = serializers.SerializerMethodField()
 
@@ -62,7 +62,7 @@ class RoleMenuSerializer(CustomModelSerializer):
 
 class RoleMenuButtonSerializer(CustomModelSerializer):
     """
-    角色-菜单-按钮 序列化
+    Role-menu-Button Serialization
     """
     isCheck = serializers.SerializerMethodField()
     data_range = serializers.SerializerMethodField()
@@ -111,7 +111,7 @@ class RoleMenuButtonSerializer(CustomModelSerializer):
 
 class RoleMenuFieldSerializer(CustomModelSerializer):
     """
-    角色-菜单-字段 序列化
+    Role-menu-Fields Serialization
     """
     is_query = serializers.SerializerMethodField()
     is_create = serializers.SerializerMethodField()
@@ -145,12 +145,12 @@ class RoleMenuFieldSerializer(CustomModelSerializer):
 
 class RoleMenuButtonPermissionViewSet(CustomModelViewSet):
     """
-    菜单按钮接口
-    list:查询
-    create:新增
-    update:修改
-    retrieve:单例
-    destroy:删除
+    Menu Button Interface
+    list:Query
+    create:New
+    update:Revise
+    retrieve:Single case
+    destroy:delete
     """
     queryset = RoleMenuButtonPermission.objects.all()
     serializer_class = RoleMenuButtonPermissionSerializer
@@ -161,7 +161,7 @@ class RoleMenuButtonPermissionViewSet(CustomModelViewSet):
     @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
     def get_role_menu(self, request):
         """
-        获取 角色-菜单
+        Get Role-menu
         :param request:
         :return:
         """
@@ -172,7 +172,7 @@ class RoleMenuButtonPermissionViewSet(CustomModelViewSet):
     @action(methods=['PUT'], detail=False, permission_classes=[IsAuthenticated])
     def set_role_menu(self, request):
         """
-        设置 角色-菜单
+        set up Role-menu
         :param request:
         :return:
         """
@@ -181,19 +181,19 @@ class RoleMenuButtonPermissionViewSet(CustomModelViewSet):
         menuId = data.get('menuId')
         isCheck = data.get('isCheck')
         if isCheck:
-            # 添加权限：创建关联记录
+            # Add permissions：Create an association record
             instance = RoleMenuPermission.objects.create(role_id=roleId, menu_id=menuId)
         else:
-            # 删除权限：移除关联记录
+            # Delete permissions：Remove the associated record
             RoleMenuPermission.objects.filter(role_id=roleId, menu_id=menuId).delete()
         menu_instance = Menu.objects.get(id=menuId)
         serializer = RoleMenuSerializer(menu_instance, request=request)
-        return DetailResponse(data=serializer.data, msg="更新成功")
+        return DetailResponse(data=serializer.data, msg="Update successfully")
 
     @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
     def get_role_menu_btn_field(self, request):
         """
-        获取 角色-菜单-按钮-列字段
+        Get Role-menu-Button-Column fields
         :param request:
         :return:
         """
@@ -208,7 +208,7 @@ class RoleMenuButtonPermissionViewSet(CustomModelViewSet):
     @action(methods=['PUT'], detail=True, permission_classes=[IsAuthenticated])
     def set_role_menu_field(self, request, pk):
         """
-        设置 角色-菜单-列字段
+        set up Role-menu-Column fields
         """
         data = request.data
         for col in data:
@@ -220,31 +220,31 @@ class RoleMenuButtonPermissionViewSet(CustomModelViewSet):
                     'is_query': col.get('is_query'),
                 })
 
-        return DetailResponse(data=[], msg="更新成功")
+        return DetailResponse(data=[], msg="Update successfully")
 
     @action(methods=['PUT'], detail=False, permission_classes=[IsAuthenticated])
     def set_role_menu_btn(self, request):
         """
-        设置 角色-菜单-按钮
+        set up Role-menu-Button
         """
         data = request.data
         isCheck = data.get('isCheck', None)
         roleId = data.get('roleId', None)
         btnId = data.get('btnId', None)
         if isCheck:
-            # 添加权限：创建关联记录
+            # Add permissions：Create an association record
             RoleMenuButtonPermission.objects.create(role_id=roleId, menu_button_id=btnId)
         else:
-            # 删除权限：移除关联记录
+            # Delete permissions：Remove the associated record
             RoleMenuButtonPermission.objects.filter(role_id=roleId, menu_button_id=btnId).delete()
         menu_btn_instance = MenuButton.objects.get(id=btnId)
         serializer = RoleMenuButtonSerializer(menu_btn_instance, request=request)
-        return DetailResponse(data=serializer.data, msg="更新成功")
+        return DetailResponse(data=serializer.data, msg="Update successfully")
 
     @action(methods=['PUT'], detail=False, permission_classes=[IsAuthenticated])
     def set_role_menu_btn_data_range(self, request):
         """
-        设置 角色-菜单-按钮-权限
+        set up Role-menu-Button-Permissions
         """
         data = request.data
         instance = RoleMenuButtonPermission.objects.get(id=data.get('role_menu_btn_perm_id'))
@@ -254,22 +254,22 @@ class RoleMenuButtonPermissionViewSet(CustomModelViewSet):
             instance.dept.clear()
         instance.save()
         serializer = RoleMenuButtonPermissionSerializer(instance, request=request)
-        return DetailResponse(data=serializer.data, msg="更新成功")
+        return DetailResponse(data=serializer.data, msg="Update successfully")
 
     @action(methods=['get'], detail=False, permission_classes=[IsAuthenticated])
     def role_to_dept_all(self, request):
         """
-        当前用户角色下所能授权的部门:角色授权页面使用
+        The departments that can be authorized under the current user role:Use the role authorization page
         :param request:
         :return:
         """
         is_superuser = request.user.is_superuser
         params = request.query_params
-        # 当前登录用户的角色
+        # Role of the currently logged in user
         role_list = request.user.role.values_list('id', flat=True)
 
         menu_button_id = params.get('menu_button')
-        # 当前登录用户角色可以分配的自定义部门权限
+        # Custom department permissions that can be assigned to the current logged-in user role
         dept_checked_disabled = RoleMenuButtonPermission.objects.filter(
             role_id__in=role_list, menu_button_id=menu_button_id
         ).values_list('dept', flat=True)

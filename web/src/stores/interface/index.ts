@@ -1,10 +1,10 @@
 /**
- * 定义接口来定义对象的类型
- * `stores` 全部类型定义在这里
+ * Define an interface to define the type of an object
+ * `stores` All types are defined here
  */
 import {useFrontendMenuStore} from "/@/stores/frontendMenu";
 
-// 用户信息
+// User Information
 export interface UserInfosState {
 	avatar: string;
 	username: string;
@@ -24,31 +24,31 @@ export interface UserInfosStates {
 	isSocketOpen: boolean
 }
 
-// 路由缓存列表
+// Routing cache list
 export interface KeepAliveNamesState {
 	keepAliveNames: string[];
 	cachedViews: string[];
 }
 
-// 后端返回原始路由(未处理时)
+// Backend returns to the original route(When unprocessed)
 export interface RequestOldRoutesState {
 	requestOldRoutes: string[];
 }
 
-// TagsView 路由列表
+// TagsView Routing list
 export interface TagsViewRoutesState {
 	tagsViewRoutes: string[];
 	isTagsViewCurrenFull: Boolean;
 }
 
-// 路由列表
+// Routing list
 export interface RoutesListState {
 	routesList: string[];
 	isColumnsMenuHover: Boolean;
 	isColumnsNavHover: Boolean;
 }
 
-// 布局配置
+// Layout configuration
 export interface ThemeConfigState {
 	isDrawer: boolean;
 	primary: string;

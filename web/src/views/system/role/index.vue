@@ -16,20 +16,20 @@ import { RoleUsersStores } from './stores/RoleUsersStores';
 
 const PermissionDrawerCom = defineAsyncComponent(() => import('./components/RoleDrawer.vue'));
 
-const RoleDrawer = RoleDrawerStores(); // 角色-抽屉
-const RoleMenuBtn = RoleMenuBtnStores(); // 角色-菜单
-const RoleMenuField = RoleMenuFieldStores();// 角色-菜单-字段
-const RoleUsers = RoleUsersStores();// 角色-用户
+const RoleDrawer = RoleDrawerStores(); // Role-drawer
+const RoleMenuBtn = RoleMenuBtnStores(); // Role-menu
+const RoleMenuField = RoleMenuFieldStores();// Role-menu-Fields
+const RoleUsers = RoleUsersStores();// Role-user
 const { crudBinding, crudRef, crudExpose } = useFs({
 	createCrudOptions,
 	context: { RoleDrawer, RoleMenuBtn, RoleMenuField },
 });
 
-// 页面打开后获取列表数据
+// Get list data after the page is opened
 onMounted(async () => {
-	// 刷新
+	// refresh
 	crudExpose.doRefresh();
-	// 获取全部用户
+	// Get all users
 	RoleUsers.get_all_users();
 
 });

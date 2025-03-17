@@ -7,30 +7,30 @@ import {useUserInfo} from "/@/stores/userInfo";
 const websocket: socket = {
     websocket: null,
     connectURL: getWsBaseURL(),
-    // 开启标识
+    // Turn on the logo
     socket_open: false,
-    // 心跳timer
+    // Heartbeattimer
     hearbeat_timer: null,
-    // 心跳发送频率
+    // Heartbeat sending frequency
     hearbeat_interval: 2 * 1000,
-    // 是否自动重连
+    // Whether to reconnect automatically
     is_reonnect: true,
-    // 重连次数
+    // Number of reconnections
     reconnect_count: 3,
-    // 已发起重连次数
+    // Number of repetitions initiated
     reconnect_current: 1,
-    // 重连timer
+    // Reconnecttimer
     reconnect_timer: null,
-    // 重连频率
+    // Reconnect frequency
     reconnect_interval: 5 * 1000,
     init: (receiveMessage: Function | null) => {
         if (!('WebSocket' in window)) {
-            message.warning('浏览器不支持WebSocket')
+            message.warning('The browser does not support itWebSocket')
             return null
         }
         const token = Session.get('token')
         if(!token){
-            // message.warning('websocket认证失败')
+            // message.warning('websocketAuthentication failed')
             return null
         }
         const wsUrl = `${getWsBaseURL()}ws/${token}/`
@@ -43,10 +43,10 @@ const websocket: socket = {
         websocket.websocket.onclose = (e: any) => {
             websocket.socket_open = false
             useUserInfo().setWebSocketState(websocket.socket_open);
-            // 需要重新连接
+            // Need to reconnect
             if (websocket.is_reonnect) {
                 websocket.reconnect_timer = setTimeout(() => {
-                    // 超过重连次数
+                    // More than the reconnection
                     if (websocket.reconnect_current > websocket.reconnect_count) {
                         clearTimeout(websocket.reconnect_timer)
                         websocket.is_reonnect = false
@@ -54,21 +54,21 @@ const websocket: socket = {
                         useUserInfo().setWebSocketState(websocket.socket_open);
                         return
                     }
-                    // 记录重连次数
+                    // Record the number of reconnections
                     websocket.reconnect_current++
                     websocket.reconnect()
                 }, websocket.reconnect_interval)
             }
         }
-        // 连接成功
+        // Connection successfully
         websocket.websocket.onopen = function () {
             websocket.socket_open = true
             useUserInfo().setWebSocketState(websocket.socket_open);
             websocket.is_reonnect = true
-            // 开启心跳
+            // Turn on heartbeat
             websocket.heartbeat()
         }
-        // 连接发生错误
+        // An error occurred in connection
         websocket.websocket.onerror = function () { }
     },
     heartbeat: () => {
@@ -82,7 +82,7 @@ const websocket: socket = {
         }, websocket.hearbeat_interval)
     },
     send: (data:string, callback = null) => {
-        // 开启状态直接发送
+        // Direct sending on
         if (websocket.websocket.readyState === websocket.websocket.OPEN) {
             websocket.websocket.send(JSON.stringify(data))
             // @ts-ignore
@@ -91,7 +91,7 @@ const websocket: socket = {
             clearInterval(websocket.hearbeat_timer)
             // message({
             //     type: 'warning',
-            //     message: 'socket链接已断开',
+            //     message: 'socketThe link has been disconnected',
             //     duration: 1000,
             // })
             websocket.socket_open = false
@@ -106,7 +106,7 @@ const websocket: socket = {
         useUserInfo().setWebSocketState(websocket.socket_open);
     },
     /**
-     * 重新连接
+     * Reconnect
      */
     reconnect: () => {
         if (websocket.websocket && !websocket.is_reonnect) {

@@ -1,9 +1,9 @@
 @import './index.scss';
 
-/* 页面宽度小于768px
+/* Page width is less than768px
 ------------------------------- */
 @media screen and (max-width: $sm) {
-	// 滚动条的宽度
+	// The width of the scroll bar
 	::-webkit-scrollbar {
 		width: 3px !important;
 		height: 3px !important;
@@ -11,7 +11,7 @@
 	::-webkit-scrollbar-track-piece {
 		background-color: var(--next-bg-main-color);
 	}
-	// 滚动条的设置
+	// Scrollbar settings
 	::-webkit-scrollbar-thumb {
 		background-color: rgba(144, 147, 153, 0.3);
 		background-clip: padding-box;
@@ -31,10 +31,10 @@
 	}
 }
 
-/* 页面宽度大于768px
+/* Page width is greater than768px
 ------------------------------- */
 @media screen and (min-width: 769px) {
-	// 滚动条的宽度
+	// The width of the scroll bar
 	::-webkit-scrollbar {
 		width: 7px;
 		height: 7px;
@@ -42,7 +42,7 @@
 	::-webkit-scrollbar-track-piece {
 		background-color: var(--next-bg-main-color);
 	}
-	// 滚动条的设置
+	// Scrollbar settings
 	::-webkit-scrollbar-thumb {
 		background-color: rgba(144, 147, 153, 0.3);
 		background-clip: padding-box;

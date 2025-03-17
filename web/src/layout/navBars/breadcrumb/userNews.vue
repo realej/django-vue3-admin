@@ -23,22 +23,22 @@
 <script setup lang="ts" name="layoutBreadcrumbUserNews">
 import { reactive,onBeforeMount,ref,onMounted } from 'vue';
 
-// 定义变量内容
+// Define variable content
 const state = reactive({
 	newsList: [] as any,
 });
 
-// 全部已读点击
+// All read clicks
 const onAllReadClick = () => {
 	state.newsList = [];
 };
-// 前往通知中心点击
+// Go to the notification center to click
 import {useRouter } from "vue-router";
 const route = useRouter()
 const onGoToGiteeClick = () => {
   route.push('/messageCenter')
 };
-//获取最新消息
+//Get the latest news
 import { request } from "/@/utils/service";
 const getLastMsg= ()=>{
   request({

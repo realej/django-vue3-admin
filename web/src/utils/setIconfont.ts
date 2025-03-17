@@ -1,13 +1,13 @@
-// 字体图标 url
+// Font icon url
 const cssCdnUrlList: Array<string> = [
 	'//at.alicdn.com/t/font_2298093_y6u00apwst.css',
-	'//at.alicdn.com/t/c/font_3882322_9ah7y8m9175.css', //dvadmin3项目用icon
+	'//at.alicdn.com/t/c/font_3882322_9ah7y8m9175.css', //dvadmin3For projectsicon
 	//'//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
 ];
-// 第三方 js url
+// Third party js url
 const jsCdnUrlList: Array<string> = [];
 
-// 动态批量设置字体图标
+// Dynamic batch setting font icons
 export function setCssCdn() {
 	if (cssCdnUrlList.length <= 0) return false;
 	cssCdnUrlList.map((v) => {
@@ -19,7 +19,7 @@ export function setCssCdn() {
 	});
 }
 
-// 动态批量设置第三方js
+// Dynamic batch setting of third partiesjs
 export function setJsCdn() {
 	if (jsCdnUrlList.length <= 0) return false;
 	jsCdnUrlList.map((v) => {
@@ -30,20 +30,20 @@ export function setJsCdn() {
 }
 
 /**
- * 批量设置字体图标、动态js
- * @method cssCdn 动态批量设置字体图标
- * @method jsCdn 动态批量设置第三方js
+ * Set font icons in batches、dynamicjs
+ * @method cssCdn Dynamic batch setting font icons
+ * @method jsCdn Dynamic batch setting of third partiesjs
  */
 const setIntroduction = {
-	// 设置css
+	// set upcss
 	cssCdn: () => {
 		setCssCdn();
 	},
-	// 设置js
+	// set upjs
 	jsCdn: () => {
 		setJsCdn();
 	},
 };
 
-// 导出函数方法
+// Export function method
 export default setIntroduction;

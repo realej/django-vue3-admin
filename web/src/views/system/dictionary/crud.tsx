@@ -46,12 +46,12 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 						show: auth('dictionary:Delete'),
 					},
 					custom: {
-						text: '字典配置',
+						text: 'Dictionary configuration',
 						type: 'text',
 						show: auth('dictionary:Update'),
 						tooltip: {
 							placement: 'top',
-							content: '字典配置',
+							content: 'Dictionary configuration',
 						},
 						//@ts-ignore
 						click: (ctx: any) => {
@@ -67,15 +67,15 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 			},
 			columns: {
 				_index: {
-					title: '序号',
+					title: 'Serial number',
 					form: { show: false },
 					column: {
 						//type: 'index',
 						align: 'center',
 						width: '70px',
-						columnSetDisabled: true, //禁止在列设置中选择
+						columnSetDisabled: true, //Disable selection in column settings
 						formatter: (context) => {
-							//计算序号,你可以自定义计算规则，此处为翻页累加
+							//Calculate the serial number,You can customize calculation rules，Here is the page recapture
 							let index = context.index ?? 1;
 							let pagination = crudExpose!.crudBinding.value.pagination;
 							// @ts-ignore
@@ -84,7 +84,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 				},
 				search: {
-					title: '关键词',
+					title: 'Keywords',
 					column: {
 						show: false,
 					},
@@ -94,7 +94,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 							props: {
 								clearable: true,
 							},
-							placeholder: '请输入关键词',
+							placeholder: 'Please enter keywords',
 						},
 					},
 					form: {
@@ -107,7 +107,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 				},
 				label: {
-					title: '字典名称',
+					title: 'Dictionary name',
 					search: {
 						show: true,
 						component: {
@@ -122,19 +122,19 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 					form: {
 						rules: [
-							// 表单校验规则
-							{ required: true, message: '字典名称必填项' },
+							// Form verification rules
+							{ required: true, message: 'Required dictionary name' },
 						],
 						component: {
 							props: {
 								clearable: true,
 							},
-							placeholder: '请输入字典名称',
+							placeholder: 'Please enter a dictionary name',
 						},
 					},
 				},
 				value: {
-					title: '字典编号',
+					title: 'Dictionary number',
 					search: {
 						disabled: true,
 						component: {
@@ -149,24 +149,24 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					},
 					form: {
 						rules: [
-							// 表单校验规则
-							{ required: true, message: '字典编号必填项' },
+							// Form verification rules
+							{ required: true, message: 'Dictionary number required' },
 						],
 						component: {
 							props: {
 								clearable: true,
 							},
-							placeholder: '请输入字典编号',
+							placeholder: 'Please enter the dictionary number',
 						},
 						helper: {
 							render(h) {
-								return <el-alert title="使用方法：dictionary('字典编号')" type="warning" />;
+								return <el-alert title="How to use：dictionary('Dictionary number')" type="warning" />;
 							},
 						},
 					},
 				},
 				status: {
-					title: '状态',
+					title: 'state',
 					search: {
 						show: true,
 					},
@@ -192,7 +192,7 @@ export const createCrudOptions = function ({ crudExpose, context }: CreateCrudOp
 					}),
 				},
 				sort: {
-					title: '排序',
+					title: 'Sort',
 					type: 'number',
 					column: {
 						minWidth: 80,

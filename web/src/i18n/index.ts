@@ -3,28 +3,28 @@ import pinia from '/@/stores/index';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 
-// 定义语言国际化内容
+// Define language international content
 
 /**
- * 说明：
- * 须在 pages 下新建文件夹（建议 `要国际化界面目录` 与 `i18n 目录` 相同，方便查找），
- * 注意国际化定义的字段，不要与原有的定义字段相同。
- * 1、/src/i18n/lang 下的 ts 为框架的国际化内容
- * 2、/src/i18n/pages 下的 ts 为各界面的国际化内容
+ * illustrate：
+ * Must be in pages Create a new folder under（suggestion `International interface catalog` and `i18n Table of contents` same，Convenient search），
+ * Pay attention to the fields defined by internationalization，Do not be the same as the original definition field。
+ * 1、/src/i18n/lang Next ts International content for the framework
+ * 2、/src/i18n/pages Next ts International content for various interfaces
  */
 
-// element plus 自带国际化
+// element plus Introduce internationalization
 import enLocale from 'element-plus/es/locale/lang/en';
 import zhcnLocale from 'element-plus/es/locale/lang/zh-cn';
 import zhtwLocale from 'element-plus/es/locale/lang/zh-tw';
 
-// 定义变量内容
+// Define variable content
 const messages = {};
 const element = { en: enLocale, 'zh-cn': zhcnLocale, 'zh-tw': zhtwLocale };
 const itemize = { en: [], 'zh-cn': [], 'zh-tw': [] };
 const modules: Record<string, any> = import.meta.glob('./**/*.ts', { eager: true });
 
-// 对自动引入的 modules 进行分类 en、zh-cn、zh-tw
+// For automatic introduction modules Category en、zh-cn、zh-tw
 // https://vitejs.cn/vite3-cn/guide/features.html#glob-import
 for (const path in modules) {
 	const key = path.match(/(\S+)\/(\S+).ts/);
@@ -32,7 +32,7 @@ for (const path in modules) {
 	else itemize[key![2]] = modules[path];
 }
 
-// 合并数组对象（非标准数组对象，数组中对象的每项 key、value 都不同）
+// Merge array objects（Non-standard array objects，Each item of an object in an array key、value All are different）
 function mergeArrObj<T>(list: T, key: string) {
 	let obj = {};
 	list[key].forEach((i: EmptyObjectType) => {
@@ -41,7 +41,7 @@ function mergeArrObj<T>(list: T, key: string) {
 	return obj;
 }
 
-// 处理最终格式
+// Process the final format
 for (const key in itemize) {
 	messages[key] = {
 		name: key,
@@ -50,11 +50,11 @@ for (const key in itemize) {
 	};
 }
 
-// 读取 pinia 默认语言
+// Read pinia Default Language
 const stores = useThemeConfig(pinia);
 const { themeConfig } = storeToRefs(stores);
 
-// 导出语言国际化
+// Export language internationalization
 // https://vue-i18n.intlify.dev/guide/essentials/fallback.html#explicit-fallback-with-one-locale
 export const i18n = createI18n({
 	legacy: false,

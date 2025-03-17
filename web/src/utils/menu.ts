@@ -2,12 +2,12 @@ import XEUtils from "xe-utils"
 import {dynamicRoutes, staticRoutes} from "/@/router/route";
 
 /**
- * @description: 处理后端菜单数据格式
+ * @description: Process backend menu data format
  * @param {Array} menuData
  * @return {*}
  */
 export const handleMenu = (menuData: Array<any>) => {
-    // 先处理menu meta数据转换
+    // Process it firstmenu metaData conversion
     const handleMeta = (item: any) => {
         item.meta = {
             title: item.title,
@@ -24,7 +24,7 @@ export const handleMenu = (menuData: Array<any>) => {
         return item
     }
 
-    // 处理框架外的路由
+    // Handle routing outside the framework
     const handleFrame = (item: any) => {
         if (item.is_iframe) {
             item.meta = {
@@ -43,9 +43,9 @@ export const handleMenu = (menuData: Array<any>) => {
         return item
     }
 
-    // 框架内路由
+    // In-frame routing
     const defaultRoutes:Array<any> = []
-    // 框架外路由
+    // Out-of-frame routing
     const iframeRoutes:Array<any> = []
 
     menuData.forEach((val) => {

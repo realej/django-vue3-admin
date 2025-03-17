@@ -13,7 +13,7 @@ export default defineComponent({
 	name: 'loginScan',
 	setup() {
 		const qrcodeRef = ref<HTMLElement | null>(null);
-		// 初始化生成二维码
+		// Initialize the QR code to generate
 		const initQrcode = () => {
 			(qrcodeRef.value as HTMLElement).innerHTML = '';
 			new QRCode(qrcodeRef.value, {
@@ -24,7 +24,7 @@ export default defineComponent({
 				colorLight: '#ffffff',
 			});
 		};
-		// 页面加载时
+		// When the page loads
 		onMounted(() => {
 			initQrcode();
 		});

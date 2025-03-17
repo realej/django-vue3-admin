@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: 猿小天
+@author: Yuan Xiaotian
 @contact: QQ:1638245306
 @Created on: 2021/6/3 003 0:30
-@Remark: 菜单按钮管理
+@Remark: Menu Button Management
 """
 from django.db.models import F
 from rest_framework.decorators import action
@@ -20,7 +20,7 @@ from dvadmin.utils.viewset import CustomModelViewSet
 
 class MenuButtonSerializer(CustomModelSerializer):
     """
-    菜单按钮-序列化器
+    Menu Buttons-Serializer
     """
 
     class Meta:
@@ -33,7 +33,7 @@ class MenuButtonSerializer(CustomModelSerializer):
 
 class MenuButtonCreateUpdateSerializer(CustomModelSerializer):
     """
-    初始化菜单按钮-序列化器
+    Initialize menu button-Serializer
     """
 
     class Meta:
@@ -44,12 +44,12 @@ class MenuButtonCreateUpdateSerializer(CustomModelSerializer):
 
 class MenuButtonViewSet(CustomModelViewSet):
     """
-    菜单按钮接口
-    list:查询
-    create:新增
-    update:修改
-    retrieve:单例
-    destroy:删除
+    Menu Button Interface
+    list:Query
+    create:New
+    update:Revise
+    retrieve:Single case
+    destroy:delete
     """
     queryset = MenuButton.objects.order_by('create_datetime')
     serializer_class = MenuButtonSerializer
@@ -59,7 +59,7 @@ class MenuButtonViewSet(CustomModelViewSet):
 
     def list(self, request, *args, **kwargs):
         """
-        重写list方法
+        Rewritelistmethod
         :param request:
         :param args:
         :param kwargs:
@@ -67,12 +67,12 @@ class MenuButtonViewSet(CustomModelViewSet):
         """
         queryset = self.filter_queryset(self.get_queryset()).order_by('name')
         serializer = self.get_serializer(queryset, many=True, request=request)
-        return SuccessResponse(serializer.data,msg="获取成功")
+        return SuccessResponse(serializer.data,msg="Get successful")
 
     @action(methods=['get'],detail=False,permission_classes=[IsAuthenticated])
     def menu_button_all_permission(self,request):
         """
-        获取所有的按钮权限
+        Get all button permissions
         :param request:
         :return:
         """
@@ -87,22 +87,22 @@ class MenuButtonViewSet(CustomModelViewSet):
     @action(methods=['post'], detail=False, permission_classes=[IsAuthenticated])
     def batch_create(self, request, *args, **kwargs):
         """
-        批量创建菜单“增删改查查”权限
-        创建的数据来源于菜单，需要规范创建菜单参数
-        value：菜单的component_name:method
-        api:菜单的web_path增加'/api'前缀，并根据method增加{id}
+        Bulk creating menus“Add, delete, modify and check”Permissions
+        The data created comes from the menu，Need to create menu parameters in a standard way
+        value：Menucomponent_name:method
+        api:Menuweb_pathIncrease'/api'Prefix，And according tomethodIncrease{id}
         """
         menu_obj = Menu.objects.filter(id=request.data['menu']).first()
         result_list = [
-            {'menu': menu_obj.id, 'name': '新增', 'value': f'{menu_obj.component_name}:Create', 'api': f'/api/{menu_obj.component_name}/', 'method': 1},
-            {'menu': menu_obj.id, 'name': '删除', 'value': f'{menu_obj.component_name}:Delete', 'api': f'/api/{menu_obj.component_name}/{{id}}/', 'method': 3},
-            {'menu': menu_obj.id, 'name': '编辑', 'value': f'{menu_obj.component_name}:Update', 'api': f'/api/{menu_obj.component_name}/{{id}}/', 'method': 2},
-            {'menu': menu_obj.id, 'name': '查询', 'value': f'{menu_obj.component_name}:Search', 'api': f'/api/{menu_obj.component_name}/', 'method': 0},
-            {'menu': menu_obj.id, 'name': '详情', 'value': f'{menu_obj.component_name}:Retrieve', 'api': f'/api/{menu_obj.component_name}/{{id}}/', 'method': 0},
-            {'menu': menu_obj.id, 'name': '复制', 'value': f'{menu_obj.component_name}:Copy', 'api': f'/api/{menu_obj.component_name}/', 'method': 1},
-            {'menu': menu_obj.id, 'name': '导入', 'value': f'{menu_obj.component_name}:Import', 'api': f'/api/{menu_obj.component_name}/import_data/', 'method': 1},
-            {'menu': menu_obj.id, 'name': '导出', 'value': f'{menu_obj.component_name}:Export', 'api': f'/api{menu_obj.component_name}/export_data/', 'method': 1},]
+            {'menu': menu_obj.id, 'name': 'New', 'value': f'{menu_obj.component_name}:Create', 'api': f'/api/{menu_obj.component_name}/', 'method': 1},
+            {'menu': menu_obj.id, 'name': 'delete', 'value': f'{menu_obj.component_name}:Delete', 'api': f'/api/{menu_obj.component_name}/{{id}}/', 'method': 3},
+            {'menu': menu_obj.id, 'name': 'edit', 'value': f'{menu_obj.component_name}:Update', 'api': f'/api/{menu_obj.component_name}/{{id}}/', 'method': 2},
+            {'menu': menu_obj.id, 'name': 'Query', 'value': f'{menu_obj.component_name}:Search', 'api': f'/api/{menu_obj.component_name}/', 'method': 0},
+            {'menu': menu_obj.id, 'name': 'Details', 'value': f'{menu_obj.component_name}:Retrieve', 'api': f'/api/{menu_obj.component_name}/{{id}}/', 'method': 0},
+            {'menu': menu_obj.id, 'name': 'copy', 'value': f'{menu_obj.component_name}:Copy', 'api': f'/api/{menu_obj.component_name}/', 'method': 1},
+            {'menu': menu_obj.id, 'name': 'Import', 'value': f'{menu_obj.component_name}:Import', 'api': f'/api/{menu_obj.component_name}/import_data/', 'method': 1},
+            {'menu': menu_obj.id, 'name': 'Export', 'value': f'{menu_obj.component_name}:Export', 'api': f'/api{menu_obj.component_name}/export_data/', 'method': 1},]
         serializer = self.get_serializer(data=result_list, many=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return SuccessResponse(serializer.data, msg="批量创建成功")
+        return SuccessResponse(serializer.data, msg="Bulk creation successfully")

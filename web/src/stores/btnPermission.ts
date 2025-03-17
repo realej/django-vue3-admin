@@ -14,7 +14,7 @@ export const BtnPermissionStore = defineStore('BtnPermission', {
             }).then((ret: {
                 data: []
             }) => {
-                // 转换数据格式并保存到pinia
+                // Convert data format and save topinia
                 let dataList = ret.data
                 this.data=dataList
             })

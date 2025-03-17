@@ -4,8 +4,8 @@ import { request } from '../utils/service';
 export const urlPrefix = '/api/init/settings/';
 
 /**
- * 系统配置数据
- * @methods getSystemConfig 获取系统配置数据
+ * System configuration data
+ * @methods getSystemConfig Obtain system configuration data
  */
 export const SystemConfigStore = defineStore('SystemConfig', {
 	state: (): ConfigStates => ({
@@ -17,7 +17,7 @@ export const SystemConfigStore = defineStore('SystemConfig', {
 				url: urlPrefix,
 				method: 'get',
 			}).then((ret: { data: [] }) => {
-				// 转换数据格式并保存到pinia
+				// Convert data format and save topinia
 				this.systemConfig = JSON.parse(JSON.stringify(ret.data));
 			});
 		},

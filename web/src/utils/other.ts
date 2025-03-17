@@ -10,13 +10,13 @@ import { Local } from '/@/utils/storage';
 import { verifyUrl } from '/@/utils/toolsValidate';
 import {SystemConfigStore} from "/@/stores/systemConfig";
 
-// 引入组件
+// Introducing components
 const SvgIcon = defineAsyncComponent(() => import('/@/components/svgIcon/index.vue'));
 
 /**
- * 导出全局注册 element plus svg 图标
- * @param app vue 实例
- * @description 使用：https://element-plus.gitee.io/zh-CN/component/icon.html
+ * Export global registration element plus svg icon
+ * @param app vue Example
+ * @description use：https://element-plus.gitee.io/zh-CN/component/icon.html
  */
 export function elSvg(app: App) {
 	const icons = svg as any;
@@ -27,7 +27,7 @@ export function elSvg(app: App) {
 }
 
 /**
- * 设置浏览器标题国际化
+ * Set up browser title internationalization
  * @method const title = useTitle(); ==> title()
  */
 export function useTitle() {
@@ -48,7 +48,7 @@ export function useTitle() {
 }
 
 /***
- * 设置网站favicon图标
+ * Set up a websitefaviconicon
  */
 export function useFavicon() {
 	const stores = SystemConfigStore(pinia);
@@ -56,7 +56,7 @@ export function useFavicon() {
 	nextTick(() => {
 		const iconUrl = systemConfig.value['base.web_favicon']
 		if(iconUrl){
-			// 动态设置 favicon，这里假设 favicon 的 URL 是动态获取的或从变量中来
+			// Dynamic settings favicon，Assume here favicon of URL It is obtained dynamically or from variables
 			const faviconUrl = `${iconUrl}?t=${new Date().getTime()}`;
 			const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
 			if (!link) {
@@ -73,34 +73,34 @@ export function useFavicon() {
 }
 
 /**
- * 设置 自定义 tagsView 名称、 自定义 tagsView 名称国际化
- * @param params 路由 query、params 中的 tagsViewName
- * @returns 返回当前 tagsViewName 名称
+ * set up Customize tagsView name、 Customize tagsView Internationalized name
+ * @param params routing query、params In-house tagsViewName
+ * @returns Return to the current tagsViewName name
  */
 export function setTagsViewNameI18n(item: any) {
 	let tagsViewName: string = '';
 	const { query, params, meta } = item;
 	if (query?.tagsViewName || params?.tagsViewName) {
 		if (/\/zh-cn|en|zh-tw\//.test(query?.tagsViewName) || /\/zh-cn|en|zh-tw\//.test(params?.tagsViewName)) {
-			// 国际化
+			// Internationalization
 			const urlTagsParams = (query?.tagsViewName && JSON.parse(query?.tagsViewName)) || (params?.tagsViewName && JSON.parse(params?.tagsViewName));
 			tagsViewName = urlTagsParams[i18n.global.locale.value];
 		} else {
-			// 非国际化
+			// Non-internationalization
 			tagsViewName = query?.tagsViewName || params?.tagsViewName;
 		}
 	} else {
-		// 非自定义 tagsView 名称
+		// Non-custom tagsView name
 		tagsViewName = i18n.global.t(meta.title);
 	}
 	return tagsViewName;
 }
 
 /**
- * 图片懒加载
- * @param el dom 目标元素
- * @param arr 列表数据
- * @description data-xxx 属性用于存储页面或应用程序的私有自定义数据
+ * Lazy image loading
+ * @param el dom Target elements
+ * @param arr List data
+ * @description data-xxx Properties are used to store private custom data for pages or applications
  */
 export const lazyImg = (el: string, arr: EmptyArrayType) => {
 	const io = new IntersectionObserver((res) => {
@@ -121,8 +121,8 @@ export const lazyImg = (el: string, arr: EmptyArrayType) => {
 };
 
 /**
- * 全局组件大小
- * @returns 返回 `window.localStorage` 中读取的缓存值 `globalComponentSize`
+ * Global component size
+ * @returns return `window.localStorage` The cached value read in `globalComponentSize`
  */
 export const globalComponentSize = (): string => {
 	const stores = useThemeConfig(pinia);
@@ -131,9 +131,9 @@ export const globalComponentSize = (): string => {
 };
 
 /**
- * 对象深克隆
- * @param obj 源对象
- * @returns 克隆后的对象
+ * Deep cloning of objects
+ * @param obj Source object
+ * @returns The cloned object
  */
 export function deepClone(obj: EmptyObjectType) {
 	let newObj: EmptyObjectType;
@@ -153,7 +153,7 @@ export function deepClone(obj: EmptyObjectType) {
 }
 
 /**
- * 判断是否是移动端
+ * Determine whether it is a mobile terminal
  */
 export function isMobile() {
 	if (
@@ -168,10 +168,10 @@ export function isMobile() {
 }
 
 /**
- * 判断数组对象中所有属性是否为空，为空则删除当前行对象
- * @description @感谢大黄
- * @param list 数组对象
- * @returns 删除空值后的数组对象
+ * Determine whether all attributes in the array object are empty，If empty, delete the current line object
+ * @description @Thanks to Dahuang
+ * @param list Array Objects
+ * @returns Delete an array object after empty value
  */
 export function handleEmpty(list: EmptyArrayType) {
 	const arr = [];
@@ -189,8 +189,8 @@ export function handleEmpty(list: EmptyArrayType) {
 }
 
 /**
- * 打开外部链接
- * @param val 当前点击项菜单
+ * Open an external link
+ * @param val Current click menu
  */
 export function handleOpenLink(val: RouteItem) {
 	const { origin, pathname } = window.location;
@@ -200,16 +200,16 @@ export function handleOpenLink(val: RouteItem) {
 }
 
 /**
- * 统一批量导出
- * @method elSvg 导出全局注册 element plus svg 图标
- * @method useTitle 设置浏览器标题国际化
- * @method setTagsViewNameI18n 设置 自定义 tagsView 名称、 自定义 tagsView 名称国际化
- * @method lazyImg 图片懒加载
- * @method globalComponentSize() element plus 全局组件大小
- * @method deepClone 对象深克隆
- * @method isMobile 判断是否是移动端
- * @method handleEmpty 判断数组对象中所有属性是否为空，为空则删除当前行对象
- * @method handleOpenLink 打开外部链接
+ * Unified batch export
+ * @method elSvg Export global registration element plus svg icon
+ * @method useTitle Set up browser title internationalization
+ * @method setTagsViewNameI18n set up Customize tagsView name、 Customize tagsView Internationalized name
+ * @method lazyImg Lazy image loading
+ * @method globalComponentSize() element plus Global component size
+ * @method deepClone Deep cloning of objects
+ * @method isMobile Determine whether it is a mobile terminal
+ * @method handleEmpty Determine whether all attributes in the array object are empty，If empty, delete the current line object
+ * @method handleOpenLink Open an external link
  */
 const other = {
 	elSvg: (app: App) => {
@@ -244,5 +244,5 @@ const other = {
 	},
 };
 
-// 统一批量导出
+// Unified batch export
 export default other;

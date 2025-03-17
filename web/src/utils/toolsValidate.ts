@@ -1,370 +1,370 @@
 /**
- * 2020.11.29 lyt 整理
- * 工具类集合，适用于平时开发
- * 新增多行注释信息，鼠标放到方法名即可查看
+ * 2020.11.29 lyt tidy
+ * Tool Class Collection，Suitable for daily development
+ * Added multiple lines of comment information，Put the mouse on the method name to view it
  */
 
 /**
- * 验证百分比（不可以小数）
- * @param val 当前值字符串
- * @returns 返回处理后的字符串
+ * Verification percentage（No decimals）
+ * @param val Current value string
+ * @returns Returns the processed string
  */
 export function verifyNumberPercentage(val: string): string {
-	// 匹配空格
+	// Match spaces
 	let v = val.replace(/(^\s*)|(\s*$)/g, '');
-	// 只能是数字和小数点，不能是其他输入
+	// Only numbers and decimal points，Can't be other input
 	v = v.replace(/[^\d]/g, '');
-	// 不能以0开始
+	// Can't0start
 	v = v.replace(/^0/g, '');
-	// 数字超过100，赋值成最大值100
+	// The number exceeds100，Assign to maximum value100
 	v = v.replace(/^[1-9]\d\d{1,3}$/, '100');
-	// 返回结果
+	// Return result
 	return v;
 }
 
 /**
- * 验证百分比（可以小数）
- * @param val 当前值字符串
- * @returns 返回处理后的字符串
+ * Verification percentage（Can be decimal）
+ * @param val Current value string
+ * @returns Returns the processed string
  */
 export function verifyNumberPercentageFloat(val: string): string {
 	let v = verifyNumberIntegerAndFloat(val);
-	// 数字超过100，赋值成最大值100
+	// The number exceeds100，Assign to maximum value100
 	v = v.replace(/^[1-9]\d\d{1,3}$/, '100');
-	// 超过100之后不给再输入值
+	// Exceed100No value is entered later
 	v = v.replace(/^100\.$/, '100');
-	// 返回结果
+	// Return result
 	return v;
 }
 
 /**
- * 小数或整数(不可以负数)
- * @param val 当前值字符串
- * @returns 返回处理后的字符串
+ * Decimal or integer(No negative numbers)
+ * @param val Current value string
+ * @returns Returns the processed string
  */
 export function verifyNumberIntegerAndFloat(val: string) {
-	// 匹配空格
+	// Match spaces
 	let v = val.replace(/(^\s*)|(\s*$)/g, '');
-	// 只能是数字和小数点，不能是其他输入
+	// Only numbers and decimal points，Can't be other input
 	v = v.replace(/[^\d.]/g, '');
-	// 以0开始只能输入一个
+	// by0Only one entry is available at the beginning
 	v = v.replace(/^0{2}$/g, '0');
-	// 保证第一位只能是数字，不能是点
+	// Guaranteed that the first one is only a number，Can't be a point
 	v = v.replace(/^\./g, '');
-	// 小数只能出现1位
+	// Decimals can only appear1Bit
 	v = v.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.');
-	// 小数点后面保留2位
+	// Keep after the decimal point2Bit
 	v = v.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
-	// 返回结果
+	// Return result
 	return v;
 }
 
 /**
- * 正整数验证
- * @param val 当前值字符串
- * @returns 返回处理后的字符串
+ * Positive integer verification
+ * @param val Current value string
+ * @returns Returns the processed string
  */
 export function verifiyNumberInteger(val: string) {
-	// 匹配空格
+	// Match spaces
 	let v = val.replace(/(^\s*)|(\s*$)/g, '');
-	// 去掉 '.' , 防止贴贴的时候出现问题 如 0.1.12.12
+	// Remove '.' , Prevent problems when posting like 0.1.12.12
 	v = v.replace(/[\.]*/g, '');
-	// 去掉以 0 开始后面的数, 防止贴贴的时候出现问题 如 00121323
+	// Remove 0 The number after the start, Prevent problems when posting like 00121323
 	v = v.replace(/(^0[\d]*)$/g, '0');
-	// 首位是0,只能出现一次
+	// The first one is0,Only once
 	v = v.replace(/^0\d$/g, '0');
-	// 只匹配数字
+	// Match only numbers
 	v = v.replace(/[^\d]/g, '');
-	// 返回结果
+	// Return result
 	return v;
 }
 
 /**
- * 去掉中文及空格
- * @param val 当前值字符串
- * @returns 返回处理后的字符串
+ * Remove Chinese and spaces
+ * @param val Current value string
+ * @returns Returns the processed string
  */
 export function verifyCnAndSpace(val: string) {
-	// 匹配中文与空格
+	// Match Chinese with spaces
 	let v = val.replace(/[\u4e00-\u9fa5\s]+/g, '');
-	// 匹配空格
+	// Match spaces
 	v = v.replace(/(^\s*)|(\s*$)/g, '');
-	// 返回结果
+	// Return result
 	return v;
 }
 
 /**
- * 去掉英文及空格
- * @param val 当前值字符串
- * @returns 返回处理后的字符串
+ * Remove English and spaces
+ * @param val Current value string
+ * @returns Returns the processed string
  */
 export function verifyEnAndSpace(val: string) {
-	// 匹配英文与空格
+	// Match English with spaces
 	let v = val.replace(/[a-zA-Z]+/g, '');
-	// 匹配空格
+	// Match spaces
 	v = v.replace(/(^\s*)|(\s*$)/g, '');
-	// 返回结果
+	// Return result
 	return v;
 }
 
 /**
- * 禁止输入空格
- * @param val 当前值字符串
- * @returns 返回处理后的字符串
+ * Disable space input
+ * @param val Current value string
+ * @returns Returns the processed string
  */
 export function verifyAndSpace(val: string) {
-	// 匹配空格
+	// Match spaces
 	let v = val.replace(/(^\s*)|(\s*$)/g, '');
-	// 返回结果
+	// Return result
 	return v;
 }
 
 /**
- * 金额用 `,` 区分开
- * @param val 当前值字符串
- * @returns 返回处理后的字符串
+ * For the amount `,` Distinguish
+ * @param val Current value string
+ * @returns Returns the processed string
  */
 export function verifyNumberComma(val: string) {
-	// 调用小数或整数(不可以负数)方法
+	// Call a decimal or integer(No negative numbers)method
 	let v: any = verifyNumberIntegerAndFloat(val);
-	// 字符串转成数组
+	// Convert string into array
 	v = v.toString().split('.');
-	// \B 匹配非单词边界，两边都是单词字符或者两边都是非单词字符
+	// \B Match non-word boundaries，Both sides are word characters or both sides are non-word characters
 	v[0] = v[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-	// 数组转字符串
+	// Array to string
 	v = v.join('.');
-	// 返回结果
+	// Return result
 	return v;
 }
 
 /**
- * 匹配文字变色（搜索时）
- * @param val 当前值字符串
- * @param text 要处理的字符串值
- * @param color 搜索到时字体高亮颜色
- * @returns 返回处理后的字符串
+ * Match text color change（When searching）
+ * @param val Current value string
+ * @param text String value to process
+ * @param color The font highlights color when searching
+ * @returns Returns the processed string
  */
 export function verifyTextColor(val: string, text = '', color = 'red') {
-	// 返回内容，添加颜色
+	// Return to content，Add color
 	let v = text.replace(new RegExp(val, 'gi'), `<span style='color: ${color}'>${val}</span>`);
-	// 返回结果
+	// Return result
 	return v;
 }
 
 /**
- * 数字转中文大写
- * @param val 当前值字符串
- * @param unit 默认：仟佰拾亿仟佰拾万仟佰拾元角分
- * @returns 返回处理后的字符串
+ * Numbers to Chinese capital
+ * @param val Current value string
+ * @param unit default：Thousands of thousands of thousands of thousands of thousands of thousands of thousands of cents of cents
+ * @returns Returns the processed string
  */
-export function verifyNumberCnUppercase(val: any, unit = '仟佰拾亿仟佰拾万仟佰拾元角分', v = '') {
-	// 当前内容字符串添加 2个0，为什么??
+export function verifyNumberCnUppercase(val: any, unit = 'Thousands of thousands of thousands of thousands of thousands of thousands of thousands of cents of cents', v = '') {
+	// Add the current content string 2indivual0，Why??
 	val += '00';
-	// 返回某个指定的字符串值在字符串中首次出现的位置，没有出现，则该方法返回 -1
+	// Returns the location where a specified string value first appears in the string，Nothing appears，Then the method returns -1
 	let lookup = val.indexOf('.');
-	// substring：不包含结束下标内容，substr：包含结束下标内容
+	// substring：Excluded subscript content，substr：Includes the end subscript content
 	if (lookup >= 0) val = val.substring(0, lookup) + val.substr(lookup + 1, 2);
-	// 根据内容 val 的长度，截取返回对应大写
+	// According to content val Length，Intercept and return the corresponding capitalization
 	unit = unit.substr(unit.length - val.length);
-	// 循环截取拼接大写
+	// Looping splicing capitalization
 	for (let i = 0; i < val.length; i++) {
-		v += '零壹贰叁肆伍陆柒捌玖'.substr(val.substr(i, 1), 1) + unit.substr(i, 1);
+		v += 'Zero One Two Three Si Wu Lu Qi Eight Nine'.substr(val.substr(i, 1), 1) + unit.substr(i, 1);
 	}
-	// 正则处理
+	// Regular processing
 	v = v
-		.replace(/零角零分$/, '整')
-		.replace(/零[仟佰拾]/g, '零')
-		.replace(/零{2,}/g, '零')
-		.replace(/零([亿|万])/g, '$1')
-		.replace(/零+元/, '元')
-		.replace(/亿零{0,3}万/, '亿')
-		.replace(/^元/, '零元');
-	// 返回结果
+		.replace(/Zero angle zero points$/, 'all')
+		.replace(/zero[Qianbaishi]/g, 'zero')
+		.replace(/zero{2,}/g, 'zero')
+		.replace(/zero([100 million|Ten thousand])/g, '$1')
+		.replace(/zero+Yuan/, 'Yuan')
+		.replace(/Yiling{0,3}Ten thousand/, '100 million')
+		.replace(/^Yuan/, 'Zero yuan');
+	// Return result
 	return v;
 }
 
 /**
- * 手机号码
- * @param val 当前值字符串
- * @returns 返回 true: 手机号码正确
+ * phone number
+ * @param val Current value string
+ * @returns return true: Correct mobile phone number
  */
 export function verifyPhone(val: string) {
-	// false: 手机号码不正确
+	// false: Incorrect mobile phone number
 	if (!/^((\+|00)86)?1((3[\d])|(4[5,6,7,9])|(5[0-3,5-9])|(6[5-7])|(7[0-8])|(8[\d])|(9[1,8,9]))\d{8}$/.test(val)) return false;
-	// true: 手机号码正确
+	// true: Correct mobile phone number
 	else return true;
 }
 
 /**
- * 国内电话号码
- * @param val 当前值字符串
- * @returns 返回 true: 国内电话号码正确
+ * Domestic phone number
+ * @param val Current value string
+ * @returns return true: The domestic phone number is correct
  */
 export function verifyTelPhone(val: string) {
-	// false: 国内电话号码不正确
+	// false: Domestic phone number is incorrect
 	if (!/\d{3}-\d{8}|\d{4}-\d{7}/.test(val)) return false;
-	// true: 国内电话号码正确
+	// true: The domestic phone number is correct
 	else return true;
 }
 
 /**
- * 登录账号 (字母开头，允许5-16字节，允许字母数字下划线)
- * @param val 当前值字符串
- * @returns 返回 true: 登录账号正确
+ * Log in to your account (Start with letters，allow5-16byte，Allow alphanumeric underline)
+ * @param val Current value string
+ * @returns return true: Log in to the account correctly
  */
 export function verifyAccount(val: string) {
-	// false: 登录账号不正确
+	// false: Login to the account incorrectly
 	if (!/^[a-zA-Z][a-zA-Z0-9_]{4,15}$/.test(val)) return false;
-	// true: 登录账号正确
+	// true: Log in to the account correctly
 	else return true;
 }
 
 /**
- * 密码 (以字母开头，长度在6~16之间，只能包含字母、数字和下划线)
- * @param val 当前值字符串
- * @returns 返回 true: 密码正确
+ * password (Start with letters，The length is6~16between，Only include letters、Numbers and underlines)
+ * @param val Current value string
+ * @returns return true: Correct password
  */
 export function verifyPassword(val: string) {
-	// false: 密码不正确
+	// false: Incorrect password
 	if (!/^[a-zA-Z]\w{5,15}$/.test(val)) return false;
-	// true: 密码正确
+	// true: Correct password
 	else return true;
 }
 
 /**
- * 强密码 (字母+数字+特殊字符，长度在6-16之间)
- * @param val 当前值字符串
- * @returns 返回 true: 强密码正确
+ * Strong password (letter+number+Special characters，The length is6-16between)
+ * @param val Current value string
+ * @returns return true: The strong password is correct
  */
 export function verifyPasswordPowerful(val: string) {
-	// false: 强密码不正确
+	// false: Strong password is incorrect
 	if (!/^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&\.*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&\.*]+$)(?![\d!@#$%^&\.*]+$)[a-zA-Z\d!@#$%^&\.*]{6,16}$/.test(val))
 		return false;
-	// true: 强密码正确
+	// true: The strong password is correct
 	else return true;
 }
 
 /**
- * 密码强度
- * @param val 当前值字符串
- * @description 弱：纯数字，纯字母，纯特殊字符
- * @description 中：字母+数字，字母+特殊字符，数字+特殊字符
- * @description 强：字母+数字+特殊字符
- * @returns 返回处理后的字符串：弱、中、强
+ * Password strength
+ * @param val Current value string
+ * @description weak：Pure numbers，Pure letters，Pure special characters
+ * @description middle：letter+number，letter+Special characters，number+Special characters
+ * @description powerful：letter+number+Special characters
+ * @returns Returns the processed string：weak、middle、powerful
  */
 export function verifyPasswordStrength(val: string) {
 	let v = '';
-	// 弱：纯数字，纯字母，纯特殊字符
-	if (/^(?:\d+|[a-zA-Z]+|[!@#$%^&\.*]+){6,16}$/.test(val)) v = '弱';
-	// 中：字母+数字，字母+特殊字符，数字+特殊字符
-	if (/^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&\.*]+$)[a-zA-Z\d!@#$%^&\.*]{6,16}$/.test(val)) v = '中';
-	// 强：字母+数字+特殊字符
+	// weak：Pure numbers，Pure letters，Pure special characters
+	if (/^(?:\d+|[a-zA-Z]+|[!@#$%^&\.*]+){6,16}$/.test(val)) v = 'weak';
+	// middle：letter+number，letter+Special characters，number+Special characters
+	if (/^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&\.*]+$)[a-zA-Z\d!@#$%^&\.*]{6,16}$/.test(val)) v = 'middle';
+	// powerful：letter+number+Special characters
 	if (/^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&\.*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&\.*]+$)(?![\d!@#$%^&\.*]+$)[a-zA-Z\d!@#$%^&\.*]{6,16}$/.test(val))
-		v = '强';
-	// 返回结果
+		v = 'powerful';
+	// Return result
 	return v;
 }
 
 /**
- * IP地址
- * @param val 当前值字符串
- * @returns 返回 true: IP地址正确
+ * IPaddress
+ * @param val Current value string
+ * @returns return true: IPCorrect address
  */
 export function verifyIPAddress(val: string) {
-	// false: IP地址不正确
+	// false: IPIncorrect address
 	if (
 		!/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/.test(
 			val
 		)
 	)
 		return false;
-	// true: IP地址正确
+	// true: IPCorrect address
 	else return true;
 }
 
 /**
- * 邮箱
- * @param val 当前值字符串
- * @returns 返回 true: 邮箱正确
+ * Mail
+ * @param val Current value string
+ * @returns return true: Correct email
  */
 export function verifyEmail(val: string) {
-	// false: 邮箱不正确
+	// false: Incorrect email address
 	if (
 		!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
 			val
 		)
 	)
 		return false;
-	// true: 邮箱正确
+	// true: Correct email
 	else return true;
 }
 
 /**
- * 身份证
- * @param val 当前值字符串
- * @returns 返回 true: 身份证正确
+ * ID card
+ * @param val Current value string
+ * @returns return true: Correct ID card
  */
 export function verifyIdCard(val: string) {
-	// false: 身份证不正确
+	// false: Incorrect ID card
 	if (!/^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/.test(val)) return false;
-	// true: 身份证正确
+	// true: Correct ID card
 	else return true;
 }
 
 /**
- * 姓名
- * @param val 当前值字符串
- * @returns 返回 true: 姓名正确
+ * Name
+ * @param val Current value string
+ * @returns return true: Correct name
  */
 export function verifyFullName(val: string) {
-	// false: 姓名不正确
+	// false: Incorrect name
 	if (!/^[\u4e00-\u9fa5]{1,6}(·[\u4e00-\u9fa5]{1,6}){0,2}$/.test(val)) return false;
-	// true: 姓名正确
+	// true: Correct name
 	else return true;
 }
 
 /**
- * 邮政编码
- * @param val 当前值字符串
- * @returns 返回 true: 邮政编码正确
+ * postal code
+ * @param val Current value string
+ * @returns return true: Correct postal code
  */
 export function verifyPostalCode(val: string) {
-	// false: 邮政编码不正确
+	// false: Incorrect postal code
 	if (!/^[1-9][0-9]{5}$/.test(val)) return false;
-	// true: 邮政编码正确
+	// true: Correct postal code
 	else return true;
 }
 
 /**
- * url 处理
- * @param val 当前值字符串
- * @returns 返回 true: url 正确
+ * url deal with
+ * @param val Current value string
+ * @returns return true: url correct
  */
 export function verifyUrl(val: string) {
-	// false: url不正确
+	// false: urlIncorrect
 	if (
 		!/^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})).?)(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(
 			val
 		)
 	)
 		return false;
-	// true: url正确
+	// true: urlcorrect
 	else return true;
 }
 
 /**
- * 车牌号
- * @param val 当前值字符串
- * @returns 返回 true：车牌号正确
+ * License plate number
+ * @param val Current value string
+ * @returns return true：Correct license plate number
  */
 export function verifyCarNum(val: string) {
-	// false: 车牌号不正确
+	// false: Incorrect license plate number
 	if (
-		!/^(([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z](([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳使领]))$/.test(
+		!/^(([Beijing, Tianjin, Shanghai, Chongqing, Hebei, Henan, Yunnan, Hunan, Anhui, Shandong, New Jiangsu, Zhejiang, Jiangxi, Hubei, Guizhou, Gansu, Shanxi, Mongolia, Shaanxi, Ji, Fujian, Guangdong, Qinghai, Tibet, Sichuan, Ningqiong envoy][A-Z](([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([Beijing, Tianjin, Shanghai, Chongqing, Hebei, Henan, Yunnan, Hunan, Anhui, Shandong, New Jiangsu, Zhejiang, Jiangxi, Hubei, Guizhou, Gansu, Shanxi, Mongolia, Shaanxi, Ji, Fujian, Guangdong, Qinghai, Tibet, Sichuan, Ningqiong envoy][A-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9Hangoutong Hong Kong and Macao envoys]))$/.test(
 			val
 		)
 	)
 		return false;
-	// true：车牌号正确
+	// true：Correct license plate number
 	else return true;
 }

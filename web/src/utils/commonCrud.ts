@@ -36,7 +36,7 @@ export const commonCrudConfig = (options = {
 }) => {
     return {
         dept_belong_id: {
-            title: '所属部门',
+            title: 'Department',
             type: 'dict-tree',
             search: {
                 show: options.dept_belong_id?.search || false
@@ -65,18 +65,18 @@ export const commonCrudConfig = (options = {
                     props: {
                         checkStrictly: true,
                         props: {
-                            // 为什么这里要写两层props
-                            // 因为props属性名与fs的动态渲染的props命名冲突，所以要多写一层
+                            // Why do I have to write two layers hereprops
+                            // becausepropsAttribute name andfsDynamic rendering ofpropsNaming conflict，So write one more layer
                             label: "name",
                             value: "id",
                         }
                     }
                 },
-                helper: "默认不填则为当前创建用户的部门ID"
+                helper: "If the default is not filled in, it will be the department where the user is currently created.ID"
             }
         },
         description: {
-            title: '备注',
+            title: 'Remark',
             search: {
                 show: options.description?.search || false
             },
@@ -88,7 +88,7 @@ export const commonCrudConfig = (options = {
             form: {
                 show: options.description?.form || false,
                 component: {
-                    placeholder: '请输入内容',
+                    placeholder: 'Please enter content',
                     showWordLimit: true,
                     maxlength: '200',
                 }
@@ -98,7 +98,7 @@ export const commonCrudConfig = (options = {
             }
         },
         modifier_name: {
-            title: '修改人',
+            title: 'Modify',
             search: {
                 show: options.modifier_name?.search || false
             },
@@ -114,7 +114,7 @@ export const commonCrudConfig = (options = {
             }
         },
         creator_name: {
-            title: '创建人',
+            title: 'Founder',
             search: {
                 show: options.creator_name?.search || false
             },
@@ -130,7 +130,7 @@ export const commonCrudConfig = (options = {
             }
         },
         update_datetime: {
-            title: '更新时间',
+            title: 'Update time',
             type: 'datetime',
             search: {
                 show: options.update_datetime?.search || false,
@@ -138,12 +138,12 @@ export const commonCrudConfig = (options = {
                 component: {
                     type: 'datetimerange',
                     props: {
-                        'start-placeholder': '开始时间',
-                        'end-placeholder': '结束时间',
+                        'start-placeholder': 'Start time',
+                        'end-placeholder': 'End time',
                         'value-format': 'YYYY-MM-DD HH:mm:ss',
                         'picker-options': {
                             shortcuts: [{
-                                text: '最近一周',
+                                text: 'The last week',
                                 onClick(picker) {
                                     const end = new Date();
                                     const start = new Date();
@@ -151,7 +151,7 @@ export const commonCrudConfig = (options = {
                                     picker.$emit('pick', [start, end]);
                                 }
                             }, {
-                                text: '最近一个月',
+                                text: 'The last month',
                                 onClick(picker) {
                                     const end = new Date();
                                     const start = new Date();
@@ -159,7 +159,7 @@ export const commonCrudConfig = (options = {
                                     picker.$emit('pick', [start, end]);
                                 }
                             }, {
-                                text: '最近三个月',
+                                text: 'The last three months',
                                 onClick(picker) {
                                     const end = new Date();
                                     const start = new Date();
@@ -172,13 +172,13 @@ export const commonCrudConfig = (options = {
                 },
                 valueResolve(context: any) {
                     const {key, value} = context
-                    //value解析，就是把组件的值转化为后台所需要的值
-                    //在form表单点击保存按钮后，提交到后台之前执行转化
+                    //valueAnalysis，It is to convert the value of the component into the value required in the background
+                    //existformAfter clicking the save button on the form，Perform conversion before submitting to the background
                     if (value) {
                         context.form.update_datetime_after = value[0]
                         context.form.update_datetime_before = value[1]
                     }
-                    //  ↑↑↑↑↑ 注意这里是form，不是row
+                    //  ↑↑↑↑↑ Note that this isform，norow
                 }
             },
             column: {
@@ -193,7 +193,7 @@ export const commonCrudConfig = (options = {
             }
         },
         create_datetime: {
-            title: '创建时间',
+            title: 'Creation time',
             type: 'datetime',
             search: {
                 show: options.create_datetime?.search || false,
@@ -201,12 +201,12 @@ export const commonCrudConfig = (options = {
                 component: {
                     type: 'datetimerange',
                     props: {
-                        'start-placeholder': '开始时间',
-                        'end-placeholder': '结束时间',
+                        'start-placeholder': 'Start time',
+                        'end-placeholder': 'End time',
                         'value-format': 'YYYY-MM-DD HH:mm:ss',
                         'picker-options': {
                             shortcuts: [{
-                                text: '最近一周',
+                                text: 'The last week',
                                 onClick(picker) {
                                     const end = new Date();
                                     const start = new Date();
@@ -214,7 +214,7 @@ export const commonCrudConfig = (options = {
                                     picker.$emit('pick', [start, end]);
                                 }
                             }, {
-                                text: '最近一个月',
+                                text: 'The last month',
                                 onClick(picker) {
                                     const end = new Date();
                                     const start = new Date();
@@ -222,7 +222,7 @@ export const commonCrudConfig = (options = {
                                     picker.$emit('pick', [start, end]);
                                 }
                             }, {
-                                text: '最近三个月',
+                                text: 'The last three months',
                                 onClick(picker) {
                                     const end = new Date();
                                     const start = new Date();
@@ -235,13 +235,13 @@ export const commonCrudConfig = (options = {
                 },
                 valueResolve(context: any) {
                     const {key, value} = context
-                    //value解析，就是把组件的值转化为后台所需要的值
-                    //在form表单点击保存按钮后，提交到后台之前执行转化
+                    //valueAnalysis，It is to convert the value of the component into the value required in the background
+                    //existformAfter clicking the save button on the form，Perform conversion before submitting to the background
                     if (value) {
                         context.form.create_datetime_after = value[0]
                         context.form.create_datetime_before = value[1]
                     }
-                    //  ↑↑↑↑↑ 注意这里是form，不是row
+                    //  ↑↑↑↑↑ Note that this isform，norow
                 }
             },
             column: {

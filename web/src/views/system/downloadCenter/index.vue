@@ -18,24 +18,24 @@ import PermissionComNew from './components/PermissionComNew/index.vue';
 import _ from "lodash-es";
 import { handleColumnPermission } from "/@/utils/columnPermission";
 
-// crud组件的ref
+// crudComponentref
 const crudRef = ref();
-// crud 配置的ref
+// crud Configuredref
 const crudBinding = ref();
 
 const { crudExpose } = useExpose({ crudRef, crudBinding });
 
-// 你的crud配置
+// yourcrudConfiguration
 const { crudOptions } = createCrudOptions({ crudExpose });
 
-// 初始化crud配置
+// initializationcrudConfiguration
 const { resetCrudOptions } = useCrud({
 	crudExpose,
 	crudOptions,
 	context: {},
 });
 
-// 页面打开后获取列表数据
+// Get list data after the page is opened
 onMounted(async () => {
 	crudExpose.doRefresh();
 });

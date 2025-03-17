@@ -3,7 +3,7 @@
 """
 @author: H0nGzA1
 @contact: QQ:2505811377
-@Remark: 部门管理
+@Remark: Department Management
 """
 from rest_framework import serializers
 from rest_framework.decorators import action
@@ -18,7 +18,7 @@ from dvadmin.utils.viewset import CustomModelViewSet
 
 class DeptSerializer(CustomModelSerializer):
     """
-    部门-序列化器
+    department-Serializer
     """
     parent_name = serializers.CharField(read_only=True, source='parent.name')
     status_label = serializers.SerializerMethodField()
@@ -38,8 +38,8 @@ class DeptSerializer(CustomModelSerializer):
 
     def get_status_label(self, obj: Dept):
         if obj.status:
-            return "启用"
-        return "禁用"
+            return "Enable"
+        return "Disabled"
 
     def get_has_children(self, obj: Dept):
         return Dept.objects.filter(parent_id=obj.id).count()
@@ -52,7 +52,7 @@ class DeptSerializer(CustomModelSerializer):
 
 class DeptImportSerializer(CustomModelSerializer):
     """
-    部门-导入-序列化器
+    department-Import-Serializer
     """
 
     class Meta:
@@ -63,7 +63,7 @@ class DeptImportSerializer(CustomModelSerializer):
 
 class DeptCreateUpdateSerializer(CustomModelSerializer):
     """
-    部门管理 创建/更新时的列化器
+    Department Management create/The serializer at update time
     """
 
     def create(self, validated_data):
@@ -85,12 +85,12 @@ class DeptCreateUpdateSerializer(CustomModelSerializer):
 
 class DeptViewSet(CustomModelViewSet):
     """
-    部门管理接口
-    list:查询
-    create:新增
-    update:修改
-    retrieve:单例
-    destroy:删除
+    Department management interface
+    list:Query
+    create:New
+    update:Revise
+    retrieve:Single case
+    destroy:delete
     """
     queryset = Dept.objects.all()
     serializer_class = DeptSerializer
@@ -101,12 +101,12 @@ class DeptViewSet(CustomModelViewSet):
     # extra_filter_class = []
     import_serializer_class = DeptImportSerializer
     import_field_dict = {
-        "name": "部门名称",
-        "key": "部门标识",
+        "name": "Department name",
+        "key": "Department logo",
     }
 
     def list(self, request, *args, **kwargs):
-        # 如果懒加载，则只返回父级
+        # If lazy load，Then return only the parent
         request.query_params._mutable = True
         params = request.query_params
         parent = params.get('parent', None)
@@ -129,41 +129,41 @@ class DeptViewSet(CustomModelViewSet):
     def all_dept(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         data = queryset.filter(status=True).order_by('sort').values('name', 'id', 'parent')
-        return DetailResponse(data=data, msg="获取成功")
+        return DetailResponse(data=data, msg="Get successful")
 
     @action(methods=['POST'], detail=False, permission_classes=[IsAuthenticated])
     def move_up(self, request):
-        """部门上移"""
+        """Department move up"""
         dept_id = request.data.get('dept_id')
         try:
             dept = Dept.objects.get(id=dept_id)
         except Dept.DoesNotExist:
-            return ErrorResponse(msg="部门不存在")
+            return ErrorResponse(msg="The department does not exist")
         previous_menu = Dept.objects.filter(sort__lt=dept.sort, parent=dept.parent).order_by('-sort').first()
         if previous_menu:
             previous_menu.sort, dept.sort = dept.sort, previous_menu.sort
             previous_menu.save()
             dept.save()
-        return SuccessResponse(data=[], msg="上移成功")
+        return SuccessResponse(data=[], msg="Move up successfully")
 
     @action(methods=['POST'], detail=False, permission_classes=[IsAuthenticated])
     def move_down(self, request):
-        """部门下移"""
+        """Department moves down"""
         dept_id = request.data['dept_id']
         try:
             dept = Dept.objects.get(id=dept_id)
         except Dept.DoesNotExist:
-            return ErrorResponse(msg="部门不存在")
+            return ErrorResponse(msg="The department does not exist")
         next_menu = Dept.objects.filter(sort__gt=dept.sort, parent=dept.parent).order_by('sort').first()
         if next_menu:
             next_menu.sort, dept.sort = dept.sort, next_menu.sort
             next_menu.save()
             dept.save()
-        return SuccessResponse(data=[], msg="下移成功")
+        return SuccessResponse(data=[], msg="Move down successfully")
 
     @action(methods=['GET'], detail=False, permission_classes=[])
     def dept_info(self, request):
-        """部门信息"""
+        """Department Information"""
         def inner(did, li):
             sub = Dept.objects.filter(parent_id=did)
             if not sub.exists():
@@ -175,10 +175,10 @@ class DeptViewSet(CustomModelViewSet):
         dept_id = request.query_params.get('dept_id')
         show_all = request.query_params.get('show_all')
         if dept_id is None:
-            return ErrorResponse(msg="部门不存在")
+            return ErrorResponse(msg="The department does not exist")
         if not show_all:
             show_all = 0
-        if int(show_all):  # 递归当前部门下的所有部门，查询用户
+        if int(show_all):  # Recursively all departments under the current department，Query the user
             all_did = [dept_id]
             inner(dept_id, all_did)
             users = Users.objects.filter(dept_id__in=all_did)

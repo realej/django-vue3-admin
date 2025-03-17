@@ -1,4 +1,4 @@
-/* 页面切换动画
+/* Page switching animation
 ------------------------------- */
 .slide-right-enter-active,
 .slide-right-leave-active,
@@ -34,7 +34,7 @@
 	opacity: 0;
 }
 
-/* Breadcrumb 面包屑过渡动画
+/* Breadcrumb Breadcrumb transition animation
 ------------------------------- */
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
@@ -50,7 +50,7 @@
 	z-index: -1;
 }
 
-/* logo 过渡动画
+/* logo Transition animation
 ------------------------------- */
 @keyframes logoAnimation {
 	0% {
@@ -64,7 +64,7 @@
 	}
 }
 
-/* 404、401 过渡动画
+/* 404、401 Transition animation
 ------------------------------- */
 @keyframes error-num {
 	0% {
@@ -93,7 +93,7 @@
 	}
 }
 
-/* 登录页动画
+/* Login page animation
 ------------------------------- */
 @keyframes loginLeft {
 	0% {
@@ -132,7 +132,7 @@
 	}
 }
 
-/* 左右左 link.vue
+/* Error 500 (Server Error)!!1500.That’s an error.There was an error. Please try again later.That’s all we know. link.vue
 ------------------------------- */
 @keyframes toRight {
 	0% {

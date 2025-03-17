@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<el-dialog title="更换头像" v-model="state.isShowDialog" width="769px">
+		<el-dialog title="Change avatar" v-model="state.isShowDialog" width="769px">
 			<div class="cropper-warp">
 				<div class="cropper-warp-left">
 					<img :src="state.cropperImg" class="cropper-warp-left-img" />
 				</div>
 				<div class="cropper-warp-right">
-					<div class="cropper-warp-right-title">预览</div>
+					<div class="cropper-warp-right-title">Preview</div>
 					<div class="cropper-warp-right-item">
 						<div class="cropper-warp-right-value">
 							<img :src="state.cropperImgBase64" class="cropper-warp-right-value-img" />
@@ -23,8 +23,8 @@
 			</div>
 			<template #footer>
 				<span class="dialog-footer">
-					<el-button @click="onCancel" size="default">取 消</el-button>
-					<el-button type="primary" @click="onSubmit" size="default">更 换</el-button>
+					<el-button @click="onCancel" size="default">Pick remove</el-button>
+					<el-button type="primary" @click="onSubmit" size="default">Even Change</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -36,7 +36,7 @@ import { reactive, nextTick } from 'vue';
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
 
-// 定义变量内容
+// Define variable content
 const state = reactive({
 	isShowDialog: false,
 	cropperImg: '',
@@ -44,7 +44,7 @@ const state = reactive({
 	cropper: '' as RefType,
 });
 
-// 打开弹窗
+// Open pop-up window
 const openDialog = (imgs: string) => {
 	state.cropperImg = imgs;
 	state.isShowDialog = true;
@@ -52,19 +52,19 @@ const openDialog = (imgs: string) => {
 		initCropper();
 	});
 };
-// 关闭弹窗
+// Close pop-up window
 const closeDialog = () => {
 	state.isShowDialog = false;
 };
-// 取消
+// Cancel
 const onCancel = () => {
 	closeDialog();
 };
-// 更换
+// replace
 const onSubmit = () => {
 	// state.cropperImgBase64 = state.cropper.getCroppedCanvas().toDataURL('image/jpeg');
 };
-// 初始化cropperjs图片裁剪
+// initializationcropperjsImage cropping
 const initCropper = () => {
 	const letImg = <HTMLImageElement>document.querySelector('.cropper-warp-left-img');
 	state.cropper = new Cropper(letImg, {
@@ -82,7 +82,7 @@ const initCropper = () => {
 	});
 };
 
-// 暴露变量
+// Expose variables
 defineExpose({
 	openDialog,
 });
